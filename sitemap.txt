@@ -6,7 +6,7 @@ https://poxiao.tk/link/index.html
 https://poxiao.tk/tags/index.html
 https://poxiao.tk/2022/06/Hexo-github-pages-CloudFlare%E5%85%8D%E8%B4%B9CDN%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/
 https://poxiao.tk/2022/06/SEO/
-https://poxiao.tk/2022/06/DNS%E6%9F%A5%E8%AF%A2/
+https://poxiao.tk/2022/06/DNS%E5%91%BD%E4%BB%A4%E6%8C%87%E5%8D%97/
 https://poxiao.tk/2022/06/hexo%E7%9A%84front-matter%E4%B8%AD%E7%9A%84%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98/
 https://poxiao.tk/2022/06/WSL%E4%B8%AD%E7%9A%84%E9%AA%9A%E6%93%8D%E4%BD%9C/
 https://poxiao.tk/2022/06/hexo+freenom+cloudflare%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/
