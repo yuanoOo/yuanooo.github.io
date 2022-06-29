@@ -15,17 +15,17 @@ https://poxiao.tk/tags/dns/
 https://poxiao.tk/tags/CDN/
 https://poxiao.tk/tags/hexo/
 https://poxiao.tk/tags/cloudflare/
-https://poxiao.tk/tags/SEO/
 https://poxiao.tk/tags/WSL/
 https://poxiao.tk/tags/Linxu/
 https://poxiao.tk/tags/typora/
+https://poxiao.tk/tags/SEO/
 https://poxiao.tk/tags/github-pages/
 https://poxiao.tk/tags/CFW/
 https://poxiao.tk/tags/%E7%BD%91%E6%98%93%E4%BA%91/
 https://poxiao.tk/categories/dns/
 https://poxiao.tk/categories/hexo/
-https://poxiao.tk/categories/SEO/
 https://poxiao.tk/categories/WSL/
+https://poxiao.tk/categories/SEO/
 https://poxiao.tk/categories/linux/
 https://poxiao.tk/categories/%E7%BD%91%E6%98%93%E4%BA%91/
 
