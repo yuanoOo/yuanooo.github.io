@@ -4,7 +4,7 @@ tags:
   - hexo 
 categories:
   - [hexo]
-cover: /img/code/code.jpg
+cover: 
 top_img: 
 date: 2022-06-27 14:44:40
 updated: 2022-06-27 14:44:40

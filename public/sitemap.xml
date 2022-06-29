@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://poxiao.tk/2022/06/zhihu-emo-yulu/</loc>
+    
+    <lastmod>2022-06-29</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://poxiao.tk/about/index.html</loc>
     
     <lastmod>2022-06-29</lastmod>
@@ -14,15 +23,6 @@
     <loc>https://poxiao.tk/2022/06/hexo/%E4%BB%8Egithub%E6%81%A2%E5%A4%8D%E5%A4%87%E4%BB%BDhexo%E5%8D%9A%E5%AE%A2hexo-git-backup/</loc>
     
     <lastmod>2022-06-29</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://poxiao.tk/2022/06/zhihu-emo-yulu/</loc>
-    
-    <lastmod>2022-06-28</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -147,6 +147,13 @@
   </url>
   
   <url>
+    <loc>https://poxiao.tk/tags/SEO/</loc>
+    <lastmod>2022-06-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://poxiao.tk/tags/WSL/</loc>
     <lastmod>2022-06-29</lastmod>
     <changefreq>weekly</changefreq>
@@ -162,13 +169,6 @@
   
   <url>
     <loc>https://poxiao.tk/tags/typora/</loc>
-    <lastmod>2022-06-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://poxiao.tk/tags/SEO/</loc>
     <lastmod>2022-06-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -212,14 +212,14 @@
   </url>
   
   <url>
-    <loc>https://poxiao.tk/categories/WSL/</loc>
+    <loc>https://poxiao.tk/categories/SEO/</loc>
     <lastmod>2022-06-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://poxiao.tk/categories/SEO/</loc>
+    <loc>https://poxiao.tk/categories/WSL/</loc>
     <lastmod>2022-06-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

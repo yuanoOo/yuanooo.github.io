@@ -6,7 +6,7 @@ tags:
   - cloudflare
 categories:
   - [hexo]
-cover: /img/code/linux.png
+cover: 
 top_img: 
 date: 2022-06-27 21:14:01
 updated: 2022-06-27 21:19:32

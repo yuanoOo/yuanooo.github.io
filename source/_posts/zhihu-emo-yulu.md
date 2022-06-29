@@ -2,7 +2,7 @@
 title: 网易云EMO语录
 date: 2022-06-25 17:00:28
 
-cover: /img/cat.png
+cover: 
 top_img: 
 
 tags: 
