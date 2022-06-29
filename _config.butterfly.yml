@@ -464,8 +464,8 @@ google_adsense:
 # --------------------------------------
 
 site_verification:
-  # - name: google-site-verification
-  #   content: xxxxxx
+  - name: google-site-verification
+    content: v7W8T1yBsImqvya-nz126O5wJTmGsQyUQJ_F8vmgUVU
   # - name: baidu-site-verification
   #   content: xxxxxxx
 
