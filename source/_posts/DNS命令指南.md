@@ -1,5 +1,5 @@
 ---
-title: DNS查询
+title: DNS命令指南。怎么验证是否遭遇DNS污染？查看域名是否解析成功？
 tags:
   - dns
 categories:
@@ -10,10 +10,10 @@ top_img:
 date: 2022-06-27 18:24:43
 updated: 2022-06-27 18:24:43
 description:
-keywords:
+keywords: DNS
 ---
 
-# DNS查询命令
+# DNS指南
 
 ## 查询DNS服务器
 
