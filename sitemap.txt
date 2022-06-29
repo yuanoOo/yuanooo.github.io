@@ -1,6 +1,6 @@
 https://yuanooo.github.io/2022/06/zhihu-emo-yulu/
-https://yuanooo.github.io/categories/index.html
 https://yuanooo.github.io/about/index.html
+https://yuanooo.github.io/categories/index.html
 https://yuanooo.github.io/link/index.html
 https://yuanooo.github.io/tags/index.html
 https://yuanooo.github.io/2022/06/Hexo-github-pages-CloudFlare%E5%85%8D%E8%B4%B9CDN%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/
