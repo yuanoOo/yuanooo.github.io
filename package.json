@@ -17,6 +17,7 @@
     "hexo-deployer-heroku": "^0.1.2",
     "hexo-filter-nofollow": "^2.0.2",
     "hexo-generator-archive": "^1.0.0",
+    "hexo-generator-baidu-sitemap": "^0.1.9",
     "hexo-generator-category": "^1.0.0",
     "hexo-generator-index": "^2.0.0",
     "hexo-generator-sitemap": "^3.0.1",

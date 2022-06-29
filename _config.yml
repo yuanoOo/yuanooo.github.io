@@ -111,6 +111,8 @@ sitemap:
   rel: false
   tags: true
   categories: true
+baidusitemap:
+  path: baidusitemap.xml
 
 
 # 备份插件：hexo-git-backup
