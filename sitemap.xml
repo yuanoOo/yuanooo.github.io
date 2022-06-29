@@ -11,15 +11,6 @@
   </url>
   
   <url>
-    <loc>https://yuanooo.github.io/2022/06/test/</loc>
-    
-    <lastmod>2022-06-29</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://yuanooo.github.io/2022/06/zhihu-emo-yulu/</loc>
     
     <lastmod>2022-06-28</lastmod>
@@ -128,6 +119,13 @@
 
   
   <url>
+    <loc>https://yuanooo.github.io/tags/dns/</loc>
+    <lastmod>2022-06-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://yuanooo.github.io/tags/CDN/</loc>
     <lastmod>2022-06-29</lastmod>
     <changefreq>weekly</changefreq>
@@ -143,13 +141,6 @@
   
   <url>
     <loc>https://yuanooo.github.io/tags/cloudflare/</loc>
-    <lastmod>2022-06-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://yuanooo.github.io/tags/dns/</loc>
     <lastmod>2022-06-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -207,14 +198,14 @@
 
   
   <url>
-    <loc>https://yuanooo.github.io/categories/hexo/</loc>
+    <loc>https://yuanooo.github.io/categories/dns/</loc>
     <lastmod>2022-06-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://yuanooo.github.io/categories/dns/</loc>
+    <loc>https://yuanooo.github.io/categories/hexo/</loc>
     <lastmod>2022-06-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
