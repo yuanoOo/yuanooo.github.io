@@ -519,7 +519,7 @@ footer_bg: transparent # "#23282d"
 rightside-bottom:
 
 # Enter transitions (開啓網頁進入效果)
-enter_transitions: true
+enter_transitions: false
 
 # Background effects (背景特效)
 # --------------------------------------
@@ -822,7 +822,7 @@ lazyload:
   enable: true
   field: site # site/post
   placeholder:
-  blur: false
+  blur: true
 
 # PWA
 # See https://github.com/JLHwung/hexo-offline
