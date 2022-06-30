@@ -510,7 +510,7 @@ tag_ui: # 留空或 index
 # can set it to color or image (可設置圖片 或者 顔色)
 # The formal of image: url(http://xxxxxx.com/xxx.jpg)
                 #https://clashdingyue.tk/img/bg/web-bg.webp
-background: # url(https://clashdingyue.tk/img/bg/web-bg.webp) # "#F5F5F5"
+background: url(https://clashdingyue.tk/img/bg/web-bg.webp) # "#F5F5F5"
 
 # Footer Background
 footer_bg: transparent # "#23282d"
