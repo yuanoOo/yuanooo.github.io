@@ -21,12 +21,12 @@ layout: about
     - name: 破晓
       link: https://poxiao.tk/
       avatar: https://poxiao.tk/img/bg/avatar.webp
-      descr: 今日事,今日毕
+      descr: 日拱一卒，功不唐捐
       
 
 {% endflink %}
 
 -------------------------
 
-# 备忘录
+# 🎉🎉🎉博客备忘录
 - 添加Twikoo评论系统
