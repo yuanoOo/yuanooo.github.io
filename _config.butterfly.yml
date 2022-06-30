@@ -510,7 +510,7 @@ tag_ui: # 留空或 index
 # can set it to color or image (可設置圖片 或者 顔色)
 # The formal of image: url(http://xxxxxx.com/xxx.jpg)
                 #https://clashdingyue.tk/img/bg/web-bg.webp
-background: "#F5F5F5" # 随意设置的，没有启用，见inject css
+background: transparent # 随意设置的，没有启用，见inject css
 
 # Footer Background
 footer_bg: transparent # "#23282d"
@@ -847,6 +847,7 @@ css_prefix: true
 # 插入代码到头部 </head> 之前 和 底部 </body> 之前
 inject:
   head:
+    # - <link rel="stylesheet" href="/css/background.css">
     - <link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'">
     # - <link rel="stylesheet" href="/xxx.css">
   bottom:
