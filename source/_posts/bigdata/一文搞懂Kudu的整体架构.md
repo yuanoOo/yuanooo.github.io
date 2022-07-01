@@ -12,6 +12,8 @@ description:
 keywords:
 ---
 
+
+
 > Kudu是典型的Master-Slave架构，基于LSM优化写入性能，但同时读性能会低（相较于Parquet）。Kudu基于Raft协议实现了Master和Slave Tablet节点的数据的一致性，以及选举功能，保证了容错性和高可用。
 >
 > Kudu是完全的列式存储引擎，可以针对性的编码和压缩，提高了IO性能。HBase是基于列族的，No Schema的NoSQL、KV数据库，无法进行针对性的编码和压缩，同时一般情况只会用一个列族，其实HBase退化为行存储引擎。
@@ -21,8 +23,6 @@ keywords:
 > kudu相对于HBase，牺牲了一定的写入性能--->Kudu在写入数据的时候，需要先检查一遍唯一主键是否存在，如果存在会报错，同样更新数据的时候，同样需要先查找主键是否存在。因此Insert和Update等所有操作比HBase多了，`先读一次`的开销，而HBase所有的操作都是转化为直接写入，因此写的性能相较于HBase有一定的劣势。
 >
 > Kudu牺牲写的性能，但是保证了一个主键，只会存在于一个RowSet中，而HBase的RowKey可能会在多个HFlie中。减少了IO，提升了读性能，特别是在大量写入，少量更新的情况下。
-
-
 
 
 
@@ -90,3 +90,8 @@ DeltaFile(主要是RedoFile)会不断增加，产生大量小文件，不Compact
 ![img](https://cdn.nlark.com/yuque/0/2022/png/2500465/1655346605651-12519d77-90d0-4e92-8def-a832ad06c4b5.png)
 
 ![img](https://cdn.nlark.com/yuque/0/2022/png/2500465/1655346609884-6c6502ed-d74e-4796-b91c-875a4792c2e9.png?x-oss-process=image%2Fresize%2Cw_913%2Climit_0)
+
+
+
+<img src="https://cdn.nlark.com/yuque/0/2022/png/2500465/1656670543950-cf2edd8b-55d4-4eb2-b224-78d3c1d9aa31.png">
+
