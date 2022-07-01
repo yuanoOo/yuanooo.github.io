@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://poxiao.tk/2022/07/bigdata/%E4%B8%80%E6%96%87%E6%90%9E%E6%87%82Kudu%E7%9A%84%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84/</loc>
+    
+    <lastmod>2022-07-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://poxiao.tk/about/index.html</loc>
     
     <lastmod>2022-06-30</lastmod>
@@ -112,7 +121,7 @@
 
   <url>
     <loc>https://poxiao.tk/</loc>
-    <lastmod>2022-06-30</lastmod>
+    <lastmod>2022-07-01</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -120,77 +129,84 @@
   
   <url>
     <loc>https://poxiao.tk/tags/dns/</loc>
-    <lastmod>2022-06-30</lastmod>
+    <lastmod>2022-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://poxiao.tk/tags/CDN/</loc>
-    <lastmod>2022-06-30</lastmod>
+    <lastmod>2022-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://poxiao.tk/tags/hexo/</loc>
-    <lastmod>2022-06-30</lastmod>
+    <lastmod>2022-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://poxiao.tk/tags/cloudflare/</loc>
-    <lastmod>2022-06-30</lastmod>
+    <lastmod>2022-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://poxiao.tk/tags/SEO/</loc>
-    <lastmod>2022-06-30</lastmod>
+    <lastmod>2022-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://poxiao.tk/tags/WSL/</loc>
-    <lastmod>2022-06-30</lastmod>
+    <lastmod>2022-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://poxiao.tk/tags/Linxu/</loc>
-    <lastmod>2022-06-30</lastmod>
+    <lastmod>2022-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://poxiao.tk/tags/typora/</loc>
-    <lastmod>2022-06-30</lastmod>
+    <lastmod>2022-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://poxiao.tk/tags/github-pages/</loc>
-    <lastmod>2022-06-30</lastmod>
+    <lastmod>2022-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://poxiao.tk/tags/CFW/</loc>
-    <lastmod>2022-06-30</lastmod>
+    <lastmod>2022-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://poxiao.tk/tags/%E7%BD%91%E6%98%93%E4%BA%91/</loc>
-    <lastmod>2022-06-30</lastmod>
+    <lastmod>2022-07-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://poxiao.tk/tags/kudu/</loc>
+    <lastmod>2022-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -199,42 +215,56 @@
   
   <url>
     <loc>https://poxiao.tk/categories/dns/</loc>
-    <lastmod>2022-06-30</lastmod>
+    <lastmod>2022-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://poxiao.tk/categories/hexo/</loc>
-    <lastmod>2022-06-30</lastmod>
+    <lastmod>2022-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://poxiao.tk/categories/SEO/</loc>
-    <lastmod>2022-06-30</lastmod>
+    <lastmod>2022-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://poxiao.tk/categories/WSL/</loc>
-    <lastmod>2022-06-30</lastmod>
+    <lastmod>2022-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://poxiao.tk/categories/linux/</loc>
-    <lastmod>2022-06-30</lastmod>
+    <lastmod>2022-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://poxiao.tk/categories/%E7%BD%91%E6%98%93%E4%BA%91/</loc>
-    <lastmod>2022-06-30</lastmod>
+    <lastmod>2022-07-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://poxiao.tk/categories/bigdata/</loc>
+    <lastmod>2022-07-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://poxiao.tk/categories/bigdata/kudu/</loc>
+    <lastmod>2022-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
