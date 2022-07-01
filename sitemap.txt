@@ -1,3 +1,4 @@
+https://poxiao.tk/2022/07/bigdata/%E4%B8%80%E6%96%87%E6%90%9E%E6%87%82Kudu%E7%9A%84%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84/
 https://poxiao.tk/about/index.html
 https://poxiao.tk/2022/06/zhihu-emo-yulu/
 https://poxiao.tk/2022/06/hexo/%E4%BB%8Egithub%E6%81%A2%E5%A4%8D%E5%A4%87%E4%BB%BDhexo%E5%8D%9A%E5%AE%A2hexo-git-backup/
@@ -22,10 +23,13 @@ https://poxiao.tk/tags/typora/
 https://poxiao.tk/tags/github-pages/
 https://poxiao.tk/tags/CFW/
 https://poxiao.tk/tags/%E7%BD%91%E6%98%93%E4%BA%91/
+https://poxiao.tk/tags/kudu/
 https://poxiao.tk/categories/dns/
 https://poxiao.tk/categories/hexo/
 https://poxiao.tk/categories/SEO/
 https://poxiao.tk/categories/WSL/
 https://poxiao.tk/categories/linux/
 https://poxiao.tk/categories/%E7%BD%91%E6%98%93%E4%BA%91/
+https://poxiao.tk/categories/bigdata/
+https://poxiao.tk/categories/bigdata/kudu/
 
