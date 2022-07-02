@@ -3,9 +3,9 @@ title: WSL中的骚操作
 tags:
   - WSL
   - Linxu
-  - typora
+  - hexo
 categories:
-  - [WSL]
+  - [Linux]
 cover: 
 top_img: 
 date: 2022-06-27 14:27:44

@@ -1,14 +1,14 @@
 ---
-title: 网易云EMO语录
+title: 网易云音乐EMO语录
 date: 2022-06-25 17:00:28
 
 cover: 
 top_img: 
 
 tags: 
-- 网易云
+- EMO语录
 categories:
-- 网易云
+- 
 
 ---
 
