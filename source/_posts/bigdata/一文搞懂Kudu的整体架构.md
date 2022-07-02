@@ -12,7 +12,7 @@ description:
 keywords:
 ---
 
-< meta  name =“ referrer ” content =“ no-referrer ” />
+<meta name ="referrer" content ="no-referrer"/>
 
 > Kudu是典型的Master-Slave架构，基于LSM优化写入性能，但同时读性能会低（相较于Parquet）。Kudu基于Raft协议实现了Master和Slave Tablet节点的数据的一致性，以及选举功能，保证了容错性和高可用。
 >
