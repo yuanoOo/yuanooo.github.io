@@ -1,5 +1,5 @@
 ---
-title: 一文搞懂Kudu的整体架构.md
+title: 一文搞懂Kudu的整体架构
 tags:
   - 'kudu'
 categories:
