@@ -92,5 +92,4 @@ DeltaFile(主要是RedoFile)会不断增加，产生大量小文件，不Compact
 
 
 
-<img src="https://cdn.nlark.com/yuque/0/2022/png/2500465/1656670543950-cf2edd8b-55d4-4eb2-b224-78d3c1d9aa31.png">
 
