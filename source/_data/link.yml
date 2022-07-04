@@ -6,11 +6,10 @@
       avatar: https://npm.elemecdn.com/guli-heo/img/avatar2.png
       descr: 分享设计与科技生活
 
-    - site: 瞬間の筆記
-      url: https://hikki.site
-      desc: 喜欢的东西就努力去追求，万一成功了呢!
-      image: https://cdn.jsdelivr.net/gh/0000rookie/imgs/202206120315.png
-      color: "#21d4fd"
+    - name: 瞬間の筆記
+      link: https://hikki.site
+      descr: 喜欢的东西就努力去追求，万一成功了呢!
+      avatar: https://cdn.jsdelivr.net/gh/0000rookie/imgs/202206120315.png
 
 
 
