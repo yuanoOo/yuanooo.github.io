@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Allow: /archives/
+Allow: /categories/
+Allow: /tags/
+Allow: /about/
+Allow: /link/
+
+
+Sitemap: https://poxiao.tk/sitemap.xml
+Sitemap: https://poxiao.tk/baidu_sitemap.xml
