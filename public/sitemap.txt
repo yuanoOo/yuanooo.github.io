@@ -1,3 +1,4 @@
+https://poxiao.tk/2022/07/bigdata/yarn%E5%85%AC%E5%B9%B3%E5%92%8C%E5%AE%B9%E9%87%8F%E8%B0%83%E5%BA%A6%E5%99%A8%E7%9A%84%E5%BC%82%E5%90%8C/
 https://poxiao.tk/2022/07/bigdata/HBase%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0MVCC/
 https://poxiao.tk/link/index.html
 https://poxiao.tk/2022/06/zhihu-emo-yulu/
@@ -26,6 +27,8 @@ https://poxiao.tk/tags/CFW/
 https://poxiao.tk/tags/EMO%E8%AF%AD%E5%BD%95/
 https://poxiao.tk/tags/HBase/
 https://poxiao.tk/tags/MVCC/
+https://poxiao.tk/tags/yarn/
+https://poxiao.tk/tags/hadoop/
 https://poxiao.tk/tags/kudu/
 https://poxiao.tk/categories/dns/
 https://poxiao.tk/categories/hexo/
@@ -34,5 +37,6 @@ https://poxiao.tk/categories/Linux/
 https://poxiao.tk/categories/linux/
 https://poxiao.tk/categories/bigdata/
 https://poxiao.tk/categories/bigdata/HBase/
+https://poxiao.tk/categories/bigdata/yarn/
 https://poxiao.tk/categories/bigdata/kudu/
 
