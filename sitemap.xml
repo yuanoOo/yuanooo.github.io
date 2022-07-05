@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://poxiao.tk/2022/07/bigdata/HBase%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0MVCC/</loc>
+    
+    <lastmod>2022-07-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://poxiao.tk/link/index.html</loc>
     
     <lastmod>2022-07-03</lastmod>
@@ -207,6 +216,20 @@
   </url>
   
   <url>
+    <loc>https://poxiao.tk/tags/HBase/</loc>
+    <lastmod>2022-07-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://poxiao.tk/tags/MVCC/</loc>
+    <lastmod>2022-07-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://poxiao.tk/tags/kudu/</loc>
     <lastmod>2022-07-05</lastmod>
     <changefreq>weekly</changefreq>
@@ -252,6 +275,13 @@
   
   <url>
     <loc>https://poxiao.tk/categories/bigdata/</loc>
+    <lastmod>2022-07-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://poxiao.tk/categories/bigdata/HBase/</loc>
     <lastmod>2022-07-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
