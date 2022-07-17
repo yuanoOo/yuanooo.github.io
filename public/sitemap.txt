@@ -16,10 +16,10 @@ https://poxiao.tk/2022/06/hexo%E7%9A%84front-matter%E4%B8%AD%E7%9A%84%E5%88%86%E
 https://poxiao.tk/2022/06/WSL%E4%B8%AD%E7%9A%84%E9%AA%9A%E6%93%8D%E4%BD%9C/
 https://poxiao.tk/2022/06/hexo+freenom+cloudflare%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/
 https://poxiao.tk/
-https://poxiao.tk/tags/dns/
 https://poxiao.tk/tags/CDN/
 https://poxiao.tk/tags/hexo/
 https://poxiao.tk/tags/cloudflare/
+https://poxiao.tk/tags/dns/
 https://poxiao.tk/tags/SEO/
 https://poxiao.tk/tags/WSL/
 https://poxiao.tk/tags/Linxu/
@@ -32,8 +32,8 @@ https://poxiao.tk/tags/yarn/
 https://poxiao.tk/tags/hadoop/
 https://poxiao.tk/tags/kudu/
 https://poxiao.tk/tags/%E7%94%A8%E6%88%B7%E7%94%BB%E5%83%8F/
-https://poxiao.tk/categories/dns/
 https://poxiao.tk/categories/hexo/
+https://poxiao.tk/categories/dns/
 https://poxiao.tk/categories/SEO/
 https://poxiao.tk/categories/Linux/
 https://poxiao.tk/categories/linux/
