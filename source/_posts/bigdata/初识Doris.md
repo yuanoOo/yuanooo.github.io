@@ -12,27 +12,56 @@ description:
 keywords:
 ---
 
->- MPP（ Massively Parallel Processing - 大规模并行处理）Based数据库。
+>- MPP（ Massively Parallel Processing - 大规模并行处理）Based高性能、实时的分析型数据库。
 >
->- Doris 采用 MySQL 协议进行通信，用户可通过 MySQL Client 或者 MySQL JDBC 连接到 Doris 集群。
+>- 在**使用接口**方面，Doris 采用 MySQ L 协议，高度兼容 MySQL 语法，支持标准 SQL，用户可以通过各类客户端工具来访问 Doris，并支持与 BI 工具的无缝对接。
 >
+>- 在**存储引擎**方面，Doris 采用列式存储，按列进行数据的编码压缩和读取，能够实现极高的压缩比，同时减少大量非相关数据的扫描，从而更加有效利用 IO 和 CPU 资源。
+>
+>- 在**查询引擎**方面，Doris 采用 MPP 的模型，节点间和节点内都并行执行，也支持多个大表的分布式 Shuffle Join，从而能够更好应对复杂查询。
+>
+>  ![origin_img_v2_cee507bd-d6ed-4359-9e52-51e9b8458f8g](https://doris.apache.org/zh-CN/assets/images/origin_img_v2_cee507bd-d6ed-4359-9e52-51e9b8458f8g-cd4a2a172ec93222a40231fe1a8d4edd.png)
+>
+>- **Doris 查询引擎是向量化**的查询引擎，所有的内存结构能够按照列式布局，能够达到大幅减少虚函数调用、提升 Cache 命中率，高效利用 SIMD 指令的效果。在宽表聚合场景下性能是非向量化引擎的 5-10 倍。
+>
+>  ![origin_img_v2_ad65aae9-9ed0-463e-a34c-94e32b092a4g](https://doris.apache.org/zh-CN/assets/images/origin_img_v2_ad65aae9-9ed0-463e-a34c-94e32b092a4g-84273f42ae82408ff09c7af6c5b67022.png)
+>
+>- **Doris 采用了 Adaptive Query Execution 技术，** 可以根据 Runtime Statistics 来动态调整执行计划，比如通过 Runtime Filter 技术能够在运行时生成生成 Filter 推到 Probe 侧，并且能够将 Filter 自动穿透到 Probe 侧最底层的 Scan 节点，从而大幅减少 Probe 的数据量，加速 Join 性能。Doris 的 Runtime Filter 支持 In/Min/Max/Bloom Filter。
+>
+>- 在**优化器**方面 Doris 使用 CBO 和 RBO 结合的优化策略，RBO 支持常量折叠、子查询改写、谓词下推等，CBO 支持 Join Reorder。目前 CBO 还在持续优化中，主要集中在更加精准的统计信息收集和推导，更加精准的代价模型预估等方面。
+>
+>- **Doris 也支持强一致的物化视图**，物化视图的更新和选择都在系统内自动进行，不需要用户手动选择，从而大幅减少了物化视图维护的代价。
+>
+>- **Doris 也支持比较丰富的索引结构，来减少数据的扫描**
+
+------
+
 >- Doris 数据模型上目前分为三类: AGGREGATE KEY, UNIQUE KEY, DUPLICATE KEY。**三种模型中数据都是按KEY进行排序。**
 >
-> - AGGREGATE KEY
+>- AGGREGATE KEY
 >
->   AGGREGATE KEY相同时，新旧记录进行聚合，目前支持的聚合函数有SUM, MIN, MAX, REPLACE。
+>  AGGREGATE KEY相同时，新旧记录进行聚合，目前支持的聚合函数有SUM, MIN, MAX, REPLACE。
 >
->   AGGREGATE KEY模型可以提前聚合数据, 适合报表和多维分析业务。
+>  AGGREGATE KEY模型可以提前聚合数据, 适合报表和多维分析业务。
 >
-> -  UNIQUE KEY
+>- UNIQUE KEY
 >
->   UNIQUE KEY 相同时，新记录覆盖旧记录。目前 UNIQUE KEY 实现上和 AGGREGATE KEY 的 REPLACE 聚合方法一样，二者本质上相同。适用于有更新需求的分析业务。
->   
-> -  DUPLICATE KEY
->   
->   只指定排序列，相同的行不会合并。适用于数据无需提前聚合的分析业务。
+>  UNIQUE KEY 相同时，新记录覆盖旧记录。目前 UNIQUE KEY 实现上和 AGGREGATE KEY 的 REPLACE 聚合方法一样，二者本质上相同。适用于有更新需求的分析业务。
+>
+>- DUPLICATE KEY
+>
+>  只指定排序列，相同的行不会合并。适用于数据无需提前聚合的分析业务。
 
+------
 
+>Doris**整体架构**如下图所示，Doris 架构非常简单，只有两类进程
+>
+>- **Frontend（FE）**，主要负责用户请求的接入、查询解析规划、元数据的管理、节点管理相关工作。
+>- **另一个是 Backend（BE）**，主要负责数据存储、查询计划的执行。
+>
+>这两类进程都是可以横向扩展的，单集群可以支持到数百台机器，数十 PB 的存储容量。并且这两类进程通过一致性协议来保证服务的高可用和数据的高可靠。这种高度集成的架构设计极大的降低了一款分布式系统的运维成本。
+>
+>![origin_img_v2_28d005e1-21d6-4801-956f-0c06373a7a9g](https://doris.apache.org/zh-CN/assets/images/origin_img_v2_28d005e1-21d6-4801-956f-0c06373a7a9g-11e2c3e5c6b6dc26b4f602697a1071a9.png)
 
 ## 建表语句
 
