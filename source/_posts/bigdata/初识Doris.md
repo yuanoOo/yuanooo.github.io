@@ -13,7 +13,24 @@ keywords:
 ---
 
 >- MPP（ Massively Parallel Processing - 大规模并行处理）Based数据库。
+>
 >- Doris 采用 MySQL 协议进行通信，用户可通过 MySQL Client 或者 MySQL JDBC 连接到 Doris 集群。
+>
+>- Doris 数据模型上目前分为三类: AGGREGATE KEY, UNIQUE KEY, DUPLICATE KEY。**三种模型中数据都是按KEY进行排序。**
+>
+> - AGGREGATE KEY
+>
+>   AGGREGATE KEY相同时，新旧记录进行聚合，目前支持的聚合函数有SUM, MIN, MAX, REPLACE。
+>
+>   AGGREGATE KEY模型可以提前聚合数据, 适合报表和多维分析业务。
+>
+> -  UNIQUE KEY
+>
+>   UNIQUE KEY 相同时，新记录覆盖旧记录。目前 UNIQUE KEY 实现上和 AGGREGATE KEY 的 REPLACE 聚合方法一样，二者本质上相同。适用于有更新需求的分析业务。
+>   
+> -  DUPLICATE KEY
+>   
+>   只指定排序列，相同的行不会合并。适用于数据无需提前聚合的分析业务。
 
 
 
