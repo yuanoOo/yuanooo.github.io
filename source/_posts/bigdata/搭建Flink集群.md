@@ -12,19 +12,11 @@ description:
 keywords:
 ---
 
-> 
-
-
-
-> ARN模式中的in a Per-Job Mode (deprecated
-
-
-
 >在YARN部署模式中，有三种部署方式：
 >
->- in Application Mode,
->- in Session Mode,
->- in a Per-Job Mode (deprecated).
+>- in Application Mode
+>- in Session Mode
+>- in a Per-Job Mode (deprecated)
 
 # YARN模式
 
