@@ -144,3 +144,44 @@ object KafkaConnectTest {
 
 ```
 
+## Flink Table && SQL Maven
+
+我们想要在代码中使用Table API，必须引入相关的依赖。
+
+```xml
+<dependency>
+    <groupId>org.apache.flink</groupId>
+    <artifactId>flink-table-api-java-bridge_${scala.binary.version}</artifactId>
+    <version>${flink.version}</version>
+</dependency>
+
+```
+
+这里的依赖是一个 Java 的“桥接器”（bridge），主要就是负责 Table API 和下层 DataStream API 的连接支持，按照不同的语言分为 Java 版和 Scala 版。
+
+如果我们希望在本地的集成开发环境（IDE）里运行 Table API 和 SQL，还需要引入以下依赖：
+
+```xml
+<dependency>
+    <groupId>org.apache.flink</groupId>
+    <artifactId>flink-table-planner-blink_${scala.binary.version}</artifactId>
+    <version>${flink.version}</version>
+    </dependency>
+    <dependency>
+    <groupId>org.apache.flink</groupId>
+    <artifactId>flink-streaming-scala_${scala.binary.version}</artifactId>
+    <version>${flink.version}</version>
+</dependency>
+```
+
+这里主要添加的依赖是一个“计划器”（planner），它是 Table API 的核心组件，负责提供运行时环境，并生成程序的执行计划。这里我们用到的是新版的 blink planner。由于 Flink 安装包的 lib 目录下会自带planner，所以在生产集群环境中提交的作业不需要打包这个赖。而在Table API 的内部实现上，部分相关的代码是用 Scala 实现的，所以还需要额外添加一个 Scala 版流处理的相关依赖。
+另外，如果想实现自定义的数据格式来做序列化，可以引入下面的依赖：
+
+```xml
+<dependency>
+    <groupId>org.apache.flink</groupId>
+    <artifactId>flink-table-common</artifactId>
+    <version>${flink.version}</version>
+</dependency>
+```
+
