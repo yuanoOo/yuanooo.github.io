@@ -1,5 +1,5 @@
 ---
-title: Flink+Hudi构建实时仓湖一体化.pdf
+title: Flink+Hudi构建实时仓湖一体化
 tags:
   - 'hudi'
 categories:
@@ -11,6 +11,5 @@ cover:
 description:
 keywords:
 ---
-<meta name="referrer" content="origin">
 
 {% pdf /doc/Flink+Hudi构建实时仓湖一体化.pdf %}
