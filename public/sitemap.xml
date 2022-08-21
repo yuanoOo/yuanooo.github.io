@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://poxiao.tk/2022/08/bigdata/Flink+Hudi%E6%9E%84%E5%BB%BA%E5%AE%9E%E6%97%B6%E4%BB%93%E6%B9%96%E4%B8%80%E4%BD%93%E5%8C%96/</loc>
+    
+    <lastmod>2022-08-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://poxiao.tk/2022/08/bigdata/doris%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%88%E4%B8%80%EF%BC%89/</loc>
     
     <lastmod>2022-08-21</lastmod>
@@ -299,6 +308,13 @@
   </url>
   
   <url>
+    <loc>https://poxiao.tk/tags/EMO%E8%AF%AD%E5%BD%95/</loc>
+    <lastmod>2022-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://poxiao.tk/tags/Doris/</loc>
     <lastmod>2022-08-21</lastmod>
     <changefreq>weekly</changefreq>
@@ -306,7 +322,7 @@
   </url>
   
   <url>
-    <loc>https://poxiao.tk/tags/EMO%E8%AF%AD%E5%BD%95/</loc>
+    <loc>https://poxiao.tk/tags/hudi/</loc>
     <lastmod>2022-08-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -413,6 +429,13 @@
   </url>
   
   <url>
+    <loc>https://poxiao.tk/categories/bigdata/Flink/</loc>
+    <lastmod>2022-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://poxiao.tk/categories/bigdata/Doris/</loc>
     <lastmod>2022-08-21</lastmod>
     <changefreq>weekly</changefreq>
@@ -427,7 +450,7 @@
   </url>
   
   <url>
-    <loc>https://poxiao.tk/categories/bigdata/Flink/</loc>
+    <loc>https://poxiao.tk/categories/bigdata/hudi/</loc>
     <lastmod>2022-08-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
