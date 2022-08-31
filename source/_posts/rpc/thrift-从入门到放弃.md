@@ -65,7 +65,7 @@ keywords:
   > [ERROR] Failed to execute goal org.apache.thrift.tools:maven-thrift-plugin:0.1.11:compile (thrift-sources) on project HelloService: thrift did n
   > ot exit cleanly. Review output for more information. -> [Help 1]
 
-  Maven插件maven-thrift-plugin配置中添加<generator>java</generator>
+  Maven插件maven-thrift-plugin配置中添加`<generator>java</generator>`
 
   ```xml
   		<plugin>
