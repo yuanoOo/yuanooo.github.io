@@ -4,7 +4,7 @@ tags:
   - 'Doris'
 categories:
   - [Doris]
-top_img: 'linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)'
+top_img: '/img/bg/banner.gif'
 date: 2022-09-03 23:40:51
 updated: 2022-09-03 23:40:51
 cover:
