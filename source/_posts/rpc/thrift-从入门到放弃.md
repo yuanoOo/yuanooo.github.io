@@ -1,5 +1,5 @@
 ---
-title: thrift-从入门到放弃.md
+title: thrift-从入门到放弃
 tags:
   - 'thrift'
 categories:
