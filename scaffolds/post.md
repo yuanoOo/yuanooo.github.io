@@ -8,7 +8,7 @@ tags:
 categories:
 - []
 cover: 
-top_img: 'linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)'
+top_img: '/img/bg/banner.gif'
 
 description: 
 keywords:

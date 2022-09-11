@@ -5,7 +5,7 @@ tags:
   - '调优'
 categories:
   - [bigdata,Flink]
-top_img: 'linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)'
+top_img: '/img/bg/banner.gif'
 date: 2022-08-08 20:23:04
 updated: 2022-08-08 20:23:04
 cover:
