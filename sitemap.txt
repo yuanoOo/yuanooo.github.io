@@ -32,9 +32,9 @@ https://poxiao.tk/tags/dns/
 https://poxiao.tk/tags/CDN/
 https://poxiao.tk/tags/hexo/
 https://poxiao.tk/tags/cloudflare/
-https://poxiao.tk/tags/SEO/
 https://poxiao.tk/tags/WSL/
 https://poxiao.tk/tags/Linxu/
+https://poxiao.tk/tags/SEO/
 https://poxiao.tk/tags/github-pages/
 https://poxiao.tk/tags/CFW/
 https://poxiao.tk/tags/EMO%E8%AF%AD%E5%BD%95/
@@ -52,8 +52,8 @@ https://poxiao.tk/tags/thrift/
 https://poxiao.tk/categories/bigdata/
 https://poxiao.tk/categories/dns/
 https://poxiao.tk/categories/hexo/
-https://poxiao.tk/categories/SEO/
 https://poxiao.tk/categories/Linux/
+https://poxiao.tk/categories/SEO/
 https://poxiao.tk/categories/linux/
 https://poxiao.tk/categories/Doris/
 https://poxiao.tk/categories/bigdata/Doris/
