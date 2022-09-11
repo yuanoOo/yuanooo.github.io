@@ -272,6 +272,13 @@
 
   
   <url>
+    <loc>https://poxiao.tk/tags/dns/</loc>
+    <lastmod>2022-09-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://poxiao.tk/tags/CDN/</loc>
     <lastmod>2022-09-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -293,6 +300,13 @@
   </url>
   
   <url>
+    <loc>https://poxiao.tk/tags/SEO/</loc>
+    <lastmod>2022-09-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://poxiao.tk/tags/WSL/</loc>
     <lastmod>2022-09-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -301,20 +315,6 @@
   
   <url>
     <loc>https://poxiao.tk/tags/Linxu/</loc>
-    <lastmod>2022-09-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://poxiao.tk/tags/dns/</loc>
-    <lastmod>2022-09-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://poxiao.tk/tags/SEO/</loc>
     <lastmod>2022-09-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -428,21 +428,14 @@
   </url>
   
   <url>
-    <loc>https://poxiao.tk/categories/hexo/</loc>
-    <lastmod>2022-09-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://poxiao.tk/categories/Linux/</loc>
-    <lastmod>2022-09-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://poxiao.tk/categories/dns/</loc>
+    <lastmod>2022-09-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://poxiao.tk/categories/hexo/</loc>
     <lastmod>2022-09-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -456,7 +449,28 @@
   </url>
   
   <url>
+    <loc>https://poxiao.tk/categories/Linux/</loc>
+    <lastmod>2022-09-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://poxiao.tk/categories/linux/</loc>
+    <lastmod>2022-09-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://poxiao.tk/categories/Doris/</loc>
+    <lastmod>2022-09-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://poxiao.tk/categories/bigdata/Doris/</loc>
     <lastmod>2022-09-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -471,20 +485,6 @@
   
   <url>
     <loc>https://poxiao.tk/categories/bigdata/HBase/</loc>
-    <lastmod>2022-09-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://poxiao.tk/categories/linux/</loc>
-    <lastmod>2022-09-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://poxiao.tk/categories/bigdata/Doris/</loc>
     <lastmod>2022-09-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
