@@ -12,7 +12,7 @@ description:
 keywords:
 ---
 
-> 本篇我们将从实际使用场景的角度出发，介绍 Compaction 的调优思路和策略。通过本文将了解到 Compaction 相关的日志分析、参数调整和 API 的使用。
+> 本篇将从实际使用场景的角度出发，介绍 Compaction 的调优思路和策略。通过本文将了解到 Compaction 相关的日志分析、参数调整和 API 的使用。
 
 ## 什么情况下需要调整 Compaction 参数
 
@@ -29,7 +29,7 @@ Doris 提供数据版本数量的监控数据。如果你部署了 Prometheus + 
 ![img](https://cdn.nlark.com/yuque/0/2022/png/2500465/1662264565446-6e38cc7f-eb01-441c-a6f0-4988b07c4835.png)
 
 > 这个图表展示的是每个 BE 节点，所有 Tablet 中数据版本最多的那个 Tablet 的版本数量，可以反映出当前版本堆积情况。
-> 部署方式参阅：http://doris.incubator.apache.org/master/zh-CN/administrator-guide/operation/monitor-alert.html*
+> 部署方式参阅：http://doris.incubator.apache.org/master/zh-CN/administrator-guide/operation/monitor-alert.html
 
 如果没有安装这个监控，如果你是用的 Palo 0.14.7 版本以上，也可以通过以下命令在命令行查看这个监控数据的趋势图：
 
