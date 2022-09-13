@@ -21,6 +21,24 @@ keywords:
 >```
 >
 >来寻找Hadoop相关的Jar包。
+>
+>
+>
+>当Flink on YARN时，还需要在{FLINK_HOME}/lib中添加以下依赖：
+>
+>```shell
+>要么是这个：
+>       flink-shaded-hadoop-2-uber-2.7.5-8.0.jar
+>
+>要么是，可以直接从hadoop/share/hadoop/mapreduce/等目录拷过来：
+>      hadoop-common-3.0.0-cdh6.3.1.jar
+>      hadoop-mapreduce-client-common-3.0.0-cdh6.3.1.jar
+>      hadoop-mapreduce-client-core-3.0.0-cdh6.3.1.jar
+>      hadoop-mapreduce-client-hs-3.0.0-cdh6.3.1.jar
+>      hadoop-mapreduce-client-jobclient-3.0.0-cdh6.3.1.jar
+>```
+>
+>
 
 ## ENV
 
