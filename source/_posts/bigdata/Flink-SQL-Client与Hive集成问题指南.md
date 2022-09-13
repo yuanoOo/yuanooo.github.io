@@ -1,12 +1,12 @@
 ---
 title: Flink-SQL-Client与Hive集成问题指南
 tags:
-  - 'Doris'
+  - 'Flink'
 categories:
-  - [bigdata,Doris]
+  - [bigdata,Flink]
 top_img: '/img/bg/banner.gif'
-date: 2022-08-07 10:51:08
-updated: 2022-08-07 10:51:08
+date: 2022-09-13 10:51:08
+updated: 2022-09-13 10:52:08
 cover:
 description:
 keywords:
