@@ -86,4 +86,10 @@ keywords:
 
   
 
-​      
+- quit;退出sql-client时报错：
+
+  ```
+  Exception in thread "Thread-4" java.lang.IllegalStateException: Trying to access closed classloader. Please check if you store classloaders directly or indirectly in static fields. If the stacktrace suggests that the leak occurs in a third party library and cannot be fixed immediately, you can disable this check with the configuration 'classloader.check-leaked-classloader'.
+  ```
+
+  可以在在 flink 配置文件里 flink-conf.yaml设置`classloader.check-leaked-classloader: false`
