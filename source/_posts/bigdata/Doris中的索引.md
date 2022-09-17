@@ -4,7 +4,7 @@ tags:
   - 'Doris'
 categories:
   - [bigdata,Doris]
-top_img: '/img/bg/banner.gif'
+top_img: 
 date: 2022-08-07 10:51:08
 updated: 2022-08-07 10:51:08
 cover:

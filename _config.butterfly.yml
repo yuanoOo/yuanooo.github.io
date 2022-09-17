@@ -141,6 +141,7 @@ cover:
     - https://tvax3.sinaimg.cn/large/0084aYsLly1gnhmxy0hdlj31hc0u0gpt.jpg
     - https://tva3.sinaimg.cn/large/0084aYsLgy1h22161jezaj30xc0f0dh1.jpg
     - https://tva4.sinaimg.cn/large/0084aYsLgy1gy51ogkzs9j31hc0m843g.jpg
+    - https://zfh-tuchuang.oss-cn-shanghai.aliyuncs.com/img/site-backgound.jpg
 
 # Replace Broken Images (替換無法顯示的圖片)
 error_img:
@@ -498,7 +499,7 @@ site_verification:
 # The position of site info, eg: 300px/300em/300rem/10% (主頁標題距離頂部距離)
 index_site_info_top:
 # The height of top_img, eg: 300px/300em/300rem (主頁top_img高度)
-index_top_img_height: 400px
+index_top_img_height: 450px
 
 # The user interface setting of category and tag page (category和tag頁的UI設置)
 # index - same as Homepage UI (index 值代表 UI將與首頁的UI一樣)

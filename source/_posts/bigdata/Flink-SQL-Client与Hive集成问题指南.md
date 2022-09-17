@@ -4,7 +4,7 @@ tags:
   - 'Flink'
 categories:
   - [bigdata,Flink]
-top_img: '/img/bg/banner.gif'
+top_img: 
 date: 2022-09-13 10:51:08
 updated: 2022-09-13 10:52:08
 cover:

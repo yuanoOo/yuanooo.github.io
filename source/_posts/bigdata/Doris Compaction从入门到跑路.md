@@ -4,7 +4,7 @@ tags:
   - 'Doris'
 categories:
   - [Doris]
-top_img: '/img/bg/banner.gif'
+top_img: 
 date: 2022-09-03 23:40:51
 updated: 2022-09-03 23:40:51
 cover:

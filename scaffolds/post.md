@@ -8,7 +8,7 @@ tags:
 categories:
 - []
 cover: 
-top_img: '/img/bg/banner.gif'
+top_img: 
 
 description: 
 keywords:

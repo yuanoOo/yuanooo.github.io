@@ -4,7 +4,7 @@ tags:
   - 'LSM-Tree'
 categories:
   - [data-structure]
-top_img: '/img/bg/banner.gif'
+top_img: 
 date: 2022-09-11 11:45:16
 updated: 2022-09-11 11:45:16
 cover:
