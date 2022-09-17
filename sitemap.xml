@@ -309,6 +309,13 @@
   </url>
   
   <url>
+    <loc>https://poxiao.tk/tags/SEO/</loc>
+    <lastmod>2022-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://poxiao.tk/tags/WSL/</loc>
     <lastmod>2022-09-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -317,13 +324,6 @@
   
   <url>
     <loc>https://poxiao.tk/tags/Linxu/</loc>
-    <lastmod>2022-09-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://poxiao.tk/tags/SEO/</loc>
     <lastmod>2022-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -451,14 +451,14 @@
   </url>
   
   <url>
-    <loc>https://poxiao.tk/categories/Linux/</loc>
+    <loc>https://poxiao.tk/categories/SEO/</loc>
     <lastmod>2022-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://poxiao.tk/categories/SEO/</loc>
+    <loc>https://poxiao.tk/categories/Linux/</loc>
     <lastmod>2022-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
