@@ -1,3 +1,4 @@
+https://poxiao.tk/2022/09/bigdata/Doris%E5%A4%A7%E6%9F%A5%E8%AF%A2%E5%AE%9E%E8%B7%B5%E4%B8%8E%E4%BC%98%E5%8C%96/
 https://poxiao.tk/2022/09/bigdata/Doris-Join%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/
 https://poxiao.tk/2022/09/%E8%AE%B0%E4%B8%80%E6%AC%A1Kylin-Server%E7%9A%84JVM-OOM%E4%BA%8B%E6%95%85%E6%8E%92%E6%9F%A5%E5%A4%8D%E7%9B%98/
 https://poxiao.tk/2022/09/bigdata/Flink-SQL-Client%E4%B8%8EHive%E9%9B%86%E6%88%90%E9%97%AE%E9%A2%98%E6%8C%87%E5%8D%97/
@@ -46,6 +47,7 @@ https://poxiao.tk/tags/JVM/
 https://poxiao.tk/tags/MAT/
 https://poxiao.tk/tags/Arthas/
 https://poxiao.tk/tags/Doris/
+https://poxiao.tk/tags/%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%8F%B0/
 https://poxiao.tk/tags/Flink/
 https://poxiao.tk/tags/%E8%B0%83%E4%BC%98/
 https://poxiao.tk/tags/HBase/
