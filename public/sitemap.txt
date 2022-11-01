@@ -1,3 +1,4 @@
+https://poxiao.tk/2022/11/bigdata/%E9%85%8D%E7%BD%AEhadoop-snappy%E9%82%A3%E4%BA%9B%E4%BA%8B/
 https://poxiao.tk/2022/10/bigdata/Kyuubi-%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%B7%91%E8%B7%AF/
 https://poxiao.tk/2022/10/os/%E6%96%87%E4%BB%B6%E4%B8%8EIO/
 https://poxiao.tk/2022/10/os/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/
@@ -61,8 +62,8 @@ https://poxiao.tk/tags/hadoop/
 https://poxiao.tk/tags/kudu/
 https://poxiao.tk/tags/%E7%94%A8%E6%88%B7%E7%94%BB%E5%83%8F/
 https://poxiao.tk/tags/LSM-Tree/
-https://poxiao.tk/tags/os/
 https://poxiao.tk/tags/thrift/
+https://poxiao.tk/tags/os/
 https://poxiao.tk/categories/bigdata/
 https://poxiao.tk/categories/dns/
 https://poxiao.tk/categories/hexo/
@@ -79,7 +80,7 @@ https://poxiao.tk/categories/bigdata/yarn/
 https://poxiao.tk/categories/bigdata/kudu/
 https://poxiao.tk/categories/bigdata/User-Profile/
 https://poxiao.tk/categories/data-structure/
-https://poxiao.tk/categories/os/
 https://poxiao.tk/categories/RPC/
+https://poxiao.tk/categories/os/
 https://poxiao.tk/categories/RPC/thrift/
 
