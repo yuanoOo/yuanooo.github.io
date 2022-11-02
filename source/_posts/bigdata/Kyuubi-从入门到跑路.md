@@ -177,6 +177,14 @@ ___flink___.kyuubi.engine.type=FLINK_SQL
 ___bob___.spark.master=spark://master:7077
 ___bob___.spark.executor.memory=8g
 
+
+# Fpr a user named doris: doris conf
+___doris___.kyuubi.engine.jdbc.connection.url=jdbc:mysql://xxx:xxx
+___doris___.kyuubi.engine.jdbc.connection.user=***
+___doris___.engine.jdbc.connection.password=***
+___doris___.engine.jdbc.type=doris
+___doris___.engine.jdbc.driver.class=com.mysql.cj.jdbc.Driver
+___doris___.engine.type=jdbc
 ```
 
 ## Extension
