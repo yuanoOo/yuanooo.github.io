@@ -20,7 +20,7 @@ Apache Kyuubi (Incubating)，一个分布式和多租户网关，用于在 Lakeh
 
 > 简单的来说Kyuubi就是一个SQL网关，用来将用户需要执行的SQL交给对应的计算引擎执行，如Spark、Flink等。作为一个优秀的网关，Kyuubi理所当然的实现了负载均衡、HA、多租户等功能。
 >
-> 正是这些功能，保证了Spark SQL可以真正的在企业内可用、好运、稳定的运行。
+> 正是这些功能，保证了Spark SQL可以真正的在企业内可用、好用、稳定的运行。
 
 ![image.png](https://cdn.nlark.com/yuque/0/2022/png/2500465/1667120616678-362b15b3-89ac-4b49-961f-71d1b0eeda4e.png)
 
