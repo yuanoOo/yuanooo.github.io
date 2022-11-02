@@ -129,6 +129,8 @@ spark.yarn.jars=hdfs://hadoop122:9000/spark-yarn/jars/*.jar
 ```
 
 - kyuubi-defaults.conf配置示例 
+
+
 ```yaml
 #
 # Licensed to the Apache Software Foundation (ASF) under one or more
