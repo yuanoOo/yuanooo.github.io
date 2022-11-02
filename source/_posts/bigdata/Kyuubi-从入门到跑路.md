@@ -128,6 +128,55 @@ spark.yarn.jars=hdfs://hadoop122:9000/spark-yarn/jars/*.jar
 # TODO-Push-based shuffle overview待启用
 ```
 
+- kyuubi-defaults.conf配置示例 
+```yaml
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+## Kyuubi Configurations
+
+#
+# kyuubi.authentication           NONE
+# kyuubi.frontend.bind.host       localhost
+# kyuubi.frontend.bind.port       10009
+#
+
+# Details in https://kyuubi.apache.org/docs/latest/deployment/settings.html
+
+
+# For a user named kent
+___kent___.spark.master=yarn
+___kent___.spark.sql.adaptive.enabled=false
+# hudi conf
+___kent___.spark.serializer=org.apache.spark.serializer.KryoSerializer
+___kent___.spark.sql.catalog.spark_catalog=org.apache.spark.sql.hudi.catalog.HoodieCatalog
+___kent___.spark.sql.extensions=org.apache.spark.sql.hudi.HoodieSparkSessionExtension
+
+
+# For a user named flink
+___flink___.kyuubi.engine.type=FLINK_SQL
+
+
+# For a user named bob
+___bob___.spark.master=spark://master:7077
+___bob___.spark.executor.memory=8g
+
+```
+
 ## Extension
 
 ### 基于MySQL自定义认证
