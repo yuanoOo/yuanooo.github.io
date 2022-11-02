@@ -66,6 +66,7 @@ Apache Kyuubi (Incubating)，一个分布式和多租户网关，用于在 Lakeh
 
 ## Spark on Yarn config
 spark.master=yarn
+spark.submit.deployMode=cluster
 spark.executor.cores=1
 spark.yarn.am.memory=512m
 spark.driver.memory=1g
