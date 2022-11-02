@@ -62,8 +62,8 @@ https://poxiao.tk/tags/hadoop/
 https://poxiao.tk/tags/kudu/
 https://poxiao.tk/tags/%E7%94%A8%E6%88%B7%E7%94%BB%E5%83%8F/
 https://poxiao.tk/tags/LSM-Tree/
-https://poxiao.tk/tags/thrift/
 https://poxiao.tk/tags/os/
+https://poxiao.tk/tags/thrift/
 https://poxiao.tk/categories/bigdata/
 https://poxiao.tk/categories/dns/
 https://poxiao.tk/categories/hexo/
@@ -80,7 +80,7 @@ https://poxiao.tk/categories/bigdata/yarn/
 https://poxiao.tk/categories/bigdata/kudu/
 https://poxiao.tk/categories/bigdata/User-Profile/
 https://poxiao.tk/categories/data-structure/
-https://poxiao.tk/categories/RPC/
 https://poxiao.tk/categories/os/
+https://poxiao.tk/categories/RPC/
 https://poxiao.tk/categories/RPC/thrift/
 
