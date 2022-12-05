@@ -29,5 +29,6 @@ keywords:
 
 ### 修复Hadoop3.2.1中Logger Level错误提升的Bug
 
-- [Flink-Hudi日志超频繁打印问题]()
+- [Flink-Hudi日志超频繁打印问题](https://poxiao.tk/2022/12/bigdata/TroubleShooting/Flink-hudi%E6%97%A5%E5%BF%97%E8%B6%85%E9%A2%91%E7%B9%81%E6%89%93%E5%8D%B0/)
+- https://issues.apache.org/jira/browse/HDFS-14759
 

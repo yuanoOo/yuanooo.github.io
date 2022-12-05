@@ -178,7 +178,7 @@ keywords:
 
   可以发现该类的路径为：/opt/hadoop/share/hadoop/hdfs/hadoop-hdfs-client-3.2.1.jar。
 
-- 2、通过对比Hadoop各个版本的源码，发现是Hadoop3.2.1版本中存在的一个小Bug，而线上集群正是这个版本，晦气~。**这应该是开发人员粗心导致的一个小Bug，最终导致了日志的疯狂打印，影响服务稳定性。这提醒我们不要随意提升Logger Level。**
+- 2、通过对比Hadoop各个版本的源码，发现是Hadoop3.2.1版本中存在的一个小Bug，而线上集群正是这个版本,随后在，晦气~。**这应该是开发人员粗心导致的一个小Bug，最终导致了日志的疯狂打印，影响服务稳定性。这提醒我们不要随意提升Logger Level。**
 
   ```shell
   (hudi12.1依赖的版本源码)hadoop2.10.1 version -> LOG.debug("SASL encryption trust check: localHostTrusted = {}, remoteHostTrusted = {}", localTrusted, remoteTrusted);
