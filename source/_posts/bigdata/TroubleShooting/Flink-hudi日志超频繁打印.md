@@ -144,3 +144,46 @@ keywords:
 
   
 
+### 解决问题
+
+> 线上集群跑的代码和Hudi的源码不一致，说明线上这个类加载自线上的Hadoop3.2.1版本，而hudi0.12.1依赖的是Hadoop2.10.1，因此出现源码不一致的情况。
+
+- 1、利用Arthas sc命令打印类信息
+
+  ```shell
+  [arthas@1302]$ sc -d org.apache.hadoop.hdfs.protocol.datatransfer.sasl.SaslDataTransferClient
+   class-info        org.apache.hadoop.hdfs.protocol.datatransfer.sasl.SaslDataTransferClient
+   code-source       /opt/hadoop/share/hadoop/hdfs/hadoop-hdfs-client-3.2.1.jar
+   name              org.apache.hadoop.hdfs.protocol.datatransfer.sasl.SaslDataTransferClient
+   isInterface       false
+   isAnnotation      false
+   isEnum            false
+   isAnonymousClass  false
+   isArray           false
+   isLocalClass      false
+   isMemberClass     false
+   isPrimitive       false
+   isSynthetic       false
+   simple-name       SaslDataTransferClient
+   modifier          public
+   annotation        org.apache.hadoop.classification.InterfaceAudience$Private
+   interfaces
+   super-class       +-java.lang.Object
+   class-loader      +-sun.misc.Launcher$AppClassLoader@5cad8086
+                       +-sun.misc.Launcher$ExtClassLoader@340f438e
+   classLoaderHash   5cad8086
+  
+  Affect(row-cnt:1) cost in 22 ms.
+  ```
+
+  可以发现该类的路径为：/opt/hadoop/share/hadoop/hdfs/hadoop-hdfs-client-3.2.1.jar。
+
+- 2、通过对比Hadoop各个版本的源码，发现是Hadoop3.2.1版本中存在的一个小Bug，而线上集群正是这个版本，晦气~。**这应该是开发人员粗心导致的一个小Bug，最终导致了日志的疯狂打印，影响服务稳定性。这提醒我们不要随意提升Logger Level。**
+
+  ```shell
+  (hudi12.1依赖的版本源码)hadoop2.10.1 version -> LOG.debug("SASL encryption trust check: localHostTrusted = {}, remoteHostTrusted = {}", localTrusted, remoteTrusted);
+  (线上集群依赖的版本源码)hadoop3.2.1 version -> LOG.info("SASL encryption trust check: localHostTrusted = {}, remoteHostTrusted = {}", localTrusted, remoteTrusted);
+  (该Bug修复的版本源码)hadoop3.2.2 version -> LOG.debug("SASL encryption trust check: localHostTrusted = {}, remoteHostTrusted = {}", localTrusted, remoteTrusted);
+  ```
+
+  
