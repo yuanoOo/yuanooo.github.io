@@ -474,6 +474,13 @@
   </url>
   
   <url>
+    <loc>https://poxiao.tk/tags/LSM-Tree/</loc>
+    <lastmod>2022-12-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://poxiao.tk/tags/Doris/</loc>
     <lastmod>2022-12-05</lastmod>
     <changefreq>weekly</changefreq>
@@ -551,7 +558,7 @@
   </url>
   
   <url>
-    <loc>https://poxiao.tk/tags/LSM-Tree/</loc>
+    <loc>https://poxiao.tk/tags/thrift/</loc>
     <lastmod>2022-12-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -559,13 +566,6 @@
   
   <url>
     <loc>https://poxiao.tk/tags/os/</loc>
-    <lastmod>2022-12-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://poxiao.tk/tags/thrift/</loc>
     <lastmod>2022-12-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -637,6 +637,13 @@
   </url>
   
   <url>
+    <loc>https://poxiao.tk/categories/data-structure/</loc>
+    <lastmod>2022-12-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://poxiao.tk/categories/Doris/</loc>
     <lastmod>2022-12-05</lastmod>
     <changefreq>weekly</changefreq>
@@ -693,7 +700,7 @@
   </url>
   
   <url>
-    <loc>https://poxiao.tk/categories/data-structure/</loc>
+    <loc>https://poxiao.tk/categories/RPC/</loc>
     <lastmod>2022-12-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -707,7 +714,7 @@
   </url>
   
   <url>
-    <loc>https://poxiao.tk/categories/RPC/</loc>
+    <loc>https://poxiao.tk/categories/RPC/thrift/</loc>
     <lastmod>2022-12-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -715,13 +722,6 @@
   
   <url>
     <loc>https://poxiao.tk/categories/Troubleshooting/</loc>
-    <lastmod>2022-12-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://poxiao.tk/categories/RPC/thrift/</loc>
     <lastmod>2022-12-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
