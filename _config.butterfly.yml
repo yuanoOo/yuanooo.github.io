@@ -136,9 +136,9 @@ cover:
   # When cover is not set, the default cover is displayed (當沒有設置cover時，默認的封面顯示)
   default_cover:
     # - https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg
-    - https://tvax4.sinaimg.cn/large/0084aYsLgy1h3jum72m7kj31220e6jsc.jpg
-    - https://tvax3.sinaimg.cn/large/0084aYsLly1grnkfb3zyvj31hc0tndku.jpg
-    - https://tvax3.sinaimg.cn/large/0084aYsLly1gnhmxy0hdlj31hc0u0gpt.jpg
+    # - https://tvax4.sinaimg.cn/large/0084aYsLgy1h3jum72m7kj31220e6jsc.jpg
+    # - https://tvax3.sinaimg.cn/large/0084aYsLly1grnkfb3zyvj31hc0tndku.jpg
+    # - https://tvax3.sinaimg.cn/large/0084aYsLly1gnhmxy0hdlj31hc0u0gpt.jpg
     # - https://tva3.sinaimg.cn/large/0084aYsLgy1h22161jezaj30xc0f0dh1.jpg
     # - https://tva4.sinaimg.cn/large/0084aYsLgy1gy51ogkzs9j31hc0m843g.jpg
     - https://zfh-tuchuang.oss-cn-shanghai.aliyuncs.com/img/site-backgound.jpg
