@@ -53,8 +53,8 @@ keywords:
   				throw new KylinTimeoutException("Query timeout after: " + KylinConfig.getInstanceFromEnv.getQueryTimeoutSeconds + "s")
   			}
   			else {
-               throw e   
-              }
+  				throw e
+  			}
   	} finally {
   		HadoopUtil.setCurrentConfiguration(_)
   	}
