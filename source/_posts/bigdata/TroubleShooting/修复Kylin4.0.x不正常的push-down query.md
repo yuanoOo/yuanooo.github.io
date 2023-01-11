@@ -30,7 +30,7 @@ keywords:
 - 修改后的代码如下`org.apache.kylin.query.pushdown.SparkSqlClient#DFToList`：
 
   ```scala
-  private def DfToList(ss: SparkSession, sql: String, df: DataFrame): Pair[JList[JList[String]], JList[StructField]] = {
+  private def dfToList(ss: SparkSession, sql: String, df: DataFrame): Pair[JList[JList[String]], JList[StructField]] = {
   	val jobGroup = Thread.currentThread.getName
   	ss.sparkContext.setJobGroup(jobGroup,
   		"Pushdown Query Id: " + QueryContextFacade.current().getQueryId, interruptOnCancel = true)
