@@ -33,3 +33,6 @@ keywords:
 - 修复流程：1、反编译相关Class文件。2、修改源码，并重新进行编译。3、打包回jar包。4、对jar包进行替换，重启相关服务。
 - https://issues.apache.org/jira/browse/HDFS-14759
 
+### 修复Kylin4.0.x中push-down query由于查询计划导致的不正常查询延时
+
+- 发现kylin4.0.x中的push-down query对于明细查询`select * from table limit 10`非常慢，往往好耗时几分钟，这非常不正常。通过排查发现，在这类非常简单的明细查询的查询计划中，竟然有shuffle过程，简直离谱。

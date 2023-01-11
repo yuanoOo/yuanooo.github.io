@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://poxiao.tk/2023/01/bigdata/TroubleShooting/%E4%BF%AE%E5%A4%8DKylin4.0.x%E4%B8%8D%E6%AD%A3%E5%B8%B8%E7%9A%84push-down%20query/</loc>
+    <lastmod>2023-01-12</lastmod>
+  </url>
+  <url>
     <loc>https://poxiao.tk/2022/12/bigdata/TroubleShooting/%E4%BF%AE%E5%A4%8Dhudi%20metadata%20table%E4%B8%8EHDFS3.x%E4%B8%8D%E5%85%BC%E5%AE%B9%E7%9A%84%E9%97%AE%E9%A2%98/</loc>
     <lastmod>2022-12-28</lastmod>
   </url>

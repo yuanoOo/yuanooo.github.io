@@ -2,6 +2,8 @@
 title: Flink-Hudi日志超频繁打印问题
 tags:
   - 'Troubleshooting'
+  - 'Flink'
+  - 'Hudi'
 categories:
   - [Troubleshooting]
 top_img: 
