@@ -94,7 +94,7 @@ https://poxiao.tk/categories/data-structure/
 https://poxiao.tk/categories/Netty/
 https://poxiao.tk/categories/os/
 https://poxiao.tk/categories/RPC/
-https://poxiao.tk/categories/Troubleshooting/
 https://poxiao.tk/categories/RPC/thrift/
+https://poxiao.tk/categories/Troubleshooting/
 https://poxiao.tk/categories/Troubleshooting/Kylin/
 
