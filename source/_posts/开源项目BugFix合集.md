@@ -40,3 +40,5 @@ keywords:
 
 ## 改写Superset源码，为Apache Superset添加新功能
 
+- https://poxiao.tk/2023/01/bigdata/Apache%20Superset%E6%B7%BB%E5%8A%A0exclude%E5%87%BD%E6%95%B0/
+
