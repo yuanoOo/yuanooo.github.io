@@ -452,20 +452,6 @@
   </url>
   
   <url>
-    <loc>https://poxiao.tk/tags/BugFix/</loc>
-    <lastmod>2023-01-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://poxiao.tk/tags/PR/</loc>
-    <lastmod>2023-01-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://poxiao.tk/tags/Kylin/</loc>
     <lastmod>2023-01-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -488,6 +474,20 @@
   
   <url>
     <loc>https://poxiao.tk/tags/Arthas/</loc>
+    <lastmod>2023-01-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://poxiao.tk/tags/BugFix/</loc>
+    <lastmod>2023-01-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://poxiao.tk/tags/PR/</loc>
     <lastmod>2023-01-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -671,14 +671,14 @@
   </url>
   
   <url>
-    <loc>https://poxiao.tk/categories/bigdata/BugFix/</loc>
+    <loc>https://poxiao.tk/categories/bigdata/Kylin/</loc>
     <lastmod>2023-01-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://poxiao.tk/categories/bigdata/Kylin/</loc>
+    <loc>https://poxiao.tk/categories/bigdata/BugFix/</loc>
     <lastmod>2023-01-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
