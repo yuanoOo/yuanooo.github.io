@@ -37,3 +37,6 @@ keywords:
 
 - 发现kylin4.0.x中的push-down query对于明细查询`select * from table limit 10`非常慢，往往好耗时几分钟，这非常不正常。通过排查发现，在这类非常简单的明细查询的查询计划中，竟然有shuffle过程，简直离谱。
 - https://poxiao.tk/2023/01/bigdata/TroubleShooting/%E4%BF%AE%E5%A4%8DKylin4.0.x%E4%B8%8D%E6%AD%A3%E5%B8%B8%E7%9A%84push-down%20query/
+
+## 改写Superset源码，为Apache Superset添加新功能
+
