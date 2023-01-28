@@ -40,3 +40,19 @@ keywords:
   >SET parallel_fragment_exec_instance_num = 8;
   >
   >SET enable_cost_based_join_reorder = true;
+
+
+
+## 调优
+
+- 理解`SHOW TABLETS FROM example_db.table_name PARTITIONS(p1, p2);`所有参数的意义，重点是Tablet数据大小，是否有数据倾斜。
+
+  > 在当前设计下，衡量分桶是否规范的唯一标准就是数据量，将每个tablet的数据量控制在100M-1G左右（2.4及以后版本，每个分桶的数据量建议控制在压缩前10G左右），是比较推荐的。这里说的数据量是指压缩后的数据量，StarRocks是列存，使用LZ4压缩，压缩率根据数据类型和数据情况的不同可能有2-8倍不等。
+
+- tablet和segment的关系。tablet writer write failed, tablet_id=3121890, txn_id=241689, err=-238错误。通常出现在同一批导入数据量过大的情况，从而导致某一个 tablet 的 Segment 文件过多。
+
+- RuntimeFilter是否生效。
+
+- 会分析Query Profile，能找到瓶颈在哪里。https://forum.mirrorship.cn/t/topic/2367
+
+- 参考：https://juejin.cn/post/7127943272634253343#heading-17，优化Doris。例如：max_segment_num_per_rowset
