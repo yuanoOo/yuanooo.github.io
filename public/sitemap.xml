@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://poxiao.tk/2023/05/bigdata/superset/superset%E9%85%8D%E7%BD%AELDAP%E8%B8%A9%E5%9D%91%E6%8C%87%E5%8D%97/</loc>
+    
+    <lastmod>2023-05-11</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://poxiao.tk/2023/02/bigdata/insight%20into%20Spark%20ESS/</loc>
     
     <lastmod>2023-02-04</lastmod>
@@ -658,13 +667,6 @@
   </url>
   
   <url>
-    <loc>https://poxiao.tk/tags/LSM/</loc>
-    <lastmod>2023-05-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://poxiao.tk/tags/Troubleshooting/</loc>
     <lastmod>2023-05-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -679,7 +681,7 @@
   </url>
   
   <url>
-    <loc>https://poxiao.tk/tags/scala/</loc>
+    <loc>https://poxiao.tk/tags/LSM/</loc>
     <lastmod>2023-05-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -693,14 +695,14 @@
   </url>
   
   <url>
-    <loc>https://poxiao.tk/tags/spark/</loc>
+    <loc>https://poxiao.tk/tags/scala/</loc>
     <lastmod>2023-05-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://poxiao.tk/tags/BI/</loc>
+    <loc>https://poxiao.tk/tags/spark/</loc>
     <lastmod>2023-05-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -714,6 +716,13 @@
   </url>
   
 
+  
+  <url>
+    <loc>https://poxiao.tk/categories/bigdata/</loc>
+    <lastmod>2023-05-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
   
   <url>
     <loc>https://poxiao.tk/categories/dns/</loc>
@@ -751,35 +760,7 @@
   </url>
   
   <url>
-    <loc>https://poxiao.tk/categories/bigdata/</loc>
-    <lastmod>2023-05-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://poxiao.tk/categories/Doris/</loc>
-    <lastmod>2023-05-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://poxiao.tk/categories/bigdata/HBase/</loc>
-    <lastmod>2023-05-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://poxiao.tk/categories/bigdata/BugFix/</loc>
-    <lastmod>2023-05-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://poxiao.tk/categories/bigdata/Kyuubi/</loc>
     <lastmod>2023-05-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -793,7 +774,35 @@
   </url>
   
   <url>
+    <loc>https://poxiao.tk/categories/Doris/</loc>
+    <lastmod>2023-05-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://poxiao.tk/categories/bigdata/Doris/</loc>
+    <lastmod>2023-05-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://poxiao.tk/categories/bigdata/Flink/</loc>
+    <lastmod>2023-05-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://poxiao.tk/categories/bigdata/HBase/</loc>
+    <lastmod>2023-05-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://poxiao.tk/categories/bigdata/Kyuubi/</loc>
     <lastmod>2023-05-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -815,13 +824,6 @@
   
   <url>
     <loc>https://poxiao.tk/categories/bigdata/kudu/</loc>
-    <lastmod>2023-05-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://poxiao.tk/categories/bigdata/Flink/</loc>
     <lastmod>2023-05-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -863,13 +865,6 @@
   </url>
   
   <url>
-    <loc>https://poxiao.tk/categories/LSM/</loc>
-    <lastmod>2023-05-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://poxiao.tk/categories/Troubleshooting/</loc>
     <lastmod>2023-05-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -877,7 +872,7 @@
   </url>
   
   <url>
-    <loc>https://poxiao.tk/categories/bigdata/scala/</loc>
+    <loc>https://poxiao.tk/categories/LSM/</loc>
     <lastmod>2023-05-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -891,14 +886,14 @@
   </url>
   
   <url>
-    <loc>https://poxiao.tk/categories/bigdata/spark/</loc>
+    <loc>https://poxiao.tk/categories/bigdata/scala/</loc>
     <lastmod>2023-05-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://poxiao.tk/categories/BI/</loc>
+    <loc>https://poxiao.tk/categories/bigdata/spark/</loc>
     <lastmod>2023-05-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -913,6 +908,13 @@
   
   <url>
     <loc>https://poxiao.tk/categories/Troubleshooting/Kylin/</loc>
+    <lastmod>2023-05-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://poxiao.tk/categories/Superset/</loc>
     <lastmod>2023-05-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

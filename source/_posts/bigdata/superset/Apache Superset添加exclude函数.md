@@ -1,10 +1,9 @@
 ---
 title: Apache Superset添加EXCLUDE函数
 tags:
-  - 'BI'
   - 'Apache Superset'
 categories:
-  - [BI]
+  - [Superset]
 top_img: 
 date: 2023-01-11 11:45:16
 updated: 2023-01-11 11:45:16
