@@ -112,7 +112,7 @@ https://poxiao.tk/categories/LSM/
 https://poxiao.tk/categories/bigdata/paimon/
 https://poxiao.tk/categories/bigdata/scala/
 https://poxiao.tk/categories/bigdata/spark/
+https://poxiao.tk/categories/Superset/
 https://poxiao.tk/categories/RPC/thrift/
 https://poxiao.tk/categories/Troubleshooting/Kylin/
-https://poxiao.tk/categories/Superset/
 

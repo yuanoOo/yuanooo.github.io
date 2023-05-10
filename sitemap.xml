@@ -900,6 +900,13 @@
   </url>
   
   <url>
+    <loc>https://poxiao.tk/categories/Superset/</loc>
+    <lastmod>2023-05-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://poxiao.tk/categories/RPC/thrift/</loc>
     <lastmod>2023-05-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -908,13 +915,6 @@
   
   <url>
     <loc>https://poxiao.tk/categories/Troubleshooting/Kylin/</loc>
-    <lastmod>2023-05-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://poxiao.tk/categories/Superset/</loc>
     <lastmod>2023-05-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
