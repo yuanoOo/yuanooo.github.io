@@ -1,5 +1,5 @@
 ---
-title: Superset配置LDAP踩坑指南
+title: 通过阅读Flask-AppBuilder源码为Superset正确配置LDAP
 tags:
   - 'Apache Superset'
 categories:
