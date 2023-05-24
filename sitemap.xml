@@ -578,13 +578,6 @@
   </url>
   
   <url>
-    <loc>https://poxiao.tk/tags/LSM-Tree/</loc>
-    <lastmod>2023-05-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://poxiao.tk/tags/%E8%B0%83%E4%BC%98/</loc>
     <lastmod>2023-05-24</lastmod>
     <changefreq>weekly</changefreq>
@@ -655,7 +648,7 @@
   </url>
   
   <url>
-    <loc>https://poxiao.tk/tags/os/</loc>
+    <loc>https://poxiao.tk/tags/LSM-Tree/</loc>
     <lastmod>2023-05-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -669,14 +662,14 @@
   </url>
   
   <url>
-    <loc>https://poxiao.tk/tags/thrift/</loc>
+    <loc>https://poxiao.tk/tags/os/</loc>
     <lastmod>2023-05-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://poxiao.tk/tags/paimon/</loc>
+    <loc>https://poxiao.tk/tags/thrift/</loc>
     <lastmod>2023-05-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -698,6 +691,13 @@
   
   <url>
     <loc>https://poxiao.tk/tags/LSM/</loc>
+    <lastmod>2023-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://poxiao.tk/tags/paimon/</loc>
     <lastmod>2023-05-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -783,6 +783,13 @@
   </url>
   
   <url>
+    <loc>https://poxiao.tk/categories/Doris/</loc>
+    <lastmod>2023-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://poxiao.tk/categories/bigdata/Doris/</loc>
     <lastmod>2023-05-24</lastmod>
     <changefreq>weekly</changefreq>
@@ -791,20 +798,6 @@
   
   <url>
     <loc>https://poxiao.tk/categories/bigdata/Flink/</loc>
-    <lastmod>2023-05-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://poxiao.tk/categories/Doris/</loc>
-    <lastmod>2023-05-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://poxiao.tk/categories/data-structure/</loc>
     <lastmod>2023-05-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -853,7 +846,7 @@
   </url>
   
   <url>
-    <loc>https://poxiao.tk/categories/os/</loc>
+    <loc>https://poxiao.tk/categories/data-structure/</loc>
     <lastmod>2023-05-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -867,14 +860,14 @@
   </url>
   
   <url>
-    <loc>https://poxiao.tk/categories/RPC/</loc>
+    <loc>https://poxiao.tk/categories/os/</loc>
     <lastmod>2023-05-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://poxiao.tk/categories/bigdata/paimon/</loc>
+    <loc>https://poxiao.tk/categories/RPC/</loc>
     <lastmod>2023-05-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -889,6 +882,13 @@
   
   <url>
     <loc>https://poxiao.tk/categories/LSM/</loc>
+    <lastmod>2023-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://poxiao.tk/categories/bigdata/paimon/</loc>
     <lastmod>2023-05-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
