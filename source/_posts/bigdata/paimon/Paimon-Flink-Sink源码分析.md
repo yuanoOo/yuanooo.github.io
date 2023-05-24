@@ -273,16 +273,14 @@ private StoreSinkWrite.Provider createWriteProvider(CheckpointConfig checkpointC
 
 ### Paimon Flink CK流程
 我们知道Flink paimon写入主要涉及两个算子：
-- 1、org.apache.paimon.flink.sink.RowDataStoreWriteOperator
-这个算子实现了org.apache.flink.streaming.api.operators.StreamOperator#prepareSnapshotPreBarrier方法，这个方法会在算子接受到driver的CK协调后，进行调用，而paimon-flink-sink会在这个方法中先后面的commit算子发送committable信息。   
-调用过程中会调用prepareCommit方法，而在这个方法的实现中，最终会调用org.apache.paimon.mergetree.MergeTreeWriter#prepareCommit
-最终会在Flink CK的时候，进行数据的落盘的操作，即Flink每次CK的时候，都会保证数据写入到文件系统。
 
-2、CommitterOperator
-这个算子实现了org.apache.flink.api.common.state.CheckpointListener#notifyCheckpointComplete接口中的方法，
-会在FLink CK完成后进行调用，paimon-flink-sink在这个方法中会进行snapshot文件的提交，包括snapshot、manifest文件。
+1、org.apache.paimon.flink.sink.RowDataStoreWriteOperator
+这个算子实现了`org.apache.flink.streaming.api.operators.StreamOperator#prepareSnapshotPreBarrier`方法，这个方法会在算子接受到driver的checkpoint请求后被调用。在prepareSnapshotPreBarrier方法中会调用`org.apache.paimon.flink.sink.PrepareCommitOperator#emitCommittables`方法，emitCommittables方法的作用是向后面的commit算子发送committable信息。
 
-```scala
+然而这个emitCommittables方法，又会调用prepareCommit方法，最终会调用`org.apache.paimon.mergetree.MergeTreeWriter#prepareCommit`
+**因此Flink每次进行checkpoint的时候，Paimon都会强制进行Memory Flush，完成数据的落盘，保证数据写入到文件系统，完成写入事务，保证一致性。**
+
+```java
 org.apache.paimon.flink.sink.PrepareCommitOperator#prepareSnapshotPreBarrier
 
 @Override
@@ -306,3 +304,6 @@ private void emitCommittables(boolean doCompaction, long checkpointId) throws IO
 
 protected abstract List<Committable> prepareCommit(boolean doCompaction, long checkpointId) throws IOException;
 ```
+2、CommitterOperator
+这个算子实现了`org.apache.flink.api.common.state.CheckpointListener#notifyCheckpointComplete`方法，该方法会在FLink CK完成后被调用，paimon-flink-sink在这个方法中会进行snapshot快照的提交，主要就是将本次快照生成的snapshot、manifest文件写入到文件系统。
+
