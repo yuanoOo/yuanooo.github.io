@@ -107,3 +107,56 @@ Client：`大哥，再见啊`，这里是客户端对服务端的一个 **ACK**
 > **Maximum Segment Lifetime** 报文最大生存时间，它是任何报文在网络上存在的最长时间，超过这个时间报文将被丢弃
 
 这里一定不要被图里的 **client／server** 和项目里的客户端服务器端混淆，你只要记住：主动关闭的一方发出 **FIN** 包（Client），被动关闭（Server）的一方响应 **ACK** 包，此时，被动关闭的一方就进入了 **CLOSE_WAIT** 状态。如果一切正常，稍后被动关闭的一方也会发出 **FIN** 包，然后迁移到 **LAST_ACK** 状态。
+
+## Apache Paimon相关issue
+
+https://github.com/apache/incubator-paimon/issues/1277
+
+没有关闭`ParquetFileReader reader = getParquetReader(fileIO, path)`,导致TCP泄露，这种bug非常难以排查，需要对源码非常熟悉。
+
+paimon-format/src/main/java/org/apache/paimon/format/parquet/ParquetUtil.java
+
+```java
+    public static Map<String, Statistics<?>> extractColumnStats(FileIO fileIO, Path path)
+            throws IOException {
+        ParquetMetadata parquetMetadata = getParquetReader(fileIO, path).getFooter();
+        List<BlockMetaData> blockMetaDataList = parquetMetadata.getBlocks();
+        Map<String, Statistics<?>> resultStats = new HashMap<>();
+        for (BlockMetaData blockMetaData : blockMetaDataList) {
+            List<ColumnChunkMetaData> columnChunkMetaDataList = blockMetaData.getColumns();
+            for (ColumnChunkMetaData columnChunkMetaData : columnChunkMetaDataList) {
+                Statistics<?> stats = columnChunkMetaData.getStatistics();
+                String columnName = columnChunkMetaData.getPath().toDotString();
+                Statistics<?> midStats;
+                if (!resultStats.containsKey(columnName)) {
+                    midStats = stats;
+                } else {
+                    midStats = resultStats.get(columnName);
+                    midStats.mergeStatistics(stats);
+        try (ParquetFileReader reader = getParquetReader(fileIO, path)) {
+            ParquetMetadata parquetMetadata = reader.getFooter();
+            List<BlockMetaData> blockMetaDataList = parquetMetadata.getBlocks();
+            Map<String, Statistics<?>> resultStats = new HashMap<>();
+            for (BlockMetaData blockMetaData : blockMetaDataList) {
+                List<ColumnChunkMetaData> columnChunkMetaDataList = blockMetaData.getColumns();
+                for (ColumnChunkMetaData columnChunkMetaData : columnChunkMetaDataList) {
+                    Statistics<?> stats = columnChunkMetaData.getStatistics();
+                    String columnName = columnChunkMetaData.getPath().toDotString();
+                    Statistics<?> midStats;
+                    if (!resultStats.containsKey(columnName)) {
+                        midStats = stats;
+                    } else {
+                        midStats = resultStats.get(columnName);
+                        midStats.mergeStatistics(stats);
+                    }
+                    resultStats.put(columnName, midStats);
+                }
+                resultStats.put(columnName, midStats);
+            }
+            return resultStats;
+        }
+        return resultStats;
+    }
+
+```
+
