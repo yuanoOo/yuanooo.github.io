@@ -45,7 +45,6 @@ End of LogType:stderr
 
 执行ss命令，发现大量连接处于**CLOSE_WAIT**，状态，这非常不正常。ESTABLISHED表示连接已被建立，可以通信了，大量连接处于**ESTABLISHED**状态才有可能正常。然后执行`netstat -na | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'`统计TCP连接状态，发现绝大部份的链接处于**CLOSE_WAIT**状态，这是非常不可思议情况。
 
-然后用`netstat -tnap`命令进行检查。
 
 ### 第一步
 
