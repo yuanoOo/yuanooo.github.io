@@ -28,3 +28,4 @@ Druid的优点：
 - 可以选择性的Rollup，Druid的Rollup预计算相当于Kylin中只进行Base Cube构建，因此无需担心维度数量的问题。
 - 基于LSM，Druid可以在进行海量数据实时导入的同时进行预计算，Druid可以实时导入。
 - Druid在每个维度列上面构建索引，来加速多维分析，而不是像Kylin那样完全的预计算。Druid中默认为每个维度列创建Bitmap索引, 都是先做字典在做bitmap。https://tianzhipeng-git.github.io/2020/09/07/bitmap-index.html
+- Druid经过Rollup的数据会比原始数据大量减少，占用的存储空间大大小于Kylin，节约了成本。

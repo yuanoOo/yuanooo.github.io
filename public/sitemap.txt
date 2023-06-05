@@ -47,8 +47,8 @@ https://poxiao.tk/2022/06/hexo+freenom+cloudflare%E9%81%87%E5%88%B0%E7%9A%84%E4%
 https://poxiao.tk/2023/05/bigdata/paimon/Paimon-Flink-Sink%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/
 https://poxiao.tk/2023/04/bigdata/lsm/LSM%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/
 https://poxiao.tk/2023/04/bigdata/paimon/%E5%88%9D%E8%AF%86paimon%20&&%20Spark%20Catalog/
-https://poxiao.tk/2023/03/bigdata/spark/spark%E4%BA%8B%E4%BB%B6%E6%80%BB%E7%BA%BF/
 https://poxiao.tk/2023/03/bigdata/scala/scala%E8%AF%AD%E6%B3%95demo/
+https://poxiao.tk/2023/03/bigdata/spark/spark%E4%BA%8B%E4%BB%B6%E6%80%BB%E7%BA%BF/
 https://poxiao.tk/
 https://poxiao.tk/tags/dns/
 https://poxiao.tk/tags/CDN/
@@ -87,8 +87,8 @@ https://poxiao.tk/tags/Hudi/
 https://poxiao.tk/tags/Druid/
 https://poxiao.tk/tags/LSM/
 https://poxiao.tk/tags/paimon/
-https://poxiao.tk/tags/spark/
 https://poxiao.tk/tags/scala/
+https://poxiao.tk/tags/spark/
 https://poxiao.tk/tags/Apache-Superset/
 https://poxiao.tk/categories/bigdata/
 https://poxiao.tk/categories/dns/
@@ -115,8 +115,8 @@ https://poxiao.tk/categories/Troubleshooting/
 https://poxiao.tk/categories/Druid/
 https://poxiao.tk/categories/LSM/
 https://poxiao.tk/categories/bigdata/paimon/
-https://poxiao.tk/categories/bigdata/spark/
 https://poxiao.tk/categories/bigdata/scala/
+https://poxiao.tk/categories/bigdata/spark/
 https://poxiao.tk/categories/Superset/
 https://poxiao.tk/categories/RPC/thrift/
 https://poxiao.tk/categories/Troubleshooting/Kylin/
