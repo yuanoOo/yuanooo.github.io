@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://poxiao.tk/2023/06/troubleshooting/dolphinscheduler%E4%B8%ADHive%20SQL%20Task%E8%BF%9E%E6%8E%A5Kyuubi%20read%20timeout/</loc>
+    <lastmod>2023-06-14</lastmod>
+  </url>
+  <url>
     <loc>https://poxiao.tk/2023/06/troubleshooting/CLOSE_WAIT%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/</loc>
     <lastmod>2023-06-12</lastmod>
   </url>
