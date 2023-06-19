@@ -14,7 +14,9 @@ keywords:
 
 ## Why Druid
 
-在海量数据上进行亚秒级的多维分析，并且要求高并发，可以选择的OLAP系统并不多。而其中最为知名的就是Apache Kylin和Apache Druid。
+> OLAP 是一种让用户可以用从不同视角方便快捷的分析数据的计算方法。主流的 OLAP 可以分为3类：多维 MOLAP ( Multi-dimensional OLAP )、关系型 ROLAP ( Relational OLAP ) 和混合 HOLAP ( Hybrid OLAP ) 三大类。
+
+在海量数据上进行亚秒级的多维分析，并且要求高并发，可以选择的OLAP系统并不多。而其中MOLAP最为知名的就是Apache Kylin和Apache Druid。
 
 先前我们一直采用Apache Kylin进行离线多维分析，在使用中发现了一系列问题，让我们不得不将目光放在Druid上面：
 
