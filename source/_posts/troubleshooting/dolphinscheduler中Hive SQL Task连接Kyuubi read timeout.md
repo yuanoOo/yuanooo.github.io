@@ -80,16 +80,31 @@ Caused by: java.net.SocketTimeoutException: Read timed out
 
 吐槽一下：DolphinScheduler SQL Task的数据库连接池是不支持配置文件配置的，只能通过修改源码修改配置，然后编译打包重新部署。这一块的代码需要重构了...
 
+```java
+// 防止建立连接超时
+dataSource.setConnectionTimeout(300_000L);
+
+// 连接池不保留空闲连接，以尽快释放掉所有连接，保证Spark Kyuubi yarn app可以被快速的释放掉，节省资源
+// ,同时保证了usercache大量的shuffle中间数据可以被及时清理掉。
+dataSource.setMinimumIdle(0);
+dataSource.setIdleTimeout(60_000L);
+
+// 保证用户有充足的连接使用
+dataSource.setMaximumPoolSize(50);
+```
+
 
 
 ### 上代码
 
 这里只修改了Hive SQL DataSource数据库连接池的配置，同时也支持了通过JDBC URL参数调整Hikari数据库连接池参数，这下调整参数方便多了。也可以修改为对所有种类的SQL DataSource生效...
 
+
+
 ```java
     org.apache.dolphinscheduler.plugin.datasource.hive.HiveDataSourceClient#initClient
         
-	@Override
+    @Override
     protected void initClient(BaseConnectionParam baseConnectionParam, DbType dbType) {
         logger.info("Create Configuration for hive configuration.");
         this.hadoopConf = createHadoopConf();
@@ -101,18 +116,43 @@ Caused by: java.net.SocketTimeoutException: Read timed out
 
         this.dataSource = JDBCDataSourceProvider.createOneSessionJdbcDataSource(baseConnectionParam, dbType);
 
-        // 为连接池设置connectionTimeout参数
+        this.dataSource.setConnectionTimeout(300_000L);
+
+        // no save idle connection to clean usercache(shuffle) file qucikly
+        dataSource.setMinimumIdle(0);
+        dataSource.setMaximumPoolSize(50);
+
         String baseConnParamOther = baseConnectionParam.getOther();
         if (JSONUtils.checkJsonValid(baseConnParamOther)) {
             Map<String, String> paramMap = JSONUtils.toMap(baseConnParamOther);
-            if (paramMap.containsKey("connectionTimeout")) {
-                String connectionTimeout = paramMap.get("connectionTimeout");
-                if (StringUtils.isNumeric(connectionTimeout)) {
+            if (paramMap.containsKey(HIKARI_CONN_TIMEOUT)){
+                String connectionTimeout = paramMap.get(HIKARI_CONN_TIMEOUT);
+                if (StringUtils.isNumeric(connectionTimeout)){
                     this.dataSource.setConnectionTimeout(Long.parseLong(connectionTimeout));
                 }
             }
-        }else{
-            this.dataSource.setConnectionTimeout(300000L);
+
+            // now support config HIKARI_MAXIMUM_POOL_SIZE by ConnectionParam
+            if (paramMap.containsKey(HIKARI_MAXIMUM_POOL_SIZE)){
+                String maximumPoolSize = paramMap.get(HIKARI_MAXIMUM_POOL_SIZE);
+                if (StringUtils.isNotBlank(maximumPoolSize)
+                        && StringUtils.isNumeric(maximumPoolSize)){
+
+                    int poolSize = Integer.parseInt(maximumPoolSize);
+                    if (poolSize > 0) {
+                        dataSource.setMaximumPoolSize(poolSize);
+                    }
+                }
+            }
+        }
+
+        // for quick release Kyuubi connection to reduce yarn resource usage
+        // reset DriverManager#setLoginTimeout to
+        dataSource.setIdleTimeout(60_000L);
+        try {
+            dataSource.setLoginTimeout(300);
+        } catch (SQLException e) {
+            logger.info("set LoginTimeout fail for hive datasource");
         }
 
         this.jdbcTemplate = new JdbcTemplate(dataSource);
