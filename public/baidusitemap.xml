@@ -105,11 +105,11 @@
     <lastmod>2022-09-03</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/08/rpc/%E5%9F%BA%E4%BA%8ENetty%E7%9A%84%E7%AE%80%E5%8D%95RPC%E5%AE%9E%E7%8E%B0/</loc>
+    <loc>https://poxiao.tk/2022/08/rpc/thrift-%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83/</loc>
     <lastmod>2022-08-31</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/08/rpc/thrift-%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83/</loc>
+    <loc>https://poxiao.tk/2022/08/rpc/%E5%9F%BA%E4%BA%8ENetty%E7%9A%84%E7%AE%80%E5%8D%95RPC%E5%AE%9E%E7%8E%B0/</loc>
     <lastmod>2022-08-31</lastmod>
   </url>
   <url>
@@ -147,6 +147,10 @@
   <url>
     <loc>https://poxiao.tk/2022/07/bigdata/%E7%94%A8%E6%88%B7%E7%94%BB%E5%83%8F%E4%BB%8B%E7%BB%8D/</loc>
     <lastmod>2022-07-16</lastmod>
+  </url>
+  <url>
+    <loc>https://poxiao.tk/2023/07/rpc/DolphinScheduler%20RPC%E6%A1%86%E6%9E%B6%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</loc>
+    <lastmod>2022-07-09</lastmod>
   </url>
   <url>
     <loc>https://poxiao.tk/2022/07/bigdata/yarn%E5%85%AC%E5%B9%B3%E5%92%8C%E5%AE%B9%E9%87%8F%E8%B0%83%E5%BA%A6%E5%99%A8%E7%9A%84%E5%BC%82%E5%90%8C/</loc>
