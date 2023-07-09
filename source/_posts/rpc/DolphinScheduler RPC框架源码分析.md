@@ -14,9 +14,9 @@ keywords:
 
 ## 前言
 
-截至2023-07-09，DolphinScheduler3.x最新版本Dev分支，DolphinScheduler中虽然基于Netty实现了一个简单的RPC框架，但是并没有使用，或者说使用的不是完整版的RPC框架。其中大量直接使用Netty Client发送网络请求，并没有使用动态代理简化或屏蔽掉通信细节，虽然在`org.apache.dolphinscheduler.rpc`包中已经有了完整实现。
+截至2023-07-09，DolphinScheduler3.x最新版本Dev分支，DolphinScheduler中虽然基于Netty实现了一个简单的RPC框架，但是并没有使用，或者说使用的不是完整版的RPC框架。其中大量直接使用Netty Client发送网络请求，并没有使用动态代理简化或或者说屏蔽掉通信细节，虽然在`org.apache.dolphinscheduler.rpc`包中已经有了完整实现。
 
-本文主要分析`org.apache.dolphinscheduler.rpc`包中完整的RPC实现，虽然在DolphinScheduler中没有被使用。但是很多代码是共用的。
+本文主要分析`org.apache.dolphinscheduler.rpc`包中完整的RPC实现。虽然在DolphinScheduler中没有被使用，但是代码是共通的。
 
 
 
