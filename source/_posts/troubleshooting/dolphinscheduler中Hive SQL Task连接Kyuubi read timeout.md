@@ -164,9 +164,7 @@ dataSource.setMaximumPoolSize(50);
 
 ## Final
 
-上述代码改动后，试运行一段时间后，特别是在多任务并发执行的场景下，会发生各种莫名奇妙的问题，经排查是因为连接池的问题，
-
-常常用于OLTP场景的连接池HikariCP，在OLAP ETL场景下表现的非常糟糕。
+上述代码改动后，试运行一段时间后，特别是在多任务并发执行的场景下，会发生各种莫名奇妙的问题，经排查是因为连接池的问题，常常用于OLTP场景的连接池HikariCP，在OLAP ETL场景下表现的非常糟糕。
 
 因此我们决定对DolphinScheduler HiveSQL Datasource进行重构，不在使用连接池，而是直接使用原生的`DriverManager`。经过一段时间的测试后，发现运行的非常稳定，再也没有出现过莫名奇妙的问题。
 
