@@ -2,7 +2,6 @@
 title: Flink调优
 tags:
   - 'Flink'
-  - '调优'
 categories:
   - [bigdata,Flink]
 top_img: '/img/bg/banner.gif'
