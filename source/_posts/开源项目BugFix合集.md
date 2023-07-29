@@ -42,3 +42,6 @@ keywords:
 
 - https://poxiao.tk/2023/01/bigdata/Apache%20Superset%E6%B7%BB%E5%8A%A0exclude%E5%87%BD%E6%95%B0/
 
+## 修复dolphinscheduler Hive SQL数据源Read timed out错误
+
+- https://poxiao.tk/2023/06/troubleshooting/dolphinscheduler%E4%B8%ADHive%20SQL%20Task%E8%BF%9E%E6%8E%A5Kyuubi%20read%20timeout/
