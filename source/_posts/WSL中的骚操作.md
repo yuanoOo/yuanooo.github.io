@@ -5,11 +5,12 @@ tags:
   - Linxu
   - hexo
 categories:
-  - [Linux]
-cover: 
-top_img: 
+  - - Linux
+abbrlink: 24289
 date: 2022-06-27 14:27:44
 updated: 2022-06-27 14:27:44
+cover:
+top_img:
 description:
 keywords:
 ---

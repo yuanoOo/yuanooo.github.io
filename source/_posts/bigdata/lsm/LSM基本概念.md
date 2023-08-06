@@ -1,10 +1,11 @@
 ---
 title: LSM基本概念与其经典实现Level-DB
 tags:
-  - 'LSM'
+  - LSM
 categories:
-  - [LSM]
+  - - LSM
 top_img: 'linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)'
+abbrlink: 61336
 date: 2023-04-30 17:57:25
 updated: 2022-04-30 17:57:25
 cover:

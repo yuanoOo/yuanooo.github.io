@@ -1,12 +1,14 @@
 ---
 title: 记一次Kylin Server JVM OOM事故排查复盘
 tags:
-  - 'Kylin'
-  - 'JVM'
-  - 'MAT'
-  - 'Arthas'
+  - Kylin
+  - JVM
+  - MAT
+  - Arthas
 categories:
-  - [bigdata,Kylin]
+  - - bigdata
+    - Kylin
+abbrlink: 45838
 date: 2022-09-23 19:35:27
 updated: 2022-09-23 19:35:27
 cover:

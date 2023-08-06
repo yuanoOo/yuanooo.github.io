@@ -1,10 +1,11 @@
 ---
 title: 从github恢复备份hexo博客By hexo-git-backup
 tags:
-  - 'hexo'
+  - hexo
 categories:
-  - [hexo]
+  - - hexo
 top_img: 'linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)'
+abbrlink: 2646
 date: 2022-06-29 13:54:12
 updated: 2022-06-29 13:54:12
 cover:

@@ -1,12 +1,13 @@
 ---
 title: Apache Superset添加EXCLUDE函数
 tags:
-  - 'Apache Superset'
+  - Apache Superset
 categories:
-  - [Superset]
-top_img: 
+  - - Superset
+abbrlink: 50109
 date: 2023-01-11 11:45:16
 updated: 2023-01-11 11:45:16
+top_img:
 cover:
 description:
 keywords:

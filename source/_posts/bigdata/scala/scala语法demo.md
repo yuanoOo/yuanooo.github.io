@@ -1,12 +1,14 @@
 ---
 title: Scala特殊语法指南
 tags:
-  - 'scala'
+  - scala
 categories:
-  - [bigdata,scala]
-top_img: 
+  - - bigdata
+    - scala
+abbrlink: 5351
 date: 2023-03-08 19:54:07
 updated: 2022-03-08 19:54:07
+top_img:
 cover:
 description:
 keywords:

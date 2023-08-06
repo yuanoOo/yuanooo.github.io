@@ -1,10 +1,12 @@
 ---
 title: Flink Cluster With YARN
 tags:
-  - 'Flink'
+  - Flink
 categories:
-  - [bigdata,Flink]
+  - - bigdata
+    - Flink
 top_img: 'linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)'
+abbrlink: 44798
 date: 2022-08-08 19:54:07
 updated: 2022-08-08 19:54:07
 cover:

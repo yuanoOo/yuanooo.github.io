@@ -1,13 +1,14 @@
 ---
 title: 记一次大量TCP连接CLOSE_WAIT问题排查
 tags:
-  - 'Troubleshooting'
-  - 'paimon'
+  - Troubleshooting
+  - paimon
 categories:
-  - [Troubleshooting]
-top_img: 
+  - - Troubleshooting
+abbrlink: 10009
 date: 2023-06-11 17:57:25
 updated: 2023-06-12 17:57:25
+top_img:
 cover:
 description:
 keywords:

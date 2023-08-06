@@ -1,9 +1,10 @@
 ---
 title: Netty与Reactor模型
 tags:
-  - 'Netty'
+  - Netty
 categories:
-  - [Netty]
+  - - Netty
+abbrlink: 22006
 date: 2022-11-29 19:35:27
 updated: 2022-11-29 19:35:27
 cover:

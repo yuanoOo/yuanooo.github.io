@@ -1,10 +1,12 @@
 ---
 title: 通过Flink-SQL，将Kafka中的Oracle-CDC-Log同步到Doris
 tags:
-  - 'Flink'
+  - Flink
 categories:
-  - [bigdata,Flink]
+  - - bigdata
+    - Flink
 top_img: 'linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)'
+abbrlink: 38552
 date: 2022-08-14 23:14:56
 updated: 2022-08-14 23:14:56
 cover:

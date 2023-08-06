@@ -1,12 +1,13 @@
 ---
 title: 通过阅读Flask-AppBuilder源码为Superset正确配置LDAP
 tags:
-  - 'Apache Superset'
+  - Apache Superset
 categories:
-  - [Superset]
-top_img: 
+  - - Superset
+abbrlink: 32468
 date: 2023-05-11 11:45:16
 updated: 2023-05-11 11:45:16
+top_img:
 cover:
 description:
 keywords:

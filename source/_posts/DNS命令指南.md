@@ -3,14 +3,15 @@ title: DNS命令指南。怎么验证是否遭遇DNS污染？查看域名是否�
 tags:
   - dns
 categories:
-  - [dns]
-  - [linux]
-cover: 
-top_img: 
+  - - dns
+  - - linux
+keywords: DNS
+abbrlink: 6111
 date: 2022-06-27 18:24:43
 updated: 2022-06-27 18:24:43
+cover:
+top_img:
 description:
-keywords: DNS
 ---
 
 # DNS指南

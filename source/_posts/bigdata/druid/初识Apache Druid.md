@@ -1,12 +1,13 @@
 ---
 title: 初识Apache Druid
 tags:
-  - 'Druid'
+  - Druid
 categories:
-  - [Druid]
-top_img: 
+  - - Druid
+abbrlink: 17536
 date: 2023-06-11 17:57:25
 updated: 2023-06-12 17:57:25
+top_img:
 cover:
 description:
 keywords:

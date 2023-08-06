@@ -1,9 +1,11 @@
 ---
 title: Kyuubi-从入门到跑路
 tags:
-  - 'Kyuubi'
+  - Kyuubi
 categories:
-  - [bigdata,Kyuubi]
+  - - bigdata
+    - Kyuubi
+abbrlink: 42607
 date: 2022-10-30 16:24:47
 updated: 2022-10-30 16:24:47
 cover:

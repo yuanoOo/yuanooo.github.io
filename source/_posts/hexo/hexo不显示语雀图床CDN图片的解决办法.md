@@ -1,12 +1,13 @@
 ---
 title: hexo不显示语雀图床CDN图片的解决办法
 tags:
-  - 'hexo'
+  - hexo
 categories:
-  - [hexo]
-top_img: 
+  - - hexo
+abbrlink: 21645
 date: 2022-07-02 11:22:17
 updated: 2022-07-02 11:22:17
+top_img:
 cover:
 description:
 keywords:

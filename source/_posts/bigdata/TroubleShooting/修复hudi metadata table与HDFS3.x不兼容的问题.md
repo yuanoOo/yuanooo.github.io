@@ -1,12 +1,13 @@
 ---
 title: 修复hudi metadata table与HDFS3.x不兼容的问题
 tags:
-  - 'Troubleshooting'
+  - Troubleshooting
 categories:
-  - [Troubleshooting]
-top_img: 
+  - - Troubleshooting
+abbrlink: 4987
 date: 2022-12-28 17:57:25
 updated: 2022-12-28 17:57:25
+top_img:
 cover:
 description:
 keywords:

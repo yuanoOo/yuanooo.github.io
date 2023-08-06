@@ -1,10 +1,12 @@
 ---
 title: 测试Flink Doris Connector
 tags:
-  - 'Doris'
+  - Doris
 categories:
-  - [bigdata,Doris]
+  - - bigdata
+    - Doris
 top_img: 'linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)'
+abbrlink: 13792
 date: 2022-08-06 17:57:25
 updated: 2022-08-06 17:57:25
 cover:

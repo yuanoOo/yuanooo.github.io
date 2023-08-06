@@ -1,10 +1,12 @@
 ---
 title: 开源项目BugFix合集
 tags:
-  - 'BugFix'
-  - 'PR'
+  - BugFix
+  - PR
 categories:
-  - [bigdata,BugFix]
+  - - bigdata
+    - BugFix
+abbrlink: 38776
 date: 2022-11-29 19:35:27
 updated: 2022-11-29 19:35:27
 cover:

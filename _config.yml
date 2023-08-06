@@ -14,7 +14,7 @@ timezone: ''
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
 url: https://poxiao.tk/ # https://yuanooo.github.io/
-permalink: :year/:month/:title/ # :year/:month/:day/:title/
+#permalink: :year/:month/:title/ # :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
   trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
@@ -94,12 +94,23 @@ include:
 exclude:
 ignore:
 
+# URL: npm install hexo-abbrlink --save
+## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
+#url: https://poxiao.tk
+#root: /
+permalink: posts/:abbrlink.html
+#abbrlinks
+abbrink:
+  alg: crc32
+  rep: dec
+
 # 插件：hexo-filter-nofollow，可以有效地加强网站SEO和防止权重流失
 nofollow:
   enable: true
   field: site
   exclude:
     # - 'exclude2.com'
+
 
 # 插件：hexo-generator-sitemap
 sitemap:

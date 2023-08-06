@@ -1,10 +1,12 @@
 ---
 title: Doris性能优化（一）
 tags:
-  - 'Doris'
+  - Doris
 categories:
-  - [bigdata,Doris]
+  - - bigdata
+    - Doris
 top_img: 'linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)'
+abbrlink: 29811
 date: 2022-08-21 11:36:49
 updated: 2022-08-21 11:36:49
 cover:

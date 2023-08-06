@@ -1,0 +1,284 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>虚拟内存-从入门到跑路 | 破晓</title><meta name="keywords" content="os"><meta name="author" content="破晓"><meta name="copyright" content="破晓"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="referrer" content="no-referrer"><meta name="description" content="虚拟内存可以提高系统的稳定性和安全性，主要通过以下两点： 1、控制物理内存的访问权限。 例如，Text Segment被只读保护起来，防止被错误的指令意外改写，内核地址空间也被保护起来，防止在用户模式下执行错误的指令意外改写内核数据。这样，执行错误指令或恶意代码的破坏能力受到了限制，顶多使当前进程因段错误终止，而不会影响整个系统的稳定性。  2、让每个进程有独立的地址空间。 所谓独立的地址空间是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="虚拟内存-从入门到跑路">
+<meta property="og:url" content="https://poxiao.tk/posts/59616.html">
+<meta property="og:site_name" content="破晓">
+<meta property="og:description" content="虚拟内存可以提高系统的稳定性和安全性，主要通过以下两点： 1、控制物理内存的访问权限。 例如，Text Segment被只读保护起来，防止被错误的指令意外改写，内核地址空间也被保护起来，防止在用户模式下执行错误的指令意外改写内核数据。这样，执行错误指令或恶意代码的破坏能力受到了限制，顶多使当前进程因段错误终止，而不会影响整个系统的稳定性。  2、让每个进程有独立的地址空间。 所谓独立的地址空间是">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zfh-tuchuang.oss-cn-shanghai.aliyuncs.com/img/site-backgound.jpg">
+<meta property="article:published_time" content="2022-10-08T10:41:38.000Z">
+<meta property="article:modified_time" content="2022-10-08T10:41:38.000Z">
+<meta property="article:author" content="破晓">
+<meta property="article:tag" content="os">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zfh-tuchuang.oss-cn-shanghai.aliyuncs.com/img/site-backgound.jpg"><link rel="shortcut icon" href="/img/bg/avatar.webp"><link rel="canonical" href="https://poxiao.tk/posts/59616"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="v7W8T1yBsImqvya-nz126O5wJTmGsQyUQJ_F8vmgUVU"/><meta name="baidu-site-verification" content="code-0Fs0BLUCMV"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-6838336925474374',
+  enable_page_level_ads: 'true'
+});</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-NDZBTJH9W4"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-NDZBTJH9W4');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 破晓","link":"链接: ","source":"来源: 破晓","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '虚拟内存-从入门到跑路',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-10-08 18:41:38'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/bg/avatar.webp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">56</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">40</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">30</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://zfh-tuchuang.oss-cn-shanghai.aliyuncs.com/img/site-backgound.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">破晓</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">虚拟内存-从入门到跑路</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-10-08T10:41:38.000Z" title="发表于 2022-10-08 18:41:38">2022-10-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-10-08T10:41:38.000Z" title="更新于 2022-10-08 18:41:38">2022-10-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/os/">os</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>12分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="虚拟内存-从入门到跑路"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<h4 id="虚拟内存可以提高系统的稳定性和安全性，主要通过以下两点："><a href="#虚拟内存可以提高系统的稳定性和安全性，主要通过以下两点：" class="headerlink" title="虚拟内存可以提高系统的稳定性和安全性，主要通过以下两点："></a>虚拟内存可以提高系统的稳定性和安全性，主要通过以下两点：</h4><ul>
+<li><p>1、控制物理内存的访问权限。</p>
+<p>例如，Text Segment被只读保护起来，防止被错误的指令意外改写，内核地址空间也被保护起来，防止在用户模式下执行错误的指令意外改写内核数据。这样，执行错误指令或恶意代码的破坏能力受到了限制，顶多使当前进程因段错误终止，而不会影响整个系统的稳定性。</p>
+</li>
+<li><p>2、让每个进程有独立的地址空间。</p>
+<p>所谓独立的地址空间是指，不同进程中的同一个VA被MMU映射到不同的PA，并且在某一个进程中访问任何地址都不可能访问到另外一个进程的数据，这样使得任何一个进程由于执行错误指令或恶意代码导致的非法内存访问都不会意外改写其它进程的数据，不会影响其它进程的运行，从而保证整个系统的稳定性。</p>
+</li>
+</ul>
+<h4 id="虚拟内存-共享库可以大大节省内存。"><a href="#虚拟内存-共享库可以大大节省内存。" class="headerlink" title="虚拟内存 + 共享库可以大大节省内存。"></a>虚拟内存 + 共享库可以大大节省内存。</h4><p>比如<code>libc</code>共享库，系统中几乎所有的进程都映射<code>libc</code>到自己的进程地址空间，而<code>libc</code>的只读部分在物理内存中只需要存在一份，就可以被所有进程共享，这就是“共享库”这个名称的由来了。    </p>
+<h4 id="虚拟内存方便给分配和释放内存带来方便，物理地址不连续的几块内存可以映射成虚拟地址连续的一块内存。"><a href="#虚拟内存方便给分配和释放内存带来方便，物理地址不连续的几块内存可以映射成虚拟地址连续的一块内存。" class="headerlink" title="虚拟内存方便给分配和释放内存带来方便，物理地址不连续的几块内存可以映射成虚拟地址连续的一块内存。"></a>虚拟内存方便给分配和释放内存带来方便，物理地址不连续的几块内存可以映射成虚拟地址连续的一块内存。</h4><h4 id="虚拟内存带来了交换分区。这样就提高了系统中可分配的内存总量，可以运行更多进程。"><a href="#虚拟内存带来了交换分区。这样就提高了系统中可分配的内存总量，可以运行更多进程。" class="headerlink" title="虚拟内存带来了交换分区。这样就提高了系统中可分配的内存总量，可以运行更多进程。"></a>虚拟内存带来了交换分区。这样就提高了系统中可分配的内存总量，可以运行更多进程。</h4><p>比如要用<code>malloc</code>分配一块很大的内存空间，虽然有足够多的空闲物理内存，却没有足够大的<em>连续</em>空闲内存，这时就可以分配多个不连续的物理页面而映射到连续的虚拟地址范围。</p>
+</blockquote>
+<h2 id="What-什么是虚拟内存"><a href="#What-什么是虚拟内存" class="headerlink" title="What-什么是虚拟内存"></a>What-什么是虚拟内存</h2><blockquote>
+<p><strong>虚拟内存</strong>是计算机系统内存管理的一种技术。它使得应用程序认为它拥有连续可用的内存（一个连续完整的地址空间），而实际上<a target="_blank" rel="noopener external nofollow noreferrer" href="https://zh.m.wikipedia.org/wiki/%E7%89%A9%E7%90%86%E5%86%85%E5%AD%98">物理内存</a>通常被分隔成多个<a target="_blank" rel="noopener external nofollow noreferrer" href="https://zh.m.wikipedia.org/wiki/%E7%A2%8E%E7%89%87%E5%8C%96">内存碎片</a>，还有部分暂时存储在外部磁盘存储器上，在需要时进行数据交换。与没有使用虚拟内存技术的系统相比，使用这种技术使得大型程序的编写变得更容易，对真正的物理内存（例如<a target="_blank" rel="noopener external nofollow noreferrer" href="https://zh.m.wikipedia.org/wiki/%E9%9A%A8%E6%A9%9F%E5%AD%98%E5%8F%96%E8%A8%98%E6%86%B6%E9%AB%94">RAM</a>）的使用也更有效率。此外，虚拟内存技术可以使多个<a target="_blank" rel="noopener external nofollow noreferrer" href="https://zh.m.wikipedia.org/wiki/%E8%A1%8C%E7%A8%8B">进程</a>共享同一个<a target="_blank" rel="noopener external nofollow noreferrer" href="https://zh.m.wikipedia.org/wiki/%E5%87%BD%E5%BC%8F%E5%BA%AB">运行库</a>，并通过分割不同进程的内存空间来提高系统的安全性。</p>
+<p>注意：<strong>虚拟内存</strong>不只是“用磁盘空间来扩展物理内存”的意思——这只是扩充<a target="_blank" rel="noopener external nofollow noreferrer" href="https://zh.m.wikipedia.org/wiki/%E8%A8%98%E6%86%B6%E9%AB%94%E9%9A%8E%E5%B1%A4">内存级别</a>以使其包含<a target="_blank" rel="noopener external nofollow noreferrer" href="https://zh.m.wikipedia.org/wiki/%E7%A1%AC%E7%9B%98%E9%A9%B1%E5%8A%A8%E5%99%A8">硬盘驱动器</a>而已。把内存扩展到磁盘只是使用虚拟内存技术的一个结果，它的作用也可以通过<a target="_blank" rel="noopener external nofollow noreferrer" href="https://zh.m.wikipedia.org/wiki/%E8%A6%86%E7%9B%96_(%E7%BC%96%E7%A8%8B)">覆盖</a>或者把处于不活动状态的程序以及它们的数据全部交换到磁盘上等方式来实现。对虚拟内存的定义是基于对<a target="_blank" rel="noopener external nofollow noreferrer" href="https://zh.m.wikipedia.org/wiki/%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4">地址空间</a>的重定义的，即把地址空间定义为“连续的虚拟内存地址”，以借此“欺骗”程序，使它们以为自己正在使用一大块的“连续”地址。</p>
+<p>那些需要快速存取或者相应时间非常稳定的<a target="_blank" rel="noopener external nofollow noreferrer" href="https://zh.m.wikipedia.org/wiki/%E5%B5%8C%E5%85%A5%E5%BC%8F">嵌入式</a>系统，以及其他的具有特殊应用的计算机系统，可能会为了避免让<a target="_blank" rel="noopener external nofollow noreferrer" href="https://zh.m.wikipedia.org/wiki/%E7%A1%AE%E5%AE%9A%E6%80%A7%E7%AE%97%E6%B3%95">运算结果的可预测性</a>降低，而选择不使用虚拟内存。</p>
+</blockquote>
+<h2 id="How"><a href="#How" class="headerlink" title="How"></a>How</h2><blockquote>
+<p>虚拟内存技术是现代<a target="_blank" rel="noopener external nofollow noreferrer" href="https://zh.m.wikipedia.org/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84">计算机系统结构</a>中不可分割的一部分。现代所有用于一般应用的<a target="_blank" rel="noopener external nofollow noreferrer" href="https://zh.m.wikipedia.org/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">操作系统</a>都对普通的应用程序使用虚拟内存技术，例如文字处理软件，电子制表软件，多媒体播放器等等。大部分架构通过<a target="_blank" rel="noopener external nofollow noreferrer" href="https://zh.m.wikipedia.org/wiki/CPU">CPU</a>中独立的硬件<strong>内存管理单元</strong>（英语：<strong>memory management unit</strong>，缩写为<strong>MMU</strong>），有时称作<strong>分页内存管理单元</strong>（英语：<strong>paged memory management unit</strong>，缩写为<strong>PMMU</strong>)来辅助实现这一功能。</p>
+</blockquote>
+<ul>
+<li><p>操作系统利用体系结构提供的VA到PA的转换机制实现虚拟内存管理。</p>
+<p>用<code>ps</code>命令查看当前终端下的进程，得知<code>bash</code>进程的id是27613，然后用<code>cat /proc/27613/maps</code>命令查看它的虚拟地址空间。<code>/proc</code>目录中的文件并不是真正的磁盘文件，而是由内核虚拟出来的文件系统，当前系统中运行的每个进程在<code>/proc</code>下都有一个子目录，目录名就是进程的id，查看目录下的文件可以得到该进程的相关信息。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">root@DESKTOP-KD33OT8:/home/demo# cat /proc/27613/maps</span><br><span class="line">5589e9d2b000-5589e9d42000 r--p 00000000 08:10 225588                     /usr/bin/zsh</span><br><span class="line">5589e9d42000-5589e9dd7000 r-xp 00017000 08:10 225588                     /usr/bin/zsh</span><br><span class="line">5589e9dd7000-5589e9df9000 r--p 000ac000 08:10 225588                     /usr/bin/zsh</span><br><span class="line">5589e9dfa000-5589e9dfc000 r--p 000ce000 08:10 225588                     /usr/bin/zsh</span><br><span class="line">5589e9dfc000-5589e9e02000 rw-p 000d0000 08:10 225588                     /usr/bin/zsh</span><br><span class="line">5589e9e02000-5589e9e16000 rw-p 00000000 00:00 0</span><br><span class="line">5589eac55000-5589eb1af000 rw-p 00000000 00:00 0                          [heap]</span><br><span class="line">7f90adfc6000-7f90adfc9000 r--p 00000000 08:10 225599                     /usr/lib/x86_64-linux-gnu/zsh/5.8/zsh/computil.so</span><br><span class="line">7f90adfc9000-7f90adfd6000 r-xp 00003000 08:10 225599                     /usr/lib/x86_64-linux-gnu/zsh/5.8/zsh/computil.so</span><br><span class="line">7f90adfd6000-7f90adfd8000 r--p 00010000 08:10 225599                     /usr/lib/x86_64-linux-gnu/zsh/5.8/zsh/computil.so</span><br><span class="line">7f90adfd8000-7f90adfd9000 r--p 00011000 08:10 225599                     /usr/lib/x86_64-linux-gnu/zsh/5.8/zsh/computil.so</span><br><span class="line">7f90adfd9000-7f90adfda000 rw-p 00012000 08:10 225599                     /usr/lib/x86_64-linux-gnu/zsh/5.8/zsh/computil.so</span><br><span class="line">7f90adfda000-7f90ae25a000 r--s 00000000 08:10 225058                     /usr/share/zsh/functions/Completion/Unix.zwc</span><br><span class="line">7f90ae265000-7f90ae28a000 r--s 00000000 08:10 225225                     /usr/share/zsh/functions/Completion/Zsh.zwc</span><br><span class="line">7f90ae299000-7f90ae2b2000 r--s 00000000 08:10 225469                     /usr/share/zsh/functions/Zle.zwc</span><br><span class="line">7f90ae2b6000-7f90ae2da000 rw-p 00000000 00:00 0</span><br><span class="line">7f90ae325000-7f90ae331000 rw-p 00000000 00:00 0</span><br><span class="line">7f90ae331000-7f90ae37d000 rw-p 00000000 00:00 0</span><br><span class="line">7f90ae37d000-7f90ae381000 r--p 00000000 08:10 225596                     /usr/lib/x86_64-linux-gnu/zsh/5.8/zsh/compctl.so</span><br><span class="line">7f90ae381000-7f90ae38d000 r-xp 00004000 08:10 225596                     /usr/lib/x86_64-linux-gnu/zsh/5.8/zsh/compctl.so</span><br><span class="line">7f90ae38d000-7f90ae38f000 r--p 00010000 08:10 225596                     /usr/lib/x86_64-linux-gnu/zsh/5.8/zsh/compctl.so</span><br><span class="line">7f90ae38f000-7f90ae390000 r--p 00011000 08:10 225596                     /usr/lib/x86_64-linux-gnu/zsh/5.8/zsh/compctl.so</span><br><span class="line">7f90ae390000-7f90ae391000 rw-p 00012000 08:10 225596                     /usr/lib/x86_64-linux-gnu/zsh/5.8/zsh/compctl.so</span><br><span class="line">7f90aecf3000-7f90aecf5000 rw-p 00000000 00:00 0</span><br><span class="line">7f90aecf5000-7f90aecf6000 r--p 00000000 08:10 2985                       /usr/lib/locale/C.UTF-8/LC_TELEPHONE</span><br><span class="line">7f90aecf6000-7f90aecf7000 r--p 00000000 08:10 2978                       /usr/lib/locale/C.UTF-8/LC_MEASUREMENT</span><br><span class="line">7f90aecf7000-7f90aecfe000 r--s 00000000 08:10 264854                     /usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache</span><br><span class="line">7f90aecfe000-7f90aecff000 r--p 00000000 08:10 38549                      /usr/lib/x86_64-linux-gnu/ld-2.31.so</span><br><span class="line">7f90aecff000-7f90aed22000 r-xp 00001000 08:10 38549                      /usr/lib/x86_64-linux-gnu/ld-2.31.so</span><br><span class="line">7f90aed22000-7f90aed2a000 r--p 00024000 08:10 38549                      /usr/lib/x86_64-linux-gnu/ld-2.31.so</span><br><span class="line">7f90aed2a000-7f90aed2b000 r--p 00000000 08:10 2977                       /usr/lib/locale/C.UTF-8/LC_IDENTIFICATION</span><br><span class="line">7f90aed2b000-7f90aed2c000 r--p 0002c000 08:10 38549                      /usr/lib/x86_64-linux-gnu/ld-2.31.so</span><br><span class="line">7f90aed2c000-7f90aed2d000 rw-p 0002d000 08:10 38549                      /usr/lib/x86_64-linux-gnu/ld-2.31.so</span><br><span class="line">7f90aed2d000-7f90aed2e000 rw-p 00000000 00:00 0</span><br><span class="line">7ffeb1e2d000-7ffeb1e7c000 rw-p 00000000 00:00 0                          [stack]</span><br><span class="line">7ffeb1f0c000-7ffeb1f10000 r--p 00000000 00:00 0                          [vvar]</span><br><span class="line">7ffeb1f10000-7ffeb1f11000 r-xp 00000000 00:00 0                          [vdso]</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="Why-为什么需要虚拟内存"><a href="#Why-为什么需要虚拟内存" class="headerlink" title="Why-为什么需要虚拟内存"></a>Why-为什么需要虚拟内存</h2><h3 id="第一，虚拟内存管理可以控制物理内存的访问权限。"><a href="#第一，虚拟内存管理可以控制物理内存的访问权限。" class="headerlink" title="第一，虚拟内存管理可以控制物理内存的访问权限。"></a>第一，虚拟内存管理可以控制物理内存的访问权限。</h3><p><strong>物理内存本身是不限制访问的，任何地址都可以读写，而操作系统要求不同的页面具有不同的访问权限，这是利用CPU模式和MMU的内存保护机制实现的。</strong>例如，Text Segment被只读保护起来，防止被错误的指令意外改写，内核地址空间也被保护起来，防止在用户模式下执行错误的指令意外改写内核数据。这样，执行错误指令或恶意代码的破坏能力受到了限制，顶多使当前进程因段错误终止，而不会影响整个系统的稳定性。</p>
+<h3 id="第二，虚拟内存管理最主要的作用是让每个进程有独立的地址空间。"><a href="#第二，虚拟内存管理最主要的作用是让每个进程有独立的地址空间。" class="headerlink" title="第二，虚拟内存管理最主要的作用是让每个进程有独立的地址空间。"></a>第二，虚拟内存管理最主要的作用是让每个进程有独立的地址空间。</h3><p><strong>所谓独立的地址空间是指，不同进程中的同一个VA被MMU映射到不同的PA，并且在某一个进程中访问任何地址都不可能访问到另外一个进程的数据，这样使得任何一个进程由于执行错误指令或恶意代码导致的非法内存访问都不会意外改写其它进程的数据，不会影响其它进程的运行，从而保证整个系统的稳定性。</strong>另一方面，每个进程都认为自己独占整个虚拟地址空间，这样链接器和加载器的实现会比较容易，不必考虑各进程的地址范围是否冲突。</p>
+<p>继续前面的实验，再打开一个终端窗口，看一下这个新的<code>bash</code>进程的地址空间，可以发现和先前的<code>bash</code>进程地址空间的布局差不多：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">ps</span></span><br><span class="line">  PID TTY          TIME CMD</span><br><span class="line">30697 pts/1    00:00:00 bash</span><br><span class="line">30749 pts/1    00:00:00 ps</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> /proc/30697/maps</span></span><br><span class="line">08048000-080f4000 r-xp 00000000 08:15 688142     /bin/bash</span><br><span class="line">080f4000-080f9000 rw-p 000ac000 08:15 688142     /bin/bash</span><br><span class="line">080f9000-080fe000 rw-p 080f9000 00:00 0 </span><br><span class="line">082d7000-084f9000 rw-p 082d7000 00:00 0          [heap]</span><br><span class="line">b7cf1000-b7cfb000 r-xp 00000000 08:15 581665     /lib/tls/i686/cmov/libnss_files-2.8.90.so</span><br><span class="line">b7cfb000-b7cfc000 r--p 00009000 08:15 581665     /lib/tls/i686/cmov/libnss_files-2.8.90.so</span><br><span class="line">b7cfc000-b7cfd000 rw-p 0000a000 08:15 581665     /lib/tls/i686/cmov/libnss_files-2.8.90.so</span><br><span class="line">...</span><br><span class="line">b7e5e000-b7fb6000 r-xp 00000000 08:15 581656     /lib/tls/i686/cmov/libc-2.8.90.so</span><br><span class="line">b7fb6000-b7fb8000 r--p 00158000 08:15 581656     /lib/tls/i686/cmov/libc-2.8.90.so</span><br><span class="line">b7fb8000-b7fb9000 rw-p 0015a000 08:15 581656     /lib/tls/i686/cmov/libc-2.8.90.so</span><br><span class="line">...</span><br><span class="line">b8006000-b8020000 r-xp 00000000 08:15 565466     /lib/ld-2.8.90.so</span><br><span class="line">b8020000-b8021000 r-xp b8020000 00:00 0          [vdso]</span><br><span class="line">b8021000-b8022000 r--p 0001a000 08:15 565466     /lib/ld-2.8.90.so</span><br><span class="line">b8022000-b8023000 rw-p 0001b000 08:15 565466     /lib/ld-2.8.90.so</span><br><span class="line">bff0e000-bff23000 rw-p bffeb000 00:00 0          [stack]</span><br></pre></td></tr></table></figure>
+
+<p>该进程也占用了0x0000 0000-0xbfff ffff的地址空间，Text Segment也是0x0804 8000-0x080f 4000，Data Segment也是0x080f 4000-0x080f 9000，和先前的进程一模一样，因为这些地址是在编译链接时写进<code>/bin/bash</code>这个可执行文件的，两个进程都加载它。这两个进程在同一个系统中同时运行着，它们的Data Segment占用相同的VA，但是两个进程各自干各自的事情，显然Data Segment中的数据应该是不同的，相同的VA怎么会有不同的数据呢？因为它们被映射到不同的PA。如下图所示。</p>
+<p><strong>图 20.5. 进程地址空间是独立的</strong></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.nlark.com/yuque/0/2022/png/2500465/1665229505062-380026ae-9136-4837-ac8c-28e7d794a3d6.png" alt="img"></p>
+<p>从图中还可以看到，两个进程都是<code>bash</code>进程，Text Segment是一样的，并且Text Segment是只读的，不会被改写，因此操作系统会安排两个进程的Text Segment共享相同的物理页面。由于每个进程都有自己的一套VA到PA的映射表，整个地址空间中的任何VA都在每个进程自己的映射表中查找相应的PA，因此不可能访问到其它进程的地址，也就没有可能意外改写其它进程的数据。</p>
+<p>另外，注意到两个进程的共享库加载地址并不相同，共享库的加载地址是在运行时决定的，而不是写在<code>/bin/bash</code>这个可执行文件中。但即使如此，也不影响两个进程共享相同物理页面中的共享库，当然，只有只读的部分是共享的，可读可写的部分不共享。</p>
+<p><strong>使用共享库可以大大节省内存。比如<code>libc</code>，系统中几乎所有的进程都映射<code>libc</code>到自己的进程地址空间，而<code>libc</code>的只读部分在物理内存中只需要存在一份，就可以被所有进程共享，这就是“共享库”这个名称的由来了。</strong></p>
+<p>现在我们也可以理解为什么共享库必须是位置无关代码了。比如<code>libc</code>，不同的进程虽然共享<code>libc</code>所在的物理页面，但这些物理页面被映射到各进程的虚拟地址空间时却位于不同的地址，所以要求<code>libc</code>的代码不管加载到什么地址都能正确执行。</p>
+<h3 id="第三，VA到PA的映射会给分配和释放内存带来方便，物理地址不连续的几块内存可以映射成虚拟地址连续的一块内存。"><a href="#第三，VA到PA的映射会给分配和释放内存带来方便，物理地址不连续的几块内存可以映射成虚拟地址连续的一块内存。" class="headerlink" title="第三，VA到PA的映射会给分配和释放内存带来方便，物理地址不连续的几块内存可以映射成虚拟地址连续的一块内存。"></a>第三，VA到PA的映射会给分配和释放内存带来方便，物理地址不连续的几块内存可以映射成虚拟地址连续的一块内存。</h3><p>比如要用<code>malloc</code>分配一块很大的内存空间，虽然有足够多的空闲物理内存，却没有足够大的<em>连续</em>空闲内存，这时就可以分配多个不连续的物理页面而映射到连续的虚拟地址范围。如下图所示。</p>
+<p><strong>图 20.6. 不连续的PA可以映射为连续的VA</strong></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.nlark.com/yuque/0/2022/png/2500465/1665229512867-30829a8c-dc36-47c3-a300-9afec24b0b0a.png" alt="img"></p>
+<h3 id="四，一个系统如果同时运行着很多进程，为各进程分配的内存之和可能会大于实际可用的物理内存，虚拟内存管理使得这种情况下各进程仍然能够正常运行。"><a href="#四，一个系统如果同时运行着很多进程，为各进程分配的内存之和可能会大于实际可用的物理内存，虚拟内存管理使得这种情况下各进程仍然能够正常运行。" class="headerlink" title="四，一个系统如果同时运行着很多进程，为各进程分配的内存之和可能会大于实际可用的物理内存，虚拟内存管理使得这种情况下各进程仍然能够正常运行。"></a>四，一个系统如果同时运行着很多进程，为各进程分配的内存之和可能会大于实际可用的物理内存，虚拟内存管理使得这种情况下各进程仍然能够正常运行。</h3><p>因为各进程分配的只不过是虚拟内存的页面，这些页面的数据可以映射到物理页面，也可以临时保存到磁盘上而不占用物理页面，在磁盘上临时保存虚拟内存页面的可能是一个磁盘分区，也可能是一个磁盘文件，称为<strong>交换设备（Swap Device）</strong>。当物理内存不够用时，将一些不常用的物理页面中的数据临时保存到交换设备，然后这个物理页面就认为是空闲的了，可以重新分配给进程使用，这个过程称为<strong>换出（Page out）</strong>。如果进程要用到被换出的页面，就从交换设备再加载回物理内存，这称为<strong>换入（Page in）</strong>。换出和换入操作统称为换页（Paging），因此：</p>
+<p><strong>系统中可分配的内存总量 &#x3D; 物理内存的大小 + 交换设备的大小</strong></p>
+<p>如下图所示。第一张图是换出，将物理页面中的数据保存到磁盘，并解除地址映射，释放物理页面。第二张图是换入，从空闲的物理页面中分配一个，将磁盘暂存的页面加载回内存，并建立地址映射。</p>
+<p><strong>图 20.7. 换页</strong></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.nlark.com/yuque/0/2022/png/2500465/1665229520142-3901c155-5c01-4e50-b706-6f68f98236c6.png" alt="image.png"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://poxiao.tk">破晓</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://poxiao.tk/posts/59616.html">https://poxiao.tk/posts/59616.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://poxiao.tk" target="_blank">破晓</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/os/">os</a></div><div class="post_share"><div class="social-share" data-image="https://zfh-tuchuang.oss-cn-shanghai.aliyuncs.com/img/site-backgound.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/gh/overtrue/share.js@master/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/bg/clash.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/bg/clash.jpg" alt="嘻嘻！！！"/></a><div class="post-qr-code-desc">嘻嘻！！！</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/19576.html"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://zfh-tuchuang.oss-cn-shanghai.aliyuncs.com/img/site-backgound.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Linux系统编程-文件与I/O</div></div></a></div><div class="next-post pull-right"><a href="/posts/60503.html"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://dogefs.s3.ladydaily.com/tzk/storage/000651627f0c-92aec253754ab3dba99f61b49e9aa856.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">基于Doris的数据中台的实践与优化</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/19576.html" title="Linux系统编程-文件与I&#x2F;O"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://zfh-tuchuang.oss-cn-shanghai.aliyuncs.com/img/site-backgound.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-09</div><div class="title">Linux系统编程-文件与I&#x2F;O</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E5%8F%AF%E4%BB%A5%E6%8F%90%E9%AB%98%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%A8%B3%E5%AE%9A%E6%80%A7%E5%92%8C%E5%AE%89%E5%85%A8%E6%80%A7%EF%BC%8C%E4%B8%BB%E8%A6%81%E9%80%9A%E8%BF%87%E4%BB%A5%E4%B8%8B%E4%B8%A4%E7%82%B9%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">虚拟内存可以提高系统的稳定性和安全性，主要通过以下两点：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98-%E5%85%B1%E4%BA%AB%E5%BA%93%E5%8F%AF%E4%BB%A5%E5%A4%A7%E5%A4%A7%E8%8A%82%E7%9C%81%E5%86%85%E5%AD%98%E3%80%82"><span class="toc-number">2.</span> <span class="toc-text">虚拟内存 + 共享库可以大大节省内存。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E6%96%B9%E4%BE%BF%E7%BB%99%E5%88%86%E9%85%8D%E5%92%8C%E9%87%8A%E6%94%BE%E5%86%85%E5%AD%98%E5%B8%A6%E6%9D%A5%E6%96%B9%E4%BE%BF%EF%BC%8C%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80%E4%B8%8D%E8%BF%9E%E7%BB%AD%E7%9A%84%E5%87%A0%E5%9D%97%E5%86%85%E5%AD%98%E5%8F%AF%E4%BB%A5%E6%98%A0%E5%B0%84%E6%88%90%E8%99%9A%E6%8B%9F%E5%9C%B0%E5%9D%80%E8%BF%9E%E7%BB%AD%E7%9A%84%E4%B8%80%E5%9D%97%E5%86%85%E5%AD%98%E3%80%82"><span class="toc-number">3.</span> <span class="toc-text">虚拟内存方便给分配和释放内存带来方便，物理地址不连续的几块内存可以映射成虚拟地址连续的一块内存。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E5%B8%A6%E6%9D%A5%E4%BA%86%E4%BA%A4%E6%8D%A2%E5%88%86%E5%8C%BA%E3%80%82%E8%BF%99%E6%A0%B7%E5%B0%B1%E6%8F%90%E9%AB%98%E4%BA%86%E7%B3%BB%E7%BB%9F%E4%B8%AD%E5%8F%AF%E5%88%86%E9%85%8D%E7%9A%84%E5%86%85%E5%AD%98%E6%80%BB%E9%87%8F%EF%BC%8C%E5%8F%AF%E4%BB%A5%E8%BF%90%E8%A1%8C%E6%9B%B4%E5%A4%9A%E8%BF%9B%E7%A8%8B%E3%80%82"><span class="toc-number">4.</span> <span class="toc-text">虚拟内存带来了交换分区。这样就提高了系统中可分配的内存总量，可以运行更多进程。</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#What-%E4%BB%80%E4%B9%88%E6%98%AF%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="toc-number"></span> <span class="toc-text">What-什么是虚拟内存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How"><span class="toc-number"></span> <span class="toc-text">How</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="toc-number"></span> <span class="toc-text">Why-为什么需要虚拟内存</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%EF%BC%8C%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%8F%AF%E4%BB%A5%E6%8E%A7%E5%88%B6%E7%89%A9%E7%90%86%E5%86%85%E5%AD%98%E7%9A%84%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E3%80%82"><span class="toc-number"></span> <span class="toc-text">第一，虚拟内存管理可以控制物理内存的访问权限。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%EF%BC%8C%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E6%9C%80%E4%B8%BB%E8%A6%81%E7%9A%84%E4%BD%9C%E7%94%A8%E6%98%AF%E8%AE%A9%E6%AF%8F%E4%B8%AA%E8%BF%9B%E7%A8%8B%E6%9C%89%E7%8B%AC%E7%AB%8B%E7%9A%84%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4%E3%80%82"><span class="toc-number"></span> <span class="toc-text">第二，虚拟内存管理最主要的作用是让每个进程有独立的地址空间。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%EF%BC%8CVA%E5%88%B0PA%E7%9A%84%E6%98%A0%E5%B0%84%E4%BC%9A%E7%BB%99%E5%88%86%E9%85%8D%E5%92%8C%E9%87%8A%E6%94%BE%E5%86%85%E5%AD%98%E5%B8%A6%E6%9D%A5%E6%96%B9%E4%BE%BF%EF%BC%8C%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80%E4%B8%8D%E8%BF%9E%E7%BB%AD%E7%9A%84%E5%87%A0%E5%9D%97%E5%86%85%E5%AD%98%E5%8F%AF%E4%BB%A5%E6%98%A0%E5%B0%84%E6%88%90%E8%99%9A%E6%8B%9F%E5%9C%B0%E5%9D%80%E8%BF%9E%E7%BB%AD%E7%9A%84%E4%B8%80%E5%9D%97%E5%86%85%E5%AD%98%E3%80%82"><span class="toc-number"></span> <span class="toc-text">第三，VA到PA的映射会给分配和释放内存带来方便，物理地址不连续的几块内存可以映射成虚拟地址连续的一块内存。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%EF%BC%8C%E4%B8%80%E4%B8%AA%E7%B3%BB%E7%BB%9F%E5%A6%82%E6%9E%9C%E5%90%8C%E6%97%B6%E8%BF%90%E8%A1%8C%E7%9D%80%E5%BE%88%E5%A4%9A%E8%BF%9B%E7%A8%8B%EF%BC%8C%E4%B8%BA%E5%90%84%E8%BF%9B%E7%A8%8B%E5%88%86%E9%85%8D%E7%9A%84%E5%86%85%E5%AD%98%E4%B9%8B%E5%92%8C%E5%8F%AF%E8%83%BD%E4%BC%9A%E5%A4%A7%E4%BA%8E%E5%AE%9E%E9%99%85%E5%8F%AF%E7%94%A8%E7%9A%84%E7%89%A9%E7%90%86%E5%86%85%E5%AD%98%EF%BC%8C%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E4%BD%BF%E5%BE%97%E8%BF%99%E7%A7%8D%E6%83%85%E5%86%B5%E4%B8%8B%E5%90%84%E8%BF%9B%E7%A8%8B%E4%BB%8D%E7%84%B6%E8%83%BD%E5%A4%9F%E6%AD%A3%E5%B8%B8%E8%BF%90%E8%A1%8C%E3%80%82"><span class="toc-number"></span> <span class="toc-text">四，一个系统如果同时运行着很多进程，为各进程分配的内存之和可能会大于实际可用的物理内存，虚拟内存管理使得这种情况下各进程仍然能够正常运行。</span></a></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 破晓</div><div class="footer_custom_text">VARIETY IS THE SPICE OF LIFE. POWERED BY HEXO WITH BUTTERFLY</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'WYR8lzh0P1AxrT4HT9aKwquJ-MdYXbMMI',
+      appKey: 'RhTywPnpSjOJAADhepy6soF6',
+      avatar: 'monsterid',
+      serverURLs: 'https://acatnwad.api.lncldglobal.com',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://poxiao.tk/posts/59616.html'
+    this.page.identifier = 'posts/59616.html'
+    this.page.title = '虚拟内存-从入门到跑路'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://poxiao.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !true) {
+  if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var qweather_key = 'b16a1fa0e63c46a4b8f28abfb06ae3fe';
+  var gaud_map_key = 'e2b04289e870b005374ee030148d64fd&s=rsv3';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '112.982279,28.19409';
+  var clock_default_rectangle_enable = 'false';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><!-- hexo injector body_end end --></body></html>

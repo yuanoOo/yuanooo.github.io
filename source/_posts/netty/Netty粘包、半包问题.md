@@ -1,9 +1,10 @@
 ---
 title: Netty粘包、半包问题解决方案
 tags:
-  - 'Netty'
+  - Netty
 categories:
-  - [Netty]
+  - - Netty
+abbrlink: 41988
 date: 2022-11-29 19:35:27
 updated: 2022-11-29 19:35:27
 cover:

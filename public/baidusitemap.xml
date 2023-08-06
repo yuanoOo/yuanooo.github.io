@@ -1,227 +1,227 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://poxiao.tk/2023/08/bigdata/flink/%E5%A2%9E%E5%BC%BAFlink%20ogg-json%20format/</loc>
+    <loc>https://poxiao.tk/posts/5296.html</loc>
     <lastmod>2023-08-08</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2023/06/bigdata/paimon/Paimon%E5%8A%A8%E6%80%81Bucket%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/</loc>
+    <loc>https://poxiao.tk/posts/24799.html</loc>
     <lastmod>2023-06-21</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2023/06/bigdata/paimon/Spark%20Batch%20Read%20on%20Paimon/</loc>
+    <loc>https://poxiao.tk/posts/26343.html</loc>
     <lastmod>2023-06-21</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2023/06/troubleshooting/dolphinscheduler%E4%B8%ADHive%20SQL%20Task%E8%BF%9E%E6%8E%A5Kyuubi%20read%20timeout/</loc>
+    <loc>https://poxiao.tk/posts/3025.html</loc>
     <lastmod>2023-06-14</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2023/06/troubleshooting/CLOSE_WAIT%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/</loc>
+    <loc>https://poxiao.tk/posts/10009.html</loc>
     <lastmod>2023-06-12</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2023/06/bigdata/druid/%E5%88%9D%E8%AF%86Apache%20Druid/</loc>
+    <loc>https://poxiao.tk/posts/17536.html</loc>
     <lastmod>2023-06-12</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2023/05/bigdata/superset/superset%E9%85%8D%E7%BD%AELDAP%E8%B8%A9%E5%9D%91%E6%8C%87%E5%8D%97/</loc>
+    <loc>https://poxiao.tk/posts/32468.html</loc>
     <lastmod>2023-05-11</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2023/02/bigdata/spark/insight%20into%20Spark%20ESS/</loc>
+    <loc>https://poxiao.tk/posts/54682.html</loc>
     <lastmod>2023-02-04</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2023/01/bigdata/TroubleShooting/%E4%BF%AE%E5%A4%8DKylin4.0.x%E4%B8%8D%E6%AD%A3%E5%B8%B8%E7%9A%84push-down%20query/</loc>
+    <loc>https://poxiao.tk/posts/3347.html</loc>
     <lastmod>2023-01-12</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2023/01/bigdata/superset/Apache%20Superset%E6%B7%BB%E5%8A%A0exclude%E5%87%BD%E6%95%B0/</loc>
+    <loc>https://poxiao.tk/posts/50109.html</loc>
     <lastmod>2023-01-11</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/12/java/LockSupport%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5/</loc>
+    <loc>https://poxiao.tk/posts/55687.html</loc>
     <lastmod>2022-12-31</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/12/bigdata/TroubleShooting/%E4%BF%AE%E5%A4%8Dhudi%20metadata%20table%E4%B8%8EHDFS3.x%E4%B8%8D%E5%85%BC%E5%AE%B9%E7%9A%84%E9%97%AE%E9%A2%98/</loc>
+    <loc>https://poxiao.tk/posts/4987.html</loc>
     <lastmod>2022-12-28</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/12/bigdata/TroubleShooting/Flink-hudi%E6%97%A5%E5%BF%97%E8%B6%85%E9%A2%91%E7%B9%81%E6%89%93%E5%8D%B0/</loc>
+    <loc>https://poxiao.tk/posts/14619.html</loc>
     <lastmod>2022-11-30</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/11/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AEBugFix%E5%90%88%E9%9B%86/</loc>
+    <loc>https://poxiao.tk/posts/38776.html</loc>
     <lastmod>2022-11-29</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/11/netty/Netty%E5%B0%8F%E8%AE%B0/</loc>
+    <loc>https://poxiao.tk/posts/22006.html</loc>
     <lastmod>2022-11-29</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/11/netty/Netty%E7%B2%98%E5%8C%85%E3%80%81%E5%8D%8A%E5%8C%85%E9%97%AE%E9%A2%98/</loc>
+    <loc>https://poxiao.tk/posts/41988.html</loc>
     <lastmod>2022-11-29</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/11/bigdata/%E9%85%8D%E7%BD%AEhadoop-snappy%E9%82%A3%E4%BA%9B%E4%BA%8B/</loc>
+    <loc>https://poxiao.tk/posts/27401.html</loc>
     <lastmod>2022-11-01</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/10/bigdata/Kyuubi-%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%B7%91%E8%B7%AF/</loc>
+    <loc>https://poxiao.tk/posts/42607.html</loc>
     <lastmod>2022-10-30</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/10/os/%E6%96%87%E4%BB%B6%E4%B8%8EIO/</loc>
+    <loc>https://poxiao.tk/posts/19576.html</loc>
     <lastmod>2022-10-09</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/10/os/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/</loc>
+    <loc>https://poxiao.tk/posts/59616.html</loc>
     <lastmod>2022-10-08</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/09/bigdata/Doris%E5%A4%A7%E6%9F%A5%E8%AF%A2%E5%AE%9E%E8%B7%B5%E4%B8%8E%E4%BC%98%E5%8C%96/</loc>
+    <loc>https://poxiao.tk/posts/60503.html</loc>
     <lastmod>2022-09-30</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/09/bigdata/Doris-Join%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</loc>
+    <loc>https://poxiao.tk/posts/41835.html</loc>
     <lastmod>2022-09-25</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/09/troubleshooting/%E8%AE%B0%E4%B8%80%E6%AC%A1Kylin-Server%E7%9A%84JVM-OOM%E4%BA%8B%E6%95%85%E6%8E%92%E6%9F%A5%E5%A4%8D%E7%9B%98/</loc>
+    <loc>https://poxiao.tk/posts/45838.html</loc>
     <lastmod>2022-09-23</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/09/bigdata/flink/Flink-SQL-Client%E4%B8%8EHive%E9%9B%86%E6%88%90%E9%97%AE%E9%A2%98%E6%8C%87%E5%8D%97/</loc>
+    <loc>https://poxiao.tk/posts/5143.html</loc>
     <lastmod>2022-09-13</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/09/data-structure/%E4%BB%8ESS-Table%E5%88%B0LSM-Tree/</loc>
+    <loc>https://poxiao.tk/posts/62654.html</loc>
     <lastmod>2022-09-11</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/09/bigdata/Doris%20Compaction%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%B7%91%E8%B7%AF/</loc>
+    <loc>https://poxiao.tk/posts/15533.html</loc>
     <lastmod>2022-09-03</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/09/bigdata/When%EF%BC%9A%E4%BD%95%E6%97%B6%E9%9C%80%E8%A6%81%E8%BF%9B%E8%A1%8CDoris%20Compaction%E8%B0%83%E4%BC%98/</loc>
+    <loc>https://poxiao.tk/posts/65527.html</loc>
     <lastmod>2022-09-03</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/08/rpc/thrift-%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83/</loc>
+    <loc>https://poxiao.tk/posts/46224.html</loc>
     <lastmod>2022-08-31</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/08/rpc/%E5%9F%BA%E4%BA%8ENetty%E7%9A%84%E7%AE%80%E5%8D%95RPC%E5%AE%9E%E7%8E%B0/</loc>
+    <loc>https://poxiao.tk/posts/11082.html</loc>
     <lastmod>2022-08-31</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/08/bigdata/doris%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%88%E4%B8%80%EF%BC%89/</loc>
+    <loc>https://poxiao.tk/posts/29811.html</loc>
     <lastmod>2022-08-21</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/08/bigdata/flink/%E9%80%9A%E8%BF%87Flink-SQL%EF%BC%8C%E5%B0%86Kafka%E4%B8%AD%E7%9A%84Oracle-CDC-Log%E5%90%8C%E6%AD%A5%E5%88%B0Doris/</loc>
+    <loc>https://poxiao.tk/posts/38552.html</loc>
     <lastmod>2022-08-14</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/08/bigdata/flink/%E5%88%9D%E5%85%A5Flink-Table@SQL/</loc>
+    <loc>https://poxiao.tk/posts/46784.html</loc>
     <lastmod>2022-08-13</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/08/bigdata/flink/Flink%E8%B0%83%E4%BC%98/</loc>
+    <loc>https://poxiao.tk/posts/54105.html</loc>
     <lastmod>2022-08-08</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/08/bigdata/flink/%E6%90%AD%E5%BB%BAFlink%E9%9B%86%E7%BE%A4/</loc>
+    <loc>https://poxiao.tk/posts/44798.html</loc>
     <lastmod>2022-08-08</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/08/bigdata/Doris%E4%B8%AD%E7%9A%84%E7%B4%A2%E5%BC%95/</loc>
+    <loc>https://poxiao.tk/posts/24352.html</loc>
     <lastmod>2022-08-07</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/08/bigdata/flink/%E6%B5%8B%E8%AF%95Flink-Doris-Connector/</loc>
+    <loc>https://poxiao.tk/posts/13792.html</loc>
     <lastmod>2022-08-06</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/07/bigdata/%E5%88%9D%E8%AF%86Doris/</loc>
+    <loc>https://poxiao.tk/posts/27737.html</loc>
     <lastmod>2022-07-22</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/07/bigdata/%E7%94%A8%E6%88%B7%E7%94%BB%E5%83%8F%E4%BB%8B%E7%BB%8D/</loc>
+    <loc>https://poxiao.tk/posts/2371.html</loc>
     <lastmod>2022-07-16</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2023/07/rpc/DolphinScheduler%20RPC%E6%A1%86%E6%9E%B6%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</loc>
+    <loc>https://poxiao.tk/posts/6282.html</loc>
     <lastmod>2022-07-09</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/07/bigdata/yarn%E5%85%AC%E5%B9%B3%E5%92%8C%E5%AE%B9%E9%87%8F%E8%B0%83%E5%BA%A6%E5%99%A8%E7%9A%84%E5%BC%82%E5%90%8C/</loc>
+    <loc>https://poxiao.tk/posts/8819.html</loc>
     <lastmod>2022-07-05</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/07/bigdata/HBase%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0MVCC/</loc>
+    <loc>https://poxiao.tk/posts/6299.html</loc>
     <lastmod>2022-07-05</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/07/hexo/hexo%E4%B8%8D%E6%98%BE%E7%A4%BA%E8%AF%AD%E9%9B%80%E5%9B%BE%E5%BA%8ACDN%E5%9B%BE%E7%89%87%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</loc>
+    <loc>https://poxiao.tk/posts/21645.html</loc>
     <lastmod>2022-07-02</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/07/bigdata/%E4%B8%80%E6%96%87%E6%90%9E%E6%87%82Kudu%E7%9A%84%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84/</loc>
+    <loc>https://poxiao.tk/posts/28143.html</loc>
     <lastmod>2022-07-01</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/06/hexo/%E4%BB%8Egithub%E6%81%A2%E5%A4%8D%E5%A4%87%E4%BB%BDhexo%E5%8D%9A%E5%AE%A2hexo-git-backup/</loc>
+    <loc>https://poxiao.tk/posts/2646.html</loc>
     <lastmod>2022-06-29</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/06/Hexo-github-pages-CloudFlare%E5%85%8D%E8%B4%B9CDN%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</loc>
+    <loc>https://poxiao.tk/posts/41454.html</loc>
     <lastmod>2022-06-27</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/06/SEO/</loc>
+    <loc>https://poxiao.tk/posts/54794.html</loc>
     <lastmod>2022-06-27</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/06/DNS%E5%91%BD%E4%BB%A4%E6%8C%87%E5%8D%97/</loc>
+    <loc>https://poxiao.tk/posts/6111.html</loc>
     <lastmod>2022-06-27</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/06/hexo%E7%9A%84front-matter%E4%B8%AD%E7%9A%84%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98/</loc>
+    <loc>https://poxiao.tk/posts/51293.html</loc>
     <lastmod>2022-06-27</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/06/WSL%E4%B8%AD%E7%9A%84%E9%AA%9A%E6%93%8D%E4%BD%9C/</loc>
+    <loc>https://poxiao.tk/posts/24289.html</loc>
     <lastmod>2022-06-27</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2022/06/hexo+freenom+cloudflare%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/</loc>
+    <loc>https://poxiao.tk/posts/6631.html</loc>
     <lastmod>2022-06-27</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2023/05/bigdata/paimon/Paimon-Flink-Sink%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</loc>
+    <loc>https://poxiao.tk/posts/27532.html</loc>
     <lastmod>2022-05-24</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2023/04/bigdata/lsm/LSM%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/</loc>
+    <loc>https://poxiao.tk/posts/61336.html</loc>
     <lastmod>2022-04-30</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2023/04/bigdata/paimon/%E5%88%9D%E8%AF%86paimon%20&&%20Spark%20Catalog/</loc>
+    <loc>https://poxiao.tk/posts/9390.html</loc>
     <lastmod>2022-04-08</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2023/03/bigdata/scala/scala%E8%AF%AD%E6%B3%95demo/</loc>
+    <loc>https://poxiao.tk/posts/39051.html</loc>
     <lastmod>2022-03-08</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2023/03/bigdata/spark/Spark%20SQL%E5%90%88%E5%B9%B6%E5%B0%8F%E6%96%87%E4%BB%B6/</loc>
+    <loc>https://poxiao.tk/posts/32133.html</loc>
     <lastmod>2022-03-08</lastmod>
   </url>
   <url>
-    <loc>https://poxiao.tk/2023/03/bigdata/spark/spark%E4%BA%8B%E4%BB%B6%E6%80%BB%E7%BA%BF/</loc>
+    <loc>https://poxiao.tk/posts/5351.html</loc>
     <lastmod>2022-03-08</lastmod>
   </url>
 </urlset> 

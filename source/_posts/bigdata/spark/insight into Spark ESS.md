@@ -1,9 +1,11 @@
 ---
 title: 理解Spark ESS
 tags:
-  - 'spark'
+  - spark
 categories:
-  - [bigdata,spark]
+  - - bigdata
+    - spark
+abbrlink: 54682
 date: 2023-02-04 15:55:27
 updated: 2023-02-04 15:55:27
 cover:

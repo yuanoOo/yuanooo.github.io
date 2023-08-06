@@ -1,10 +1,12 @@
 ---
 title: 初识paimon && Spark Catalog
 tags:
-  - 'paimon'
+  - paimon
 categories:
-  - [bigdata,paimon]
+  - - bigdata
+    - paimon
 top_img: 'linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)'
+abbrlink: 9390
 date: 2023-04-08 17:57:25
 updated: 2022-04-08 17:57:25
 cover:

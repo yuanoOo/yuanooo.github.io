@@ -1,10 +1,12 @@
 ---
 title: thrift-从入门到放弃
 tags:
-  - 'thrift'
+  - thrift
 categories:
-  - [RPC,thrift]
+  - - RPC
+    - thrift
 top_img: 'linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)'
+abbrlink: 11082
 date: 2022-08-31 21:07:13
 updated: 2022-08-31 21:07:13
 cover:

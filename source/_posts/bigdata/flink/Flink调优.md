@@ -1,10 +1,12 @@
 ---
 title: Flink调优
 tags:
-  - 'Flink'
+  - Flink
 categories:
-  - [bigdata,Flink]
-top_img: '/img/bg/banner.gif'
+  - - bigdata
+    - Flink
+top_img: /img/bg/banner.gif
+abbrlink: 54105
 date: 2022-08-08 20:23:04
 updated: 2022-08-08 20:23:04
 cover:

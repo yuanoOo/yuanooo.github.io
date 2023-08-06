@@ -1,10 +1,11 @@
 ---
 title: DolphinScheduler RPC框架源码分析
 tags:
-  - 'dolphinscheduler'
+  - dolphinscheduler
 categories:
-  - [RPC]
+  - - RPC
 top_img: 'linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)'
+abbrlink: 6282
 date: 2023-07-09 21:07:13
 updated: 2022-07-09 21:07:13
 cover:

@@ -1,11 +1,13 @@
 ---
 title: HBase如何实现MVCC？
 tags:
-  - 'HBase'
-  - 'MVCC'
+  - HBase
+  - MVCC
 categories:
-  - [bigdata,HBase]
+  - - bigdata
+    - HBase
 top_img: 'linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)'
+abbrlink: 6299
 date: 2022-07-05 15:13:53
 updated: 2022-07-05 15:13:53
 cover:

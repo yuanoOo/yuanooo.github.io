@@ -1,12 +1,13 @@
 ---
 title: 从SS-Table到LSM-Tree
 tags:
-  - 'LSM-Tree'
+  - LSM-Tree
 categories:
-  - [data-structure]
-top_img: 
+  - - data-structure
+abbrlink: 62654
 date: 2022-09-11 11:45:16
 updated: 2022-09-11 11:45:16
+top_img:
 cover:
 description:
 keywords:

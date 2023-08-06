@@ -1,12 +1,14 @@
 ---
 title: Doris中的索引
 tags:
-  - 'Doris'
+  - Doris
 categories:
-  - [bigdata,Doris]
-top_img: 
+  - - bigdata
+    - Doris
+abbrlink: 24352
 date: 2022-08-07 10:51:08
 updated: 2022-08-07 10:51:08
+top_img:
 cover:
 description:
 keywords:

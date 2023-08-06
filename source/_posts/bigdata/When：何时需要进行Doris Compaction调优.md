@@ -1,10 +1,11 @@
 ---
 title: When：何时需要进行Doris Compaction调优
 tags:
-  - 'Doris'
+  - Doris
 categories:
-  - [Doris]
-top_img: '/img/bg/banner.gif'
+  - - Doris
+top_img: /img/bg/banner.gif
+abbrlink: 65527
 date: 2022-09-03 23:40:51
 updated: 2022-09-03 23:40:51
 cover:

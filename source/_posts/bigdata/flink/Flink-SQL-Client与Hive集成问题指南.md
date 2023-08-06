@@ -1,12 +1,14 @@
 ---
 title: Flink-SQL-Client与Hive集成问题指南
 tags:
-  - 'Flink'
+  - Flink
 categories:
-  - [bigdata,Flink]
-top_img: 
+  - - bigdata
+    - Flink
+abbrlink: 5143
 date: 2022-09-13 10:51:08
 updated: 2022-09-13 10:52:08
+top_img:
 cover:
 description:
 keywords:

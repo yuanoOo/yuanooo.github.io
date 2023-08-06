@@ -1,10 +1,12 @@
 ---
 title: Spark Batch Read Paimon源码分析
 tags:
-  - 'paimon'
+  - paimon
 categories:
-  - [bigdata,paimon]
+  - - bigdata
+    - paimon
 top_img: 'linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)'
+abbrlink: 26343
 date: 2023-06-21 17:57:25
 updated: 2023-06-21 17:57:25
 cover:

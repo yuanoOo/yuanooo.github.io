@@ -1,0 +1,272 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Spark Batch Read Paimon源码分析 | 破晓</title><meta name="keywords" content="paimon"><meta name="author" content="破晓"><meta name="copyright" content="破晓"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="referrer" content="no-referrer"><meta name="description" content="A bucket is the smallest storage unit for reads and writes, so the number of buckets limits the maximum processing parallelism. This number should not be too big, though, as it will result in lots of">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spark Batch Read Paimon源码分析">
+<meta property="og:url" content="https://poxiao.tk/posts/26343.html">
+<meta property="og:site_name" content="破晓">
+<meta property="og:description" content="A bucket is the smallest storage unit for reads and writes, so the number of buckets limits the maximum processing parallelism. This number should not be too big, though, as it will result in lots of">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://dogefs.s3.ladydaily.com/tzk/storage/000651627f0c-92aec253754ab3dba99f61b49e9aa856.png">
+<meta property="article:published_time" content="2023-06-21T09:57:25.000Z">
+<meta property="article:modified_time" content="2023-06-21T09:57:25.000Z">
+<meta property="article:author" content="破晓">
+<meta property="article:tag" content="paimon">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://dogefs.s3.ladydaily.com/tzk/storage/000651627f0c-92aec253754ab3dba99f61b49e9aa856.png"><link rel="shortcut icon" href="/img/bg/avatar.webp"><link rel="canonical" href="https://poxiao.tk/posts/26343"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="v7W8T1yBsImqvya-nz126O5wJTmGsQyUQJ_F8vmgUVU"/><meta name="baidu-site-verification" content="code-0Fs0BLUCMV"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-6838336925474374',
+  enable_page_level_ads: 'true'
+});</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-NDZBTJH9W4"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-NDZBTJH9W4');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 破晓","link":"链接: ","source":"来源: 破晓","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Spark Batch Read Paimon源码分析',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-06-21 17:57:25'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/bg/avatar.webp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">56</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">40</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">30</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">破晓</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Spark Batch Read Paimon源码分析</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-06-21T09:57:25.000Z" title="发表于 2023-06-21 17:57:25">2023-06-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-06-21T09:57:25.000Z" title="更新于 2023-06-21 17:57:25">2023-06-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/bigdata/">bigdata</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/bigdata/paimon/">paimon</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>4分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Spark Batch Read Paimon源码分析"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>A bucket is the smallest storage unit for reads and writes, so the number of buckets limits the maximum processing parallelism. This number should not be too big, though, as it will result in lots of small files and low read performance. In general, the recommended data size in each bucket is about 1GB.</p>
+<table>
+<thead>
+<tr>
+<th>num-sorted-run.compaction-trigger</th>
+<th>5</th>
+<th>Integer</th>
+<th>The sorted run number to trigger compaction. Includes level0 files (one file one sorted run) and high-level runs (one level one sorted run).</th>
+</tr>
+</thead>
+</table>
+</blockquote>
+<h2 id="Paimon-Bucket-amp-amp-Sorted-Run"><a href="#Paimon-Bucket-amp-amp-Sorted-Run" class="headerlink" title="Paimon Bucket &amp;&amp; Sorted Run"></a>Paimon Bucket &amp;&amp; Sorted Run</h2><p>对于Paimon Primary Key主键表，一个Bucket对应一个LSM树，一个LSM树由多个Sorted Run构成。</p>
+<p>一个Sorted Run可能包含一个或多个文件，但是每个文件只能属于一个Sorted Run。</p>
+<ul>
+<li>对于Level-0层来说：一个SST文件对应一个Sorted Run，Level-0的文件是每次刷盘形成的，而Flink流写Paimon刷盘的时机是CheckPoint的时候或memory buffer is full。所以Level-0层会不断产生新文件，而每个文件就是一个Sorted Run，为了防止Level-0层小文件过多，Paimon会按照合并策略进行小文件合并。Paimon采用类似RocksDB中的UniversalCompaction合并策略，进行合并。</li>
+<li>对于其他Level层来说：一层对应一个Sorted Run。</li>
+</ul>
+<p>在排序运行中，数据文件的主键范围永远不会重叠。不同的排序运行可能具有重叠的主键范围，甚至可能包含相同的主键。查询LSM树时，必须合并所有排序的运行，并且必须根据用户指定的<a target="_blank" rel="noopener external nofollow noreferrer" href="https://paimon.apache.org/docs/master/concepts/primary-key-table/#merge-engines">合并引擎</a>和每条记录的时间戳来合并具有相同主键的所有记录。</p>
+<h2 id="Spark批读Paimon"><a href="#Spark批读Paimon" class="headerlink" title="Spark批读Paimon"></a>Spark批读Paimon</h2><p>Spark批读Paimon的核心实现类为<code>org.apache.paimon.spark.SparkScan</code>。将Paimon表中的文件分成一个个Split交给Spark，Spark会一个Task读取一个Split，然后Spark就可以同时启动多个Task并行读取Paimon了。</p>
+<p>那么Paimon是如何将Paimon表中的文件划分成一个个Split呢？对于主键表，其核心实现类为<code>org.apache.paimon.table.source.MergeTreeSplitGenerator</code>。注释写的非常清楚，这个类就是为了将每个Bucket下面的文件划分为一个个Split，以达到并行执行的目的，大致流程如下：</p>
+<ul>
+<li>1、将文件划分为一个个section，该算法保证，每个section中的数据文件的主键范围永远不会重叠。这是为了保证Split和Split之间不存在主键范围重叠，这样每个Spark Task在读取Split的时候根据MergeEngine进行合并去重，就能保证全局范围上的主键唯一性。当然这个全局范围是指每个桶内主键不会重复，同时Paimon要求bucket-key必须为主键的一部分，这样就保证了Paimon在分区内主键的唯一性。</li>
+<li>2、根据算法将一个个section合并为一个个split，该算法主要是为了将一些小section合并为一个split，减少小文件过多对查询性能的影响。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> List&lt;List&lt;DataFileMeta&gt;&gt; <span class="title function_">split</span><span class="params">(List&lt;DataFileMeta&gt; files)</span> &#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * The generator aims to parallel the scan execution by slicing the files of each bucket</span></span><br><span class="line"><span class="comment">     * into multiple splits. The generation has one constraint: files with intersected key</span></span><br><span class="line"><span class="comment">     * ranges (within one section) must go to the same split. Therefore, the files are first to go</span></span><br><span class="line"><span class="comment">     * through the interval partition algorithm to generate sections and then through the</span></span><br><span class="line"><span class="comment">     * OrderedPack algorithm. Note that the item to be packed here is each section, the capacity</span></span><br><span class="line"><span class="comment">     * is denoted as the targetSplitSize, and the final number of the bins is the number of</span></span><br><span class="line"><span class="comment">     * splits generated.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * For instance, there are files: [1, 2] [3, 4] [5, 180] [5, 190] [200, 600] [210, 700]</span></span><br><span class="line"><span class="comment">     * with targetSplitSize 128M. After interval partition, there are four sections:</span></span><br><span class="line"><span class="comment">     * - section1: [1, 2]</span></span><br><span class="line"><span class="comment">     * - section2: [3, 4]</span></span><br><span class="line"><span class="comment">     * - section3: [5, 180], [5, 190]</span></span><br><span class="line"><span class="comment">     * - section4: [200, 600], [210, 700]</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * After OrderedPack, section1 and section2 will be put into one bin (split), so the final result will be:</span></span><br><span class="line"><span class="comment">     * - split1: [1, 2] [3, 4]</span></span><br><span class="line"><span class="comment">     * - split2: [5, 180] [5,190]</span></span><br><span class="line"><span class="comment">     * - split3: [200, 600] [210, 700]</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    List&lt;List&lt;DataFileMeta&gt;&gt; sections =</span><br><span class="line">            <span class="keyword">new</span> <span class="title class_">IntervalPartition</span>(files, keyComparator)</span><br><span class="line">                    .partition().stream().map(<span class="built_in">this</span>::flatRun).collect(Collectors.toList());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> packSplits(sections);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Paimon主键表分区数据量最佳大小"><a href="#Paimon主键表分区数据量最佳大小" class="headerlink" title="Paimon主键表分区数据量最佳大小"></a>Paimon主键表分区数据量最佳大小</h2><p>那么Paimon每个分区的数据量，这里指data size in each bucket，多少是最合适呢？文档中推荐为1GB。</p>
+<p>根据上文可知，存在overlap的文件必须划分进一个Split，也就是一个并行度。如果是几个大文件存在overlap，这几个文件就只能划分进一个Split，就会造成只能一个Task读取合并这几个大文件，这个Task会处理的很慢，进而拖慢整个作业，甚至会在合并去重的时候，因为内存不足造成Task失败，进而造成整个Job失败，这显然不能接受。因此data size in each bucket一定不能太大。</p>
+<p>Parquet最佳文件大小为每个文件数百 Mb（最高可达 1 GB）。那么data size in each bucket的最佳文件大小也应该为数百 Mb（最高可达 1 GB）。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://poxiao.tk">破晓</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://poxiao.tk/posts/26343.html">https://poxiao.tk/posts/26343.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://poxiao.tk" target="_blank">破晓</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/paimon/">paimon</a></div><div class="post_share"><div class="social-share" data-image="https://dogefs.s3.ladydaily.com/tzk/storage/000651627f0c-92aec253754ab3dba99f61b49e9aa856.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/gh/overtrue/share.js@master/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/bg/clash.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/bg/clash.jpg" alt="嘻嘻！！！"/></a><div class="post-qr-code-desc">嘻嘻！！！</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/24799.html"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://dogefs.s3.ladydaily.com/tzk/storage/20210302234030.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Paimon动态Bucket设计与实现</div></div></a></div><div class="next-post pull-right"><a href="/posts/3025.html"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://zfh-tuchuang.oss-cn-shanghai.aliyuncs.com/img/site-backgound.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">修复dolphinscheduler Hive SQL数据源连接Kyuubi偶现Read timed out错误</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/10009.html" title="记一次大量TCP连接CLOSE_WAIT问题排查"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://dogefs.s3.ladydaily.com/tzk/storage/20210302234030.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-11</div><div class="title">记一次大量TCP连接CLOSE_WAIT问题排查</div></div></a></div><div><a href="/posts/27532.html" title="Paimon-Flink-Sink源码分析"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://zfh-tuchuang.oss-cn-shanghai.aliyuncs.com/img/site-backgound.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-24</div><div class="title">Paimon-Flink-Sink源码分析</div></div></a></div><div><a href="/posts/24799.html" title="Paimon动态Bucket设计与实现"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://dogefs.s3.ladydaily.com/tzk/storage/20210302234030.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-21</div><div class="title">Paimon动态Bucket设计与实现</div></div></a></div><div><a href="/posts/9390.html" title="初识paimon &amp;&amp; Spark Catalog"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://dogefs.s3.ladydaily.com/tzk/storage/000651627f0c-92aec253754ab3dba99f61b49e9aa856.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-08</div><div class="title">初识paimon &amp;&amp; Spark Catalog</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Paimon-Bucket-amp-amp-Sorted-Run"><span class="toc-number">1.</span> <span class="toc-text">Paimon Bucket &amp;&amp; Sorted Run</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spark%E6%89%B9%E8%AF%BBPaimon"><span class="toc-number">2.</span> <span class="toc-text">Spark批读Paimon</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Paimon%E4%B8%BB%E9%94%AE%E8%A1%A8%E5%88%86%E5%8C%BA%E6%95%B0%E6%8D%AE%E9%87%8F%E6%9C%80%E4%BD%B3%E5%A4%A7%E5%B0%8F"><span class="toc-number">3.</span> <span class="toc-text">Paimon主键表分区数据量最佳大小</span></a></li></ol></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 破晓</div><div class="footer_custom_text">VARIETY IS THE SPICE OF LIFE. POWERED BY HEXO WITH BUTTERFLY</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'WYR8lzh0P1AxrT4HT9aKwquJ-MdYXbMMI',
+      appKey: 'RhTywPnpSjOJAADhepy6soF6',
+      avatar: 'monsterid',
+      serverURLs: 'https://acatnwad.api.lncldglobal.com',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://poxiao.tk/posts/26343.html'
+    this.page.identifier = 'posts/26343.html'
+    this.page.title = 'Spark Batch Read Paimon源码分析'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://poxiao.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !true) {
+  if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var qweather_key = 'b16a1fa0e63c46a4b8f28abfb06ae3fe';
+  var gaud_map_key = 'e2b04289e870b005374ee030148d64fd&s=rsv3';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '112.982279,28.19409';
+  var clock_default_rectangle_enable = 'false';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><!-- hexo injector body_end end --></body></html>

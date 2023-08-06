@@ -1,9 +1,10 @@
 ---
 title: Linux系统编程-文件与I/O
 tags:
-  - 'os'
+  - os
 categories:
-  - ['os']
+  - - os
+abbrlink: 19576
 date: 2022-10-09 13:47:56
 updated: 2022-10-09 13:47:56
 cover:

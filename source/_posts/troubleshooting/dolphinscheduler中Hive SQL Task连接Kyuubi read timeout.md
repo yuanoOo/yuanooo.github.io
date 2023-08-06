@@ -1,13 +1,14 @@
 ---
 title: 修复dolphinscheduler Hive SQL数据源连接Kyuubi偶现Read timed out错误
 tags:
-  - 'Troubleshooting'
-  - 'dolphinscheduler'
+  - Troubleshooting
+  - dolphinscheduler
 categories:
-  - [Troubleshooting]
-top_img: 
+  - - Troubleshooting
+abbrlink: 3025
 date: 2023-06-14 17:57:25
 updated: 2023-06-14 17:57:25
+top_img:
 cover:
 description:
 keywords:

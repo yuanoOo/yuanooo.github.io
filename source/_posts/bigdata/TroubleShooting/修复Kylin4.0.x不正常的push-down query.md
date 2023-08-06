@@ -1,13 +1,15 @@
 ---
 title: 修复Kylin4.0.x不正常的push-down query查询耗时
 tags:
-  - 'Troubleshooting'
-  - 'Kylin'
+  - Troubleshooting
+  - Kylin
 categories:
-  - [Troubleshooting, Kylin]
-top_img: 
+  - - Troubleshooting
+    - Kylin
+abbrlink: 3347
 date: 2023-01-11 17:57:25
 updated: 2023-01-12 17:57:25
+top_img:
 cover:
 description:
 keywords:

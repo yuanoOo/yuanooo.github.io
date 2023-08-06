@@ -1,12 +1,13 @@
 ---
 title: Doris Compaction从入门到跑路
 tags:
-  - 'Doris'
+  - Doris
 categories:
-  - [Doris]
-top_img: 
+  - - Doris
+abbrlink: 15533
 date: 2022-09-03 23:40:51
 updated: 2022-09-03 23:40:51
+top_img:
 cover:
 description:
 keywords:

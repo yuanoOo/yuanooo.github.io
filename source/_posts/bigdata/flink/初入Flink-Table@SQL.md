@@ -1,10 +1,12 @@
 ---
 title: 初入Flink Table && SQL
 tags:
-  - 'Flink'
+  - Flink
 categories:
-  - [bigdata,Flink]
+  - - bigdata
+    - Flink
 top_img: 'linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)'
+abbrlink: 46784
 date: 2022-08-13 17:55:05
 updated: 2022-08-13 17:55:05
 cover:

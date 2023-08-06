@@ -1,10 +1,12 @@
 ---
 title: 初识Doris
 tags:
-  - 'Doris'
+  - Doris
 categories:
-  - [bigdata,Doris]
+  - - bigdata
+    - Doris
 top_img: 'linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)'
+abbrlink: 27737
 date: 2022-07-23 06:19:04
 updated: 2022-07-23 06:19:04
 cover:

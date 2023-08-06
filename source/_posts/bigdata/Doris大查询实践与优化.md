@@ -1,10 +1,12 @@
 ---
 title: 基于Doris的数据中台的实践与优化
 tags:
-  - 'Doris'
-  - '数据中台'
+  - Doris
+  - 数据中台
 categories:
-  - [bigdata,Doris]
+  - - bigdata
+    - Doris
+abbrlink: 60503
 date: 2022-09-30 15:42:16
 updated: 2022-09-30 15:42:16
 cover:

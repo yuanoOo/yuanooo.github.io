@@ -1,12 +1,14 @@
 ---
 title: Spark SQL合并小文件
 tags:
-  - 'spark'
+  - spark
 categories:
-  - [bigdata,spark]
-top_img: 
+  - - bigdata
+    - spark
+abbrlink: 39051
 date: 2023-03-08 19:54:07
 updated: 2022-03-08 19:54:07
+top_img:
 cover:
 description:
 keywords:

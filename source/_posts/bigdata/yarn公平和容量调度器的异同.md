@@ -1,11 +1,13 @@
 ---
 title: Yarn容量调度器和公平调度器的异同
 tags:
-  - 'yarn'
-  - 'hadoop'
+  - yarn
+  - hadoop
 categories:
-  - [bigdata,yarn]
+  - - bigdata
+    - yarn
 top_img: 'linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)'
+abbrlink: 8819
 date: 2022-07-05 18:20:39
 updated: 2022-07-05 18:20:39
 cover:

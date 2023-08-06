@@ -1,10 +1,12 @@
 ---
 title: 优化Flink ogg-json format
 tags:
-  - 'Flink'
+  - Flink
 categories:
-  - [bigdata,Flink]
-top_img: '/img/bg/banner.gif'
+  - - bigdata
+    - Flink
+top_img: /img/bg/banner.gif
+abbrlink: 5296
 date: 2023-08-08 20:23:04
 updated: 2023-08-08 20:23:04
 cover:

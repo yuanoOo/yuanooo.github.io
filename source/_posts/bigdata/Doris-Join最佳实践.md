@@ -1,9 +1,11 @@
 ---
 title: Doris Join最佳实践
 tags:
-  - 'Doris'
+  - Doris
 categories:
-  - [bigdata,Doris]
+  - - bigdata
+    - Doris
+abbrlink: 41835
 date: 2022-09-25 14:51:43
 updated: 2022-09-25 14:51:43
 cover:

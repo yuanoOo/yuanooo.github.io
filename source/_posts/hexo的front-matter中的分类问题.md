@@ -1,13 +1,14 @@
 ---
 title: hexo的front-matter中的tags和categories
 tags:
-  - hexo 
+  - hexo
 categories:
-  - [hexo]
-cover: 
-top_img: 
+  - - hexo
+abbrlink: 51293
 date: 2022-06-27 14:44:40
 updated: 2022-06-27 14:44:40
+cover:
+top_img:
 description:
 keywords:
 ---
