@@ -92,13 +92,13 @@ https://poxiao.tk/tags/Kylin/
 https://poxiao.tk/tags/JVM/
 https://poxiao.tk/tags/MAT/
 https://poxiao.tk/tags/Arthas/
-https://poxiao.tk/tags/Druid/
 https://poxiao.tk/tags/Flink/
 https://poxiao.tk/tags/Hudi/
-https://poxiao.tk/tags/scala/
+https://poxiao.tk/tags/Druid/
 https://poxiao.tk/tags/LSM/
-https://poxiao.tk/tags/Apache-Superset/
+https://poxiao.tk/tags/scala/
 https://poxiao.tk/tags/spark/
+https://poxiao.tk/tags/Apache-Superset/
 https://poxiao.tk/categories/bigdata/
 https://poxiao.tk/categories/dns/
 https://poxiao.tk/categories/hexo/
@@ -122,11 +122,11 @@ https://poxiao.tk/categories/Troubleshooting/
 https://poxiao.tk/categories/bigdata/Kylin/
 https://poxiao.tk/categories/Druid/
 https://poxiao.tk/categories/bigdata/Flink/
+https://poxiao.tk/categories/LSM/
 https://poxiao.tk/categories/bigdata/paimon/
 https://poxiao.tk/categories/bigdata/scala/
-https://poxiao.tk/categories/LSM/
-https://poxiao.tk/categories/Superset/
 https://poxiao.tk/categories/bigdata/spark/
+https://poxiao.tk/categories/Superset/
 https://poxiao.tk/categories/RPC/thrift/
 https://poxiao.tk/categories/Troubleshooting/Kylin/
 
