@@ -81,8 +81,8 @@ https://poxiao.tk/tags/kudu/
 https://poxiao.tk/tags/%E7%94%A8%E6%88%B7%E7%94%BB%E5%83%8F/
 https://poxiao.tk/tags/LSM-Tree/
 https://poxiao.tk/tags/Threads/
-https://poxiao.tk/tags/Netty/
 https://poxiao.tk/tags/os/
+https://poxiao.tk/tags/Netty/
 https://poxiao.tk/tags/dolphinscheduler/
 https://poxiao.tk/tags/thrift/
 https://poxiao.tk/tags/RPC/
@@ -115,8 +115,8 @@ https://poxiao.tk/categories/bigdata/kudu/
 https://poxiao.tk/categories/bigdata/User-Profile/
 https://poxiao.tk/categories/data-structure/
 https://poxiao.tk/categories/Java/
-https://poxiao.tk/categories/Netty/
 https://poxiao.tk/categories/os/
+https://poxiao.tk/categories/Netty/
 https://poxiao.tk/categories/RPC/
 https://poxiao.tk/categories/Troubleshooting/
 https://poxiao.tk/categories/bigdata/Kylin/
@@ -126,7 +126,7 @@ https://poxiao.tk/categories/LSM/
 https://poxiao.tk/categories/bigdata/paimon/
 https://poxiao.tk/categories/bigdata/scala/
 https://poxiao.tk/categories/bigdata/spark/
+https://poxiao.tk/categories/Superset/
 https://poxiao.tk/categories/RPC/thrift/
 https://poxiao.tk/categories/Troubleshooting/Kylin/
-https://poxiao.tk/categories/Superset/
 
