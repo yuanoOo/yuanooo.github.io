@@ -250,7 +250,7 @@ public class Scheduler {
 
 Demo中的任务编排，如下图所示：
 
-![/img/dag1.png]()
+![DAG](/img/dag1.png)
 
 ```shell
 task3需要被执行，因为他是DAG开始执行的起点
