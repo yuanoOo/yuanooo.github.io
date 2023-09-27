@@ -44,7 +44,7 @@ Spark已经内置足够多的UDF，已经可以满足绝大部分的应用场景
 >
 > `size(array_union(array('1', '2', '3'), array('2','1'))) = size(array('1', '2', '3'))`
 
-- driver
+### driver
 
 ```scala
 import org.apache.spark.sql.SparkSession
@@ -90,7 +90,8 @@ object StringPiovtFunctionDriver {
 
 ```
 
-- 拓展SparkSessionExtensions，injectFunction
+### 拓展SparkSessionExtensions，injectFunction
+
 ```scala
 import org.apache.spark.sql.catalyst.FunctionIdentifier
 import org.apache.spark.sql.catalyst.analysis.FunctionRegistry.FunctionBuilder
@@ -108,7 +109,8 @@ class FunctionSparkExtension extends (SparkSessionExtensions => Unit){
 }
 ```
 
-- function implement
+### Function Implement
+
 ```scala
 // left is fully string
 case class MLBStrPivot(left: Expression, right: Expression, child: Expression) extends RuntimeReplaceable {
