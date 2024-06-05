@@ -1,0 +1,359 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Doris Compaction从入门到跑路 | 破晓</title><meta name="keywords" content="Doris"><meta name="author" content="破晓"><meta name="copyright" content="破晓"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="referrer" content="no-referrer"><meta name="description" content="Doris 中用于控制Compaction的参数非常多。本文尝试以下方面，介绍这些参数的含义以及如果通过调整参数来适配场景。  数据版本是如何产生的，哪些因素影响数据版本的产出。 为什么需要 Base 和 Cumulative 两种类型的 Compaction。 Compaction 机制是如何挑选数据分片进行 Compaction 的。 对于一个数据分片，Compaction 机制是如何确定哪">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Doris Compaction从入门到跑路">
+<meta property="og:url" content="https://poxiao.tk/posts/15533.html">
+<meta property="og:site_name" content="破晓">
+<meta property="og:description" content="Doris 中用于控制Compaction的参数非常多。本文尝试以下方面，介绍这些参数的含义以及如果通过调整参数来适配场景。  数据版本是如何产生的，哪些因素影响数据版本的产出。 为什么需要 Base 和 Cumulative 两种类型的 Compaction。 Compaction 机制是如何挑选数据分片进行 Compaction 的。 对于一个数据分片，Compaction 机制是如何确定哪">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zfh-tuchuang.oss-cn-shanghai.aliyuncs.com/img/site-backgound.jpg">
+<meta property="article:published_time" content="2022-09-03T15:40:51.000Z">
+<meta property="article:modified_time" content="2022-09-03T15:40:51.000Z">
+<meta property="article:author" content="破晓">
+<meta property="article:tag" content="Doris">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zfh-tuchuang.oss-cn-shanghai.aliyuncs.com/img/site-backgound.jpg"><link rel="shortcut icon" href="/img/bg/avatar.webp"><link rel="canonical" href="https://poxiao.tk/posts/15533"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="v7W8T1yBsImqvya-nz126O5wJTmGsQyUQJ_F8vmgUVU"/><meta name="baidu-site-verification" content="code-0Fs0BLUCMV"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-6838336925474374',
+  enable_page_level_ads: 'true'
+});</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-NDZBTJH9W4"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-NDZBTJH9W4');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 破晓","link":"链接: ","source":"来源: 破晓","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Doris Compaction从入门到跑路',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-03 23:40:51'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/bg/avatar.webp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">58</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">41</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">30</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://zfh-tuchuang.oss-cn-shanghai.aliyuncs.com/img/site-backgound.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">破晓</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Doris Compaction从入门到跑路</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-09-03T15:40:51.000Z" title="发表于 2022-09-03 23:40:51">2022-09-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-09-03T15:40:51.000Z" title="更新于 2022-09-03 23:40:51">2022-09-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Doris/">Doris</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>13分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Doris Compaction从入门到跑路"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>Doris 中用于控制Compaction的参数非常多。本文尝试以下方面，介绍这些参数的含义以及如果通过调整参数来适配场景。</p>
+<ol>
+<li>数据版本是如何产生的，哪些因素影响数据版本的产出。</li>
+<li>为什么需要 Base 和 Cumulative 两种类型的 Compaction。</li>
+<li>Compaction 机制是如何挑选数据分片进行 Compaction 的。</li>
+<li>对于一个数据分片，Compaction 机制是如何确定哪些数据版本参与 Compaction 的。</li>
+<li>在高频导入场景下，可以修改哪些参数来优化 Compaction 逻辑。</li>
+<li>Compaction 相关的查看和管理命令。</li>
+</ol>
+</blockquote>
+<h1 id="Why-need-Compaction"><a href="#Why-need-Compaction" class="headerlink" title="Why  need Compaction"></a>Why  need Compaction</h1><p>Doris 的数据写入模型使用了 LSM-Tree 类似的数据结构。数据都是以追加（Append）的方式写入磁盘的。这种数据结构可以将随机写变为顺序写。这是一种面向写优化的数据结构，他能增强系统的写入吞吐，但是在读逻辑中，需要通过 Merge-on-Read 的方式，在读取时合并多次写入的数据，从而处理写入时的数据变更。</p>
+<p>Merge-on-Read 会影响读取的效率，为了降低读取时需要合并的数据量，基于 LSM-Tree 的系统都会引入后台数据合并的逻辑，以一定策略定期的对数据进行合并。Doris 中这种机制被称为 Compaction。</p>
+<p>Doris 中每次数据写入会生成一个数据版本。Compaction的过程就是讲多个数据版本合并成一个更大的版本。Compaction 可以带来以下好处：</p>
+<blockquote>
+<ul>
+<li><p>1.数据更加有序</p>
+<p>每个数据版本内的数据是按主键有序的，但是版本之间的数据是无序的。Compaction后形成的大版本将多个小版本的数据变成有序数据。在有序数据中进行数据检索的效率更高。</p>
+</li>
+<li><p>2.消除数据变更</p>
+<p>数据都是以追加的方式写入的，因此 Delete、Update 等操作都是写入一个标记。Compaction 操作可以处理这些标记，进行真正的数据删除或更新，从而在读取时，不再需要根据这些标记来过滤数据。</p>
+</li>
+<li><p>3.增加数据聚合度<br>在聚合模型下，Compaction 能进一步聚合不同数据版本中相同 key 的数据行，从而增加数据聚合度，减少读取时需要实时进行的聚合计算。</p>
+</li>
+</ul>
+</blockquote>
+<h1 id="Compaction-的问题"><a href="#Compaction-的问题" class="headerlink" title="Compaction 的问题"></a>Compaction 的问题</h1><p>用户可能需要根据实际的使用场景来调整 Compaction 的策略，否则可能遇到如下问题：</p>
+<ol>
+<li><p>Compaction 速度低于数据写入速度</p>
+<p>在高频写入场景下，短时间内会产生大量的数据版本。如果 Compaction 不及时，就会造成大量版本堆积，最终严重影响写入速度。</p>
+</li>
+<li><p>写放大问题</p>
+<p>Compaction 本质上是将已经写入的数据读取后重写写回的过程，这种数据重复写入被称为写放大。一个好的Compaction策略应该在保证效率的前提下，尽量降低写放大系数。过多的 Compaction 会占用大量的磁盘IO资源，影响系统整体效率。</p>
+</li>
+</ol>
+<h1 id="Something-about-Compaction-How"><a href="#Something-about-Compaction-How" class="headerlink" title="Something about Compaction(How)"></a>Something about Compaction(How)</h1><h2 id="数据版本的产生"><a href="#数据版本的产生" class="headerlink" title="数据版本的产生"></a>数据版本的产生</h2><p>首先，用户的数据表会按照分区和分桶规则，切分成若干个数据分片（Tablet）存储在不同 BE 节点上。每个 Tablet 都有多个副本（默认为3副本）。Compaction 是在每个 BE 上独立进行的，Compaction 逻辑处理的就是一个 BE 节点上所有的数据分片。</p>
+<p>Doris的数据都是以追加的方式写入系统的。Doris目前的写入依然是以微批的方式进行的，每一批次的数据针对每个 Tablet 都会形成一个 rowset。而一个 Tablet 是由多个Rowset 组成的。每个 Rowset 都有一个对应的起始版本和终止版本。对于新增Rowset，起始版本和终止版本相同，表示为 [6-6]、[7-7] 等。多个Rowset经过 Compaction 形成一个大的 Rowset，起始版本和终止版本为多个版本的并集，如 [6-6]、[7-7]、[8-8] 合并后变成 [6-8]。</p>
+<p>Rowset 的数量直接影响到 Compaction 是否能够及时完成。那么一批次导入会生成多少个 Rowset 呢？这里我们举一个例子：</p>
+<p>假设集群有3个 BE 节点。每个BE节点2块盘。只有一张表，2个分区，每个分区3个分桶，默认3副本。那么总分片数量是（2 * 3 * 3）18 个，如果均匀分布在所有节点上，则每个盘上3个tablet。假设一次导入涉及到其中一个分区，则一次导入总共产生9个Rowset，即平均每块盘产生1-2个 Rowset。（这里仅考虑数据完全均匀分布的情况下，实际情况中，可能多个 Tablet 集中在某一块磁盘上。）</p>
+<p>从上面的例子我们可以得出，rowset的数量直接取决于表的分片数量。举个极端的例子，如果一个Doris集群只有3个BE节点，但是一个表有9000个分片。那么一次导入，每个BE节点就会新增3000个rowset，则至少要进行3000次compaction，才能处理完所有的分片。所以：</p>
+<blockquote>
+<p><strong>合理的设置表的分区、分桶和副本数量，避免过多的分片，可以降低Compaction的开销。</strong></p>
+</blockquote>
+<h2 id="Base-amp-Cumulative-Compaction"><a href="#Base-amp-Cumulative-Compaction" class="headerlink" title="Base &amp; Cumulative Compaction"></a>Base &amp; Cumulative Compaction</h2><p>Doris 中有两种 Compaction 操作，分别称为 Base Compaction(BC) 和 Cumulative Compaction(CC)。BC 是将基线数据版本（以0为起始版本的数据）和增量数据版本合并的过程，而CC是增量数据间的合并过程。BC操作因为涉及到基线数据，而基线数据通常比较大，所以操作耗时会比CC长。</p>
+<p>如果只有 Base Compaction，则每次增量数据都要和全量的基线数据合并，写放大问题会非常严重，并且每次 Compaction 都相当耗时。因此我们需要引入 Cumulative Compaction 来先对增量数据进行合并，当增量数据合并后的大小达到一定阈值后，再和基线数据合并。这里我们有一个比较通用的 Compaction 调优策略：</p>
+<blockquote>
+<p><strong>在合理范围内，尽量减少 Base Compaction 操作。</strong></p>
+</blockquote>
+<p>BC 和 CC 之间的分界线成为 Cumulative Point（CP），这是一个动态变化的版本号。比CP小的数据版本会只会触发 BC，而比CP大的数据版本，只会触发CC。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.nlark.com/yuque/0/2022/png/2500465/1662219046764-f9891cea-fe8d-4eb2-89a4-911ffb10e7e2.png" alt="img"></p>
+<p>整个过程有点类似 2048 小游戏：只有合并后大小足够，才能继续和更大的数据版本合并。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.nlark.com/yuque/0/2022/png/2500465/1662219046833-aa0766ec-9852-4766-b57d-5b24448cd2b4.png" alt="img"></p>
+<h2 id="数据分片选择策略"><a href="#数据分片选择策略" class="headerlink" title="数据分片选择策略"></a>数据分片选择策略</h2><p><strong>Compaction 的目的是合并多个数据版本，一是避免在读取时大量的 Merge 操作，二是避免大量的数据版本导致的随机IO。</strong>因此，Compaction 策略的重点问题，就是如何选择合适的 tablet，以保证节点上不会出现数据版本过多的数据分片。</p>
+<h3 id="Compaction-分数"><a href="#Compaction-分数" class="headerlink" title="Compaction 分数"></a>Compaction 分数</h3><p>一个自然的想法，就是每次都选择数据版本最多的数据分片进行 Compaction。这个策略也是 Doris 的默认策略。这个策略在大部分场景下都能很好的工作。但是考虑到一种情况，就是版本多的分片，可能并不是最频繁访问的分片。而 Compaction 的目的就是优化读性能。那么有可能某一张 “写多读少” 表一直在 Compaction，而另一张 “读多写少” 的表不能及时的 Compaction，导致读性能变差。</p>
+<p>因此，Doris 在选择数据分片时还引入了 “读取频率” 的因素。“读取频率” 和 “版本数量” 会根据各自的权重，综合计算出一个 Compaction 分数，分数越高的分片，优先做 Compaction。这两个因素的权重由以下 BE 参数控制（取值越大，权重越高）：</p>
+<blockquote>
+<p><strong>compaction_tablet_scan_frequency_factor：“读取频率” 的权重值，默认为 0。</strong></p>
+<p><strong>compaction_tablet_compaction_score_factor：“版本数量” 的权重，默认为 1。</strong></p>
+</blockquote>
+<blockquote>
+<p>“读取频率” 的权重值默认为0，即默认仅考虑 “版本数量” 这个因素。*</p>
+</blockquote>
+<h3 id="生产者与消费者"><a href="#生产者与消费者" class="headerlink" title="生产者与消费者"></a>生产者与消费者</h3><p>Compaction 是一个 生产者-消费者 模型。由一个生产者线程负责选择需要做 Compaction 的数据分片，而多个消费者负责执行 Compaction 操作。</p>
+<p>生产者线程只有一个，会定期扫描所有 tablet 来选择合适的 compaction 对象。因为 Base Compaction 和 Cumulative Compaction 是不同类型的任务，因此目前的策略是每生成 9 个 CC 任务，生成一个 BC 任务。任务生成的频率由以下两个参数控制：</p>
+<blockquote>
+<p><strong>cumulative_compaction_rounds_for_each_base_compaction_round：多少个CC任务后生成一个BC任务。</strong></p>
+<p><strong>generate_compaction_tasks_min_interval_ms：任务生成的间隔。</strong></p>
+</blockquote>
+<blockquote>
+<p><em>这两个参数通常情况下不需要调整。</em></p>
+</blockquote>
+<p>生产者线程产生的任务会被提交到消费者线程池。因为 Compaction 是一个IO密集型的任务，为了保证 Compaction 任务不会过多的占用IO资源，Doris 限制了每个磁盘上能够同时进行的 Compaction 任务数量，以及节点整体的任务数量，这些限制由以下参数控制：</p>
+<blockquote>
+<p>compaction_task_num_per_disk：每个磁盘上的任务数，默认为2。该参数必须大于等于2，以保证 BC 和 CC 任务各自至少有一个线程。</p>
+<p>max_compaction_threads：消费者线程，即Compaction线程的总数。默认为 10。</p>
+</blockquote>
+<p>举个例子，假设一个 BE 节点配置了3个数据目录（即3块磁盘），每个磁盘上的任务数配置为2，总线程数为5。则同一时间，最多有5个 Compaction 任务在进行，而每块磁盘上最多有2个任务在进行。并且最多有3个 BC 任务在进行，因为每块盘上会自动预留一个线程给CC任务。</p>
+<p><strong>另一方面，Compaction 任务同时也是一个内存密集型任务，因为其本质是一个多路归并排序的过程，每一路是一个数据版本。</strong>如果一个 Compaction 任务涉及的数据版本很多，则会占用更多的内存，如果仅限制任务数，而不考虑任务的内存开销，则有可能导致系统内存超限。因此，Doris 在上述任务个数限制之外，还增加了一个任务配额限制：</p>
+<blockquote>
+<p>total_permits_for_compaction_score：Compaction 任务配额，默认 10000。</p>
+</blockquote>
+<p>每个 Compaction 任务都有一个配额，其数值就是任务涉及的数据版本数量。假设一个任务需要合并100个版本，则其配额为100。当正在运行的任务配额总和超过配置后，新的任务将被拒绝。</p>
+<p>三个配置共同决定了节点所能承受的 Compaction 任务数量。</p>
+<h3 id="数据版本选择策略"><a href="#数据版本选择策略" class="headerlink" title="数据版本选择策略"></a>数据版本选择策略</h3><p>一个 Compaction 任务对应的是一个数据分片（Tablet）。消费线程拿到一个 Compaction 任务后，会根据 Compaction 的任务类型，选择 tablet 中合适的数据版本（Rowset）进行数据合并。下面分别介绍 Base Compaction 和 Cumulative Compaction 的数据分片选择策略。</p>
+<h4 id="Base-Compaction"><a href="#Base-Compaction" class="headerlink" title="Base Compaction"></a>Base Compaction</h4><p>前文说过，BC 任务是增量数据和基线数据的合并任务。并且只有比 Cumulative Point（CP） 小的数据版本才会参与 BC 任务。因此，BC 任务的数据版本选取策略比较简单。</p>
+<p>首先，会选取所有版本在 0到 CP之间的 rowset。然后根据以下几个配置参数，判断是否启动一个 BC 任务：</p>
+<blockquote>
+<p>base_compaction_num_cumulative_deltas：一次 BC 任务最小版本数量限制。默认为5。该参数主要为了避免过多 BC 任务。当数据版本数量较少时，BC 是没有必要的。</p>
+<p>base_compaction_interval_seconds_since_last_operation：第一个参数限制了当版本数量少时，不会进行 BC 任务。但我们需要避免另一种情况，即某些 tablet 可能仅会导入少量批次的数据，因此当 Doris 发现一个 tablet 长时间没有执行过 BC 任务时，也会触发 BC 任务。这个参数就是控制这个时间的，默认是 86400，单位是秒。</p>
+</blockquote>
+<p><em>&gt; 以上两个参数通常情况下不需要修改，在某些情况下如何需要想尽快合并基线数据，可以尝试改小 <strong>base_compaction_num_cumulative_deltas 参数。但这个参数只会影响到 “被选中的 tablet”。而 “被选中” 的前提是这个 tablet 的数据版本数量是最多的。</strong></em></p>
+<h4 id="Cumulative-Compaction"><a href="#Cumulative-Compaction" class="headerlink" title="Cumulative Compaction"></a>Cumulative Compaction</h4><p>CC 任务只会选取版本比 CP 大的数据版本。其本身的选取策略也比较简单，即从 CP 版本开始，依次向后选取数据版本。最终的数据版本集合由以下参数控制：</p>
+<blockquote>
+<p>min_cumulative_compaction_num_singleton_deltas：一次 CC 任务最少的版本数量限制。这个配置是和 cumulative_size_based_compaction_lower_size_mbytes 配置同时判断的。即如果版本数量小于阈值，并且数据量也小于阈值，则不会触发 CC 任务。以避免过多不必要的 CC 任务。默认是5。</p>
+<p>max_cumulative_compaction_num_singleton_deltas：一次 CC 任务最大的版本数量限制。以防止一次 CC 任务合并的版本数量过多，占用过多资源。默认是1000。</p>
+<p>cumulative_size_based_compaction_lower_size_mbytes：一次 CC 任务最少的数据量，和min_cumulative_compaction_num_singleton_delta 同时判断。默认是 64，单位是 MB。</p>
+</blockquote>
+<p>简单来说，默认配置下，就是从 CP 版本开始往后选取 rowset。最少选5个，最多选 1000 个，然后判断数据量是否大于阈值即可。</p>
+<p>CC 任务还有一个重要步骤，就是在合并任务结束后，设置新的 Cumulative Point。CC 任务合并完成后，会产生一个合并后的新的数据版本，而我们要做的就是判断这个新的数据版是 “晋升” 到 BC 任务区，还是依然保留在 CC 任务区。举个例子：</p>
+<p>假设当前 CP 是 10。有一个 CC 任务合并了 [10-13] [14-14] [15-15] 后生成了 [10-15] 这个版本。如果决定将 [10-15] 版本移动到 BC 任务区，则需修改 CP 为 15，否则 CP 保持不变，依然为 10。</p>
+<p><strong>CP 只会增加，不会减少。</strong> 以下参数决定了是否更新 CP：</p>
+<blockquote>
+<p>cumulative_size_based_promotion_ratio：晋升比率。默认 0.05。</p>
+<p>cumulative_size_based_promotion_min_size_mbytes：最小晋升大小，默认 64，单位 MB。</p>
+<p>cumulative_size_based_promotion_size_mbytes：最大晋升大小，默认 1024，单位 MB。</p>
+</blockquote>
+<p>以上参数比较难理解，这里我们先解释下 “晋升” 的原则。一个 CC 任务生成的 rowset 的晋升原则，是其数据大小和基线数据的大小在 “同一量级”。这个类似 2048 小游戏，只有相同的数字才能合并形成更大的数字。而上面三个参数，就是用于判断一个新的rowset是否匹配基线数据的数量级。举例说明：</p>
+<p>在默认配置下，假设当前基线数据（即所有 CP 之前的数据版本）的数据量为 10GB，则晋升量级为 （10GB * 0.05）512MB。这个数值大于 64 MB 小于 1024 MB，满足条件。所以如果 CC 任务生成的新的 rowset 的大小大于 512 MB，则可以晋升，即 CP 增加。而假设基线数据为 50GB，则晋升量级为（50GB * 0.05）2.5GB。这个数值大于 64 MB 也大于 1024 MB，因此晋升量级会被调整为 1024 MB。所以如果 CC 任务生成的新的 rowset 的大小大于 1024 MB，则可以晋升，即 CP 增加。</p>
+<p>从上面的例子可以看出，cumulative_size_based_promotion_ratio 用于定义 “同一量级”，0.05 即表示数据量大于基线数据的 5% 的 rowset 都有晋升的可能，而 cumulative_size_based_promotion_min_size_mbytes 和 cumulative_size_based_promotion_size_mbytes 用于保证晋升不会过于频繁或过于严格。</p>
+<blockquote>
+<p><em>这三个参数会直接影响 BC 和 CC 任务的频率，尤其在高频导入场景下需要适当调整。我们会在后续文章中举例说明。</em></p>
+</blockquote>
+<h3 id="其他-Compaction-参数和注意事项"><a href="#其他-Compaction-参数和注意事项" class="headerlink" title="其他 Compaction 参数和注意事项"></a>其他 Compaction 参数和注意事项</h3><p>还有一些参数和 Compaction 相关，在某些情况下需要修改：</p>
+<p>disable_auto_compaction：默认为 false，修改为 true 则会禁止 Compaction 操作。该参数仅在一些调试情况，或者 compaction 异常需要临时关闭的情况下才需使用。</p>
+<h4 id="Delete-灾难"><a href="#Delete-灾难" class="headerlink" title="Delete 灾难"></a>Delete 灾难</h4><p>通过 DELETE FROM 语句执行的数据删除操作，在 Doris 中也会生成一个数据版本用于标记删除。这种类型的数据版本比较特殊，我们成为 “删除版本”。删除版本只能通过 Base Compaction 任务处理。因此在在遇到删除版本时，Cumulative Point 会强制增加，将删除版本移动到 BC 任务区。<strong>因此数据导入和删除交替发生的场景通常会导致 Compaction 灾难</strong>。比如以下版本序列：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[0-10]</span><br><span class="line">[11-11] 删除版本</span><br><span class="line">[12-12]</span><br><span class="line">[13-13] 删除版本</span><br><span class="line">[14-14]</span><br><span class="line">[15-15] 删除版本</span><br><span class="line">[16-16]</span><br><span class="line">[17-17] 删除版本</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>在这种情况下，CC 任务几乎不会被触发（因为CC任务只能选择一个版本，而无法处理删除版本），所有版本都会交给 Base Compaction 处理，导致 Compaction 进度缓慢。目前Doris还无法很好的处理这种场景，因此需要在业务上尽量避免。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://poxiao.tk">破晓</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://poxiao.tk/posts/15533.html">https://poxiao.tk/posts/15533.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://poxiao.tk" target="_blank">破晓</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Doris/">Doris</a></div><div class="post_share"><div class="social-share" data-image="https://zfh-tuchuang.oss-cn-shanghai.aliyuncs.com/img/site-backgound.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/gh/overtrue/share.js@master/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/bg/clash.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/bg/clash.jpg" alt="嘻嘻！！！"/></a><div class="post-qr-code-desc">嘻嘻！！！</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/62654.html"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://dogefs.s3.ladydaily.com/tzk/storage/20210302234030.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">从SS-Table到LSM-Tree</div></div></a></div><div class="next-post pull-right"><a href="/posts/65527.html"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://dogefs.s3.ladydaily.com/tzk/storage/20210302234030.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">When：何时需要进行Doris Compaction调优</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/41835.html" title="Doris Join最佳实践"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://dogefs.s3.ladydaily.com/tzk/storage/20210302234030.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-25</div><div class="title">Doris Join最佳实践</div></div></a></div><div><a href="/posts/60503.html" title="基于Doris的数据中台的实践与优化"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://dogefs.s3.ladydaily.com/tzk/storage/000651627f0c-92aec253754ab3dba99f61b49e9aa856.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-30</div><div class="title">基于Doris的数据中台的实践与优化</div></div></a></div><div><a href="/posts/24352.html" title="Doris中的索引"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://dogefs.s3.ladydaily.com/tzk/storage/000651627f0c-92aec253754ab3dba99f61b49e9aa856.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-07</div><div class="title">Doris中的索引</div></div></a></div><div><a href="/posts/65527.html" title="When：何时需要进行Doris Compaction调优"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://dogefs.s3.ladydaily.com/tzk/storage/20210302234030.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-03</div><div class="title">When：何时需要进行Doris Compaction调优</div></div></a></div><div><a href="/posts/29811.html" title="Doris性能优化（一）"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://zfh-tuchuang.oss-cn-shanghai.aliyuncs.com/img/site-backgound.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-21</div><div class="title">Doris性能优化（一）</div></div></a></div><div><a href="/posts/27737.html" title="初识Doris"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://dogefs.s3.ladydaily.com/tzk/storage/20210302234030.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-23</div><div class="title">初识Doris</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Why-need-Compaction"><span class="toc-number">1.</span> <span class="toc-text">Why  need Compaction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Compaction-%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text">Compaction 的问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Something-about-Compaction-How"><span class="toc-number">3.</span> <span class="toc-text">Something about Compaction(How)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%89%88%E6%9C%AC%E7%9A%84%E4%BA%A7%E7%94%9F"><span class="toc-number">3.1.</span> <span class="toc-text">数据版本的产生</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Base-amp-Cumulative-Compaction"><span class="toc-number">3.2.</span> <span class="toc-text">Base &amp; Cumulative Compaction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%88%86%E7%89%87%E9%80%89%E6%8B%A9%E7%AD%96%E7%95%A5"><span class="toc-number">3.3.</span> <span class="toc-text">数据分片选择策略</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Compaction-%E5%88%86%E6%95%B0"><span class="toc-number">3.3.1.</span> <span class="toc-text">Compaction 分数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E4%BA%A7%E8%80%85%E4%B8%8E%E6%B6%88%E8%B4%B9%E8%80%85"><span class="toc-number">3.3.2.</span> <span class="toc-text">生产者与消费者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%89%88%E6%9C%AC%E9%80%89%E6%8B%A9%E7%AD%96%E7%95%A5"><span class="toc-number">3.3.3.</span> <span class="toc-text">数据版本选择策略</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Base-Compaction"><span class="toc-number">3.3.3.1.</span> <span class="toc-text">Base Compaction</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cumulative-Compaction"><span class="toc-number">3.3.3.2.</span> <span class="toc-text">Cumulative Compaction</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96-Compaction-%E5%8F%82%E6%95%B0%E5%92%8C%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">3.3.4.</span> <span class="toc-text">其他 Compaction 参数和注意事项</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Delete-%E7%81%BE%E9%9A%BE"><span class="toc-number">3.3.4.1.</span> <span class="toc-text">Delete 灾难</span></a></li></ol></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By 破晓</div><div class="footer_custom_text">VARIETY IS THE SPICE OF LIFE. POWERED BY HEXO WITH BUTTERFLY</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'WYR8lzh0P1AxrT4HT9aKwquJ-MdYXbMMI',
+      appKey: 'RhTywPnpSjOJAADhepy6soF6',
+      avatar: 'monsterid',
+      serverURLs: 'https://acatnwad.api.lncldglobal.com',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://poxiao.tk/posts/15533.html'
+    this.page.identifier = 'posts/15533.html'
+    this.page.title = 'Doris Compaction从入门到跑路'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://poxiao.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !true) {
+  if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    if(parent_div_git) {
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var qweather_key = 'b16a1fa0e63c46a4b8f28abfb06ae3fe';
+  var gaud_map_key = 'e2b04289e870b005374ee030148d64fd&s=rsv3';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '112.982279,28.19409';
+  var clock_default_rectangle_enable = 'true';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="https://pv.sohu.com/cityjson?ie=utf-8"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><!-- hexo injector body_end end --></body></html>

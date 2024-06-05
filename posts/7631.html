@@ -1,0 +1,261 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>利用RuntimeReplaceable实现Spark Native function | 破晓</title><meta name="keywords" content="spark"><meta name="author" content="破晓"><meta name="copyright" content="破晓"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="referrer" content="no-referrer"><meta name="description" content="关于Spark Native Function在Spark中实现自定义函数，有多种方式：  1、实现Hive UDF，Spark是兼容Hive UDF的，简单易用，支持纯SQL环境，因此这可能是使用最为广泛的。 2、实现Spark-SQL UDF，需要嵌入到代码中，因此也主要用在代码中，目前还不支持纯SQL环境。 3、通过拓展SparkSessionExtensions，基本等价于Spark Bu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用RuntimeReplaceable实现Spark Native function">
+<meta property="og:url" content="https://poxiao.tk/posts/7631.html">
+<meta property="og:site_name" content="破晓">
+<meta property="og:description" content="关于Spark Native Function在Spark中实现自定义函数，有多种方式：  1、实现Hive UDF，Spark是兼容Hive UDF的，简单易用，支持纯SQL环境，因此这可能是使用最为广泛的。 2、实现Spark-SQL UDF，需要嵌入到代码中，因此也主要用在代码中，目前还不支持纯SQL环境。 3、通过拓展SparkSessionExtensions，基本等价于Spark Bu">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://dogefs.s3.ladydaily.com/tzk/storage/000651627f0c-92aec253754ab3dba99f61b49e9aa856.png">
+<meta property="article:published_time" content="2023-09-27T07:55:27.000Z">
+<meta property="article:modified_time" content="2023-09-27T07:55:27.000Z">
+<meta property="article:author" content="破晓">
+<meta property="article:tag" content="spark">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://dogefs.s3.ladydaily.com/tzk/storage/000651627f0c-92aec253754ab3dba99f61b49e9aa856.png"><link rel="shortcut icon" href="/img/bg/avatar.webp"><link rel="canonical" href="https://poxiao.tk/posts/7631"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="v7W8T1yBsImqvya-nz126O5wJTmGsQyUQJ_F8vmgUVU"/><meta name="baidu-site-verification" content="code-0Fs0BLUCMV"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-6838336925474374',
+  enable_page_level_ads: 'true'
+});</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-NDZBTJH9W4"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-NDZBTJH9W4');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 破晓","link":"链接: ","source":"来源: 破晓","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '利用RuntimeReplaceable实现Spark Native function',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-09-27 15:55:27'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/bg/avatar.webp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">58</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">41</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">30</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://dogefs.s3.ladydaily.com/tzk/storage/000651627f0c-92aec253754ab3dba99f61b49e9aa856.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">破晓</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">利用RuntimeReplaceable实现Spark Native function</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-09-27T07:55:27.000Z" title="发表于 2023-09-27 15:55:27">2023-09-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-27T07:55:27.000Z" title="更新于 2023-09-27 15:55:27">2023-09-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/bigdata/">bigdata</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/bigdata/spark/">spark</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">960</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>4分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="利用RuntimeReplaceable实现Spark Native function"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="关于Spark-Native-Function"><a href="#关于Spark-Native-Function" class="headerlink" title="关于Spark Native Function"></a>关于Spark Native Function</h2><p>在Spark中实现自定义函数，有多种方式：</p>
+<ul>
+<li>1、实现Hive UDF，Spark是兼容Hive UDF的，简单易用，支持纯SQL环境，因此这可能是使用最为广泛的。</li>
+<li>2、实现Spark-SQL UDF，需要嵌入到代码中，因此也主要用在代码中，目前还不支持纯SQL环境。</li>
+<li>3、通过拓展SparkSessionExtensions，基本等价于Spark Built-in内置函数，可以充分利用Spark catalyst优化器和Codegen，从而带来可观的性能提升，这里称之为Spark Native Function。但是这种方式也是实现最为困难的，需要对SQL解析器、优化器等有一定的理解。同时网上关于这种方式的资料几乎没有，Spark官方文档中也是根本没有提及这种方式，足以说明这种方式较高的门槛。</li>
+</ul>
+<h2 id="应用场景：RuntimeReplaceable"><a href="#应用场景：RuntimeReplaceable" class="headerlink" title="应用场景：RuntimeReplaceable"></a>应用场景：RuntimeReplaceable</h2><p>Spark已经内置足够多的UDF，已经可以满足绝大部分的应用场景。</p>
+<p>剩下的不能满足的应用场景中，其中很大一部分可以通过组合这些内置的函数，来满足。因此也就带来一个问题，就是有时候应用场景非常复杂，需要组合几十种函数，而Spark-SQL也不支持存储过程，最后导致SQL非常长，难以理解阅读，从而难以维护。</p>
+<p>而通过实现<code>RuntimeReplaceable</code>类型Spark Native Function，可以完美的解决我们的问题。<code>RuntimeReplaceable</code>是通过用我们自定义的函数Express替换掉抽象语法树中的函数Express，主要用于兼容不同数据库系统函数别名，也正好满足我们的应用场景。</p>
+<h2 id="上代码"><a href="#上代码" class="headerlink" title="上代码"></a>上代码</h2><p>在这个例子中，我们实现了一个<code>str_pivot</code> Spark Native Function，该函数解决的应用场景如下：</p>
+<blockquote>
+<p>有这样一个用逗号分隔的字符串<code>c1,c2,c3</code>包含三个元素c1、c2、c3，这三个元素通过排列组合，顺序不同也是一种组合，共有16中组合，例如：c1，c1c2，c2c1，c1c2c3等等。</p>
+<p>给出另一个字符串<code>c2c1</code>，判断这个字符串是不是其中一个排列组合。这就是<code>str_pivot</code>函数要实现的。</p>
+<p>我们可以通过下面这个算法实现：</p>
+<p><code>size(array_union(array(&#39;1&#39;, &#39;2&#39;, &#39;3&#39;), array(&#39;2&#39;,&#39;1&#39;))) = size(array(&#39;1&#39;, &#39;2&#39;, &#39;3&#39;))</code></p>
+</blockquote>
+<h3 id="driver"><a href="#driver" class="headerlink" title="driver"></a>driver</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.spark.sql.<span class="type">SparkSession</span></span><br><span class="line"><span class="keyword">import</span> org.apache.spark.sql.execution.<span class="type">CodegenMode</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * org.apache.spark.sql.catalyst.analysis.FunctionRegistry</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * org.apache.spark.sql.catalyst.expressions.Length</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * -- CodeGen</span></span><br><span class="line"><span class="comment"> * org.apache.spark.sql.catalyst.expressions.UnaryMathExpression</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">StringPiovtFunctionDriver</span> </span>&#123;</span><br><span class="line">  <span class="keyword">val</span> sql = <span class="string">&quot;select str_pivot(&#x27;1,2,3,4&#x27;, &#x27;1,2&#x27;)&quot;</span></span><br><span class="line">  <span class="keyword">val</span> sql_udf = <span class="string">&quot;select str_pivot_udf(&#x27;1,2,3,4&#x27;, &#x27;1,2&#x27;)&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</span><br><span class="line">    <span class="keyword">val</span> spark = <span class="type">SparkSession</span></span><br><span class="line">      .builder()</span><br><span class="line">      .master(<span class="string">&quot;local[1]&quot;</span>)</span><br><span class="line">      .appName(<span class="string">&quot;SparkNativeFunctionInject&quot;</span>)</span><br><span class="line">      .withExtensions(<span class="keyword">new</span> <span class="type">FunctionSparkExtension</span>)</span><br><span class="line">      .getOrCreate()</span><br><span class="line">	</span><br><span class="line">    <span class="comment">// UDF方式实现，对比执行计划等</span></span><br><span class="line">    spark.udf.register(<span class="string">&quot;str_pivot_udf&quot;</span>,</span><br><span class="line">      (left: <span class="type">String</span>, right: <span class="type">String</span>) =&gt; &#123;</span><br><span class="line">        left.split(<span class="string">&quot;,&quot;</span>).union(right.split(<span class="string">&quot;,&quot;</span>)).toSet.size == left.split(<span class="string">&quot;,&quot;</span>).length</span><br><span class="line">      &#125;</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    spark.sql(sql).show()</span><br><span class="line">    spark.sql(sql).explain(<span class="literal">true</span>)</span><br><span class="line">    spark.sql(sql).explain(<span class="type">CodegenMode</span>.name)</span><br><span class="line"></span><br><span class="line">    spark.sql(sql_udf).show()</span><br><span class="line">    spark.sql(sql_udf).explain(<span class="literal">true</span>)</span><br><span class="line">    spark.sql(sql_udf).explain(<span class="type">CodegenMode</span>.name)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="拓展SparkSessionExtensions，injectFunction"><a href="#拓展SparkSessionExtensions，injectFunction" class="headerlink" title="拓展SparkSessionExtensions，injectFunction"></a>拓展SparkSessionExtensions，injectFunction</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.spark.sql.catalyst.<span class="type">FunctionIdentifier</span></span><br><span class="line"><span class="keyword">import</span> org.apache.spark.sql.catalyst.analysis.<span class="type">FunctionRegistry</span>.<span class="type">FunctionBuilder</span></span><br><span class="line"><span class="keyword">import</span> org.apache.spark.sql.catalyst.expressions.&#123;<span class="type">Expression</span>, <span class="type">ExpressionInfo</span>&#125;</span><br><span class="line"><span class="keyword">import</span> org.apache.spark.sql.&#123;<span class="type">MLBStrPivot</span>, <span class="type">SparkSessionExtensions</span>, <span class="type">StringLength</span>, <span class="type">StringPivot</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FunctionSparkExtension</span> <span class="keyword">extends</span> (<span class="params"><span class="type">SparkSessionExtensions</span> =&gt; <span class="type">Unit</span></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">apply</span></span>(extensions: <span class="type">SparkSessionExtensions</span>): <span class="type">Unit</span> = &#123;</span><br><span class="line">    extensions.injectFunction(</span><br><span class="line">      (<span class="keyword">new</span> <span class="type">FunctionIdentifier</span>(<span class="string">&quot;str_pivot&quot;</span>),</span><br><span class="line">        <span class="keyword">new</span> <span class="type">ExpressionInfo</span>(classOf[<span class="type">MLBStrPivot</span>].getName,</span><br><span class="line">          <span class="string">&quot;str_pivot&quot;</span>),</span><br><span class="line">        (children: <span class="type">Seq</span>[<span class="type">Expression</span>]) =&gt; <span class="keyword">new</span> <span class="type">MLBStrPivot</span>(children.head, children(<span class="number">1</span>))))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Function-Implement"><a href="#Function-Implement" class="headerlink" title="Function Implement"></a>Function Implement</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// left is fully string</span></span><br><span class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">MLBStrPivot</span>(<span class="params">left: <span class="type">Expression</span>, right: <span class="type">Expression</span>, child: <span class="type">Expression</span></span>) <span class="keyword">extends</span> <span class="title">RuntimeReplaceable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//size(array_union(array(&#x27;1&#x27;, &#x27;2&#x27;, &#x27;3&#x27;), array(&#x27;2&#x27;,&#x27;1&#x27;))) = size(array(&#x27;1&#x27;, &#x27;2&#x27;, &#x27;3&#x27;))</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">this</span></span>(left: <span class="type">Expression</span>, right: <span class="type">Expression</span>) = &#123;</span><br><span class="line">    <span class="keyword">this</span>(left, right,  </span><br><span class="line">    <span class="type">EqualTo</span></span><br><span class="line">      (</span><br><span class="line">        <span class="type">Size</span>(<span class="type">ArrayUnion</span>(<span class="type">StringSplit</span>(left, <span class="type">Literal</span>(<span class="string">&quot;,&quot;</span>), <span class="type">Literal</span>(<span class="number">-1</span>)), <span class="type">StringSplit</span>(right, <span class="type">Literal</span>(<span class="string">&quot;,&quot;</span>), <span class="type">Literal</span>(<span class="number">-1</span>))), <span class="literal">false</span>),</span><br><span class="line">        <span class="type">Size</span>(<span class="type">StringSplit</span>(left, <span class="type">Literal</span>(<span class="string">&quot;,&quot;</span>), <span class="type">Literal</span>(<span class="number">-1</span>)))</span><br><span class="line">      )</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">flatArguments</span></span>: <span class="type">Iterator</span>[<span class="type">Any</span>] = <span class="type">Iterator</span>(left, right)</span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">exprsReplaced</span></span>: <span class="type">Seq</span>[<span class="type">Expression</span>] = <span class="type">Seq</span>(left, right)</span><br><span class="line">  <span class="comment">// 用上面实现的Express进行替换	</span></span><br><span class="line">  <span class="keyword">override</span> <span class="keyword">protected</span> <span class="function"><span class="keyword">def</span> <span class="title">withNewChildInternal</span></span>(newChild: <span class="type">Expression</span>): <span class="type">MLBStrPivot</span> = copy(child = newChild)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://poxiao.tk">破晓</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://poxiao.tk/posts/7631.html">https://poxiao.tk/posts/7631.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://poxiao.tk" target="_blank">破晓</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/spark/">spark</a></div><div class="post_share"><div class="social-share" data-image="https://dogefs.s3.ladydaily.com/tzk/storage/000651627f0c-92aec253754ab3dba99f61b49e9aa856.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/gh/overtrue/share.js@master/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/bg/clash.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/bg/clash.jpg" alt="嘻嘻！！！"/></a><div class="post-qr-code-desc">嘻嘻！！！</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/posts/55672.html"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://dogefs.s3.ladydaily.com/tzk/storage/000651627f0c-92aec253754ab3dba99f61b49e9aa856.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">DAG实现与任务调度</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/39051.html" title="Spark SQL合并小文件"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://dogefs.s3.ladydaily.com/tzk/storage/000651627f0c-92aec253754ab3dba99f61b49e9aa856.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-08</div><div class="title">Spark SQL合并小文件</div></div></a></div><div><a href="/posts/54682.html" title="理解Spark ESS"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://zfh-tuchuang.oss-cn-shanghai.aliyuncs.com/img/site-backgound.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-04</div><div class="title">理解Spark ESS</div></div></a></div><div><a href="/posts/32133.html" title="Spark事件总线源码分析"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://zfh-tuchuang.oss-cn-shanghai.aliyuncs.com/img/site-backgound.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-08</div><div class="title">Spark事件总线源码分析</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8ESpark-Native-Function"><span class="toc-number">1.</span> <span class="toc-text">关于Spark Native Function</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%EF%BC%9ARuntimeReplaceable"><span class="toc-number">2.</span> <span class="toc-text">应用场景：RuntimeReplaceable</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E4%BB%A3%E7%A0%81"><span class="toc-number">3.</span> <span class="toc-text">上代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#driver"><span class="toc-number">3.1.</span> <span class="toc-text">driver</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%93%E5%B1%95SparkSessionExtensions%EF%BC%8CinjectFunction"><span class="toc-number">3.2.</span> <span class="toc-text">拓展SparkSessionExtensions，injectFunction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Function-Implement"><span class="toc-number">3.3.</span> <span class="toc-text">Function Implement</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By 破晓</div><div class="footer_custom_text">VARIETY IS THE SPICE OF LIFE. POWERED BY HEXO WITH BUTTERFLY</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'WYR8lzh0P1AxrT4HT9aKwquJ-MdYXbMMI',
+      appKey: 'RhTywPnpSjOJAADhepy6soF6',
+      avatar: 'monsterid',
+      serverURLs: 'https://acatnwad.api.lncldglobal.com',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://poxiao.tk/posts/7631.html'
+    this.page.identifier = 'posts/7631.html'
+    this.page.title = '利用RuntimeReplaceable实现Spark Native function'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://poxiao.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !true) {
+  if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    if(parent_div_git) {
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var qweather_key = 'b16a1fa0e63c46a4b8f28abfb06ae3fe';
+  var gaud_map_key = 'e2b04289e870b005374ee030148d64fd&s=rsv3';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '112.982279,28.19409';
+  var clock_default_rectangle_enable = 'true';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="https://pv.sohu.com/cityjson?ie=utf-8"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><!-- hexo injector body_end end --></body></html>

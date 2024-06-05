@@ -1,0 +1,353 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>初识Doris | 破晓</title><meta name="keywords" content="Doris"><meta name="author" content="破晓"><meta name="copyright" content="破晓"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="referrer" content="no-referrer"><meta name="description" content="MPP（ Massively Parallel Processing - 大规模并行处理）Based高性能、实时的分析型数据库。  在使用接口方面，Doris 采用 MySQ L 协议，高度兼容 MySQL 语法，支持标准 SQL，用户可以通过各类客户端工具来访问 Doris，并支持与 BI 工具的无缝对接。  在存储引擎方面，Doris 采用列式存储，按列进行数据的编码压缩和读取，能够实现极">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初识Doris">
+<meta property="og:url" content="https://poxiao.tk/posts/27737.html">
+<meta property="og:site_name" content="破晓">
+<meta property="og:description" content="MPP（ Massively Parallel Processing - 大规模并行处理）Based高性能、实时的分析型数据库。  在使用接口方面，Doris 采用 MySQ L 协议，高度兼容 MySQL 语法，支持标准 SQL，用户可以通过各类客户端工具来访问 Doris，并支持与 BI 工具的无缝对接。  在存储引擎方面，Doris 采用列式存储，按列进行数据的编码压缩和读取，能够实现极">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://dogefs.s3.ladydaily.com/tzk/storage/20210302234030.png">
+<meta property="article:published_time" content="2022-07-22T22:19:04.000Z">
+<meta property="article:modified_time" content="2022-07-22T22:19:04.000Z">
+<meta property="article:author" content="破晓">
+<meta property="article:tag" content="Doris">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://dogefs.s3.ladydaily.com/tzk/storage/20210302234030.png"><link rel="shortcut icon" href="/img/bg/avatar.webp"><link rel="canonical" href="https://poxiao.tk/posts/27737"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="v7W8T1yBsImqvya-nz126O5wJTmGsQyUQJ_F8vmgUVU"/><meta name="baidu-site-verification" content="code-0Fs0BLUCMV"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-6838336925474374',
+  enable_page_level_ads: 'true'
+});</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-NDZBTJH9W4"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-NDZBTJH9W4');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 破晓","link":"链接: ","source":"来源: 破晓","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '初识Doris',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-07-23 06:19:04'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/bg/avatar.webp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">58</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">41</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">30</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">破晓</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">初识Doris</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-07-22T22:19:04.000Z" title="发表于 2022-07-23 06:19:04">2022-07-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-07-22T22:19:04.000Z" title="更新于 2022-07-23 06:19:04">2022-07-23</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/bigdata/">bigdata</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/bigdata/Doris/">Doris</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>12分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="初识Doris"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<ul>
+<li><p>MPP（ Massively Parallel Processing - 大规模并行处理）Based高性能、实时的分析型数据库。</p>
+</li>
+<li><p>在<strong>使用接口</strong>方面，Doris 采用 MySQ L 协议，高度兼容 MySQL 语法，支持标准 SQL，用户可以通过各类客户端工具来访问 Doris，并支持与 BI 工具的无缝对接。</p>
+</li>
+<li><p>在<strong>存储引擎</strong>方面，Doris 采用列式存储，按列进行数据的编码压缩和读取，能够实现极高的压缩比，同时减少大量非相关数据的扫描，从而更加有效利用 IO 和 CPU 资源。</p>
+</li>
+<li><p>在<strong>查询引擎</strong>方面，Doris 采用 MPP 的模型，节点间和节点内都并行执行，也支持多个大表的分布式 Shuffle Join，从而能够更好应对复杂查询。</p>
+</li>
+</ul>
+<p> <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://doris.apache.org/zh-CN/assets/images/origin_img_v2_cee507bd-d6ed-4359-9e52-51e9b8458f8g-cd4a2a172ec93222a40231fe1a8d4edd.png" alt="origin_img_v2_cee507bd-d6ed-4359-9e52-51e9b8458f8g"></p>
+<ul>
+<li><strong>Doris 查询引擎是向量化</strong>的查询引擎，所有的内存结构能够按照列式布局，能够达到大幅减少虚函数调用、提升 Cache 命中率，高效利用 SIMD 指令的效果。在宽表聚合场景下性能是非向量化引擎的 5-10 倍。</li>
+</ul>
+<p> <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://doris.apache.org/zh-CN/assets/images/origin_img_v2_ad65aae9-9ed0-463e-a34c-94e32b092a4g-84273f42ae82408ff09c7af6c5b67022.png" alt="origin_img_v2_ad65aae9-9ed0-463e-a34c-94e32b092a4g"></p>
+<ul>
+<li><p><strong>Doris 采用了 Adaptive Query Execution 技术，</strong> 可以根据 Runtime Statistics 来动态调整执行计划，比如通过 Runtime Filter 技术能够在运行时生成生成 Filter 推到 Probe 侧，并且能够将 Filter 自动穿透到 Probe 侧最底层的 Scan 节点，从而大幅减少 Probe 的数据量，加速 Join 性能。Doris 的 Runtime Filter 支持 In&#x2F;Min&#x2F;Max&#x2F;Bloom Filter。</p>
+</li>
+<li><p>在<strong>优化器</strong>方面 Doris 使用 CBO 和 RBO 结合的优化策略，RBO 支持常量折叠、子查询改写、谓词下推等，CBO 支持 Join Reorder。目前 CBO 还在持续优化中，主要集中在更加精准的统计信息收集和推导，更加精准的代价模型预估等方面。</p>
+</li>
+<li><p><strong>Doris 也支持强一致的物化视图</strong>，物化视图的更新和选择都在系统内自动进行，不需要用户手动选择，从而大幅减少了物化视图维护的代价。</p>
+</li>
+<li><p><strong>Doris 也支持比较丰富的索引结构，来减少数据的扫描</strong></p>
+</li>
+</ul>
+</blockquote>
+<hr>
+<blockquote>
+<ul>
+<li><p>Doris 数据模型上目前分为三类: AGGREGATE KEY, UNIQUE KEY, DUPLICATE KEY。<strong>三种模型中数据都是按KEY进行排序。</strong></p>
+</li>
+<li><p>AGGREGATE KEY</p>
+</li>
+</ul>
+<p> AGGREGATE KEY相同时，新旧记录进行聚合，目前支持的聚合函数有SUM, MIN, MAX, REPLACE。</p>
+<p> AGGREGATE KEY模型可以提前聚合数据, 适合报表和多维分析业务。</p>
+<ul>
+<li>UNIQUE KEY</li>
+</ul>
+<p> UNIQUE KEY 相同时，新记录覆盖旧记录。目前 UNIQUE KEY 实现上和 AGGREGATE KEY 的 REPLACE 聚合方法一样，二者本质上相同。适用于有更新需求的分析业务。</p>
+<ul>
+<li>DUPLICATE KEY</li>
+</ul>
+<p> 只指定排序列，相同的行不会合并。适用于数据无需提前聚合的分析业务。</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Doris<strong>整体架构</strong>如下图所示，Doris 架构非常简单，只有两类进程</p>
+<ul>
+<li><strong>Frontend（FE）</strong>，主要负责用户请求的接入、查询解析规划、元数据的管理、节点管理相关工作。</li>
+<li><strong>另一个是 Backend（BE）</strong>，主要负责数据存储、查询计划的执行。</li>
+</ul>
+<p>这两类进程都是可以横向扩展的，单集群可以支持到数百台机器，数十 PB 的存储容量。并且这两类进程通过一致性协议来保证服务的高可用和数据的高可靠。这种高度集成的架构设计极大的降低了一款分布式系统的运维成本。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://doris.apache.org/zh-CN/assets/images/origin_img_v2_28d005e1-21d6-4801-956f-0c06373a7a9g-11e2c3e5c6b6dc26b4f602697a1071a9.png" alt="origin_img_v2_28d005e1-21d6-4801-956f-0c06373a7a9g"></p>
+</blockquote>
+<h2 id="建表语句"><a href="#建表语句" class="headerlink" title="建表语句"></a>建表语句</h2><ul>
+<li><p>Range Partition</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> IF <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> example_db.expamle_range_tbl</span><br><span class="line">(</span><br><span class="line"> `user_id` LARGEINT <span class="keyword">NOT</span> <span class="keyword">NULL</span> COMMENT &quot;用户 id&quot;,</span><br><span class="line"> `<span class="type">date</span>` <span class="type">DATE</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> COMMENT &quot;数据灌入日期时间&quot;,</span><br><span class="line"> `<span class="type">timestamp</span>` DATETIME <span class="keyword">NOT</span> <span class="keyword">NULL</span> COMMENT &quot;数据灌入的时间戳&quot;,</span><br><span class="line"> `city` <span class="type">VARCHAR</span>(<span class="number">20</span>) COMMENT &quot;用户所在城市&quot;,</span><br><span class="line"> `age` <span class="type">SMALLINT</span> COMMENT &quot;用户年龄&quot;,</span><br><span class="line"> `sex` TINYINT COMMENT &quot;用户性别&quot;,</span><br><span class="line"> `last_visit_date` DATETIME REPLACE <span class="keyword">DEFAULT</span> &quot;1970-01-01 </span><br><span class="line">00:00:00&quot; COMMENT &quot;用户最后一次访问时间&quot;,</span><br><span class="line"> `cost` <span class="type">BIGINT</span> SUM <span class="keyword">DEFAULT</span> &quot;0&quot; COMMENT &quot;用户总消费&quot;,</span><br><span class="line"> `max_dwell_time` <span class="type">INT</span> MAX <span class="keyword">DEFAULT</span> &quot;0&quot; COMMENT &quot;用户最大停留时间&quot;,</span><br><span class="line"> `min_dwell_time` <span class="type">INT</span> MIN <span class="keyword">DEFAULT</span> &quot;99999&quot; COMMENT &quot;用户最小停留时间&quot;</span><br><span class="line">)</span><br><span class="line">ENGINE<span class="operator">=</span>olap</span><br><span class="line">AGGREGATE KEY(`user_id`, `<span class="type">date</span>`, `<span class="type">timestamp</span>`, `city`, `age`, `sex`)</span><br><span class="line"><span class="keyword">PARTITION</span> <span class="keyword">BY</span> <span class="keyword">RANGE</span>(`<span class="type">date</span>`)</span><br><span class="line">(</span><br><span class="line"> <span class="keyword">PARTITION</span> `p201701` <span class="keyword">VALUES</span> LESS THAN (&quot;2017-02-01&quot;),</span><br><span class="line"> <span class="keyword">PARTITION</span> `p201702` <span class="keyword">VALUES</span> LESS THAN (&quot;2017-03-01&quot;),</span><br><span class="line"> <span class="keyword">PARTITION</span> `p201703` <span class="keyword">VALUES</span> LESS THAN (&quot;2017-04-01&quot;)</span><br><span class="line">)</span><br><span class="line">DISTRIBUTED <span class="keyword">BY</span> HASH(`user_id`) BUCKETS <span class="number">16</span></span><br><span class="line">PROPERTIES</span><br><span class="line">(</span><br><span class="line"> &quot;replication_num&quot; <span class="operator">=</span> &quot;3&quot;,</span><br><span class="line"> &quot;storage_medium&quot; <span class="operator">=</span> &quot;SSD&quot;,</span><br><span class="line"> &quot;storage_cooldown_time&quot; <span class="operator">=</span> &quot;2018-01-01 12:00:00&quot;</span><br><span class="line">);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>List Partition</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> IF <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> example_db.expamle_list_tbl</span><br><span class="line">(</span><br><span class="line"> `user_id` LARGEINT <span class="keyword">NOT</span> <span class="keyword">NULL</span> COMMENT &quot;用户 id&quot;,</span><br><span class="line"> `<span class="type">date</span>` <span class="type">DATE</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> COMMENT &quot;数据灌入日期时间&quot;,</span><br><span class="line"> `<span class="type">timestamp</span>` DATETIME <span class="keyword">NOT</span> <span class="keyword">NULL</span> COMMENT &quot;数据灌入的时间戳&quot;,</span><br><span class="line"> `city` <span class="type">VARCHAR</span>(<span class="number">20</span>) COMMENT &quot;用户所在城市&quot;,</span><br><span class="line"> `age` <span class="type">SMALLINT</span> COMMENT &quot;用户年龄&quot;,</span><br><span class="line"> `sex` TINYINT COMMENT &quot;用户性别&quot;,</span><br><span class="line"> `last_visit_date` DATETIME REPLACE <span class="keyword">DEFAULT</span> &quot;1970-01-01 </span><br><span class="line">00:00:00&quot; COMMENT &quot;用户最后一次访问时间&quot;,</span><br><span class="line"> `cost` <span class="type">BIGINT</span> SUM <span class="keyword">DEFAULT</span> &quot;0&quot; COMMENT &quot;用户总消费&quot;,</span><br><span class="line"> `max_dwell_time` <span class="type">INT</span> MAX <span class="keyword">DEFAULT</span> &quot;0&quot; COMMENT &quot;用户最大停留时间&quot;,</span><br><span class="line"> `min_dwell_time` <span class="type">INT</span> MIN <span class="keyword">DEFAULT</span> &quot;99999&quot; COMMENT &quot;用户最小停留时</span><br><span class="line">间&quot;</span><br><span class="line">)</span><br><span class="line">ENGINE<span class="operator">=</span>olap</span><br><span class="line">AGGREGATE KEY(`user_id`, `<span class="type">date</span>`, `<span class="type">timestamp</span>`, `city`, `age`, `sex`)</span><br><span class="line"><span class="keyword">PARTITION</span> <span class="keyword">BY</span> LIST(`city`)</span><br><span class="line">(</span><br><span class="line"> <span class="keyword">PARTITION</span> `p_cn` <span class="keyword">VALUES</span> <span class="keyword">IN</span> (&quot;Beijing&quot;, &quot;Shanghai&quot;, &quot;Hong Kong&quot;),</span><br><span class="line"> <span class="keyword">PARTITION</span> `p_usa` <span class="keyword">VALUES</span> <span class="keyword">IN</span> (&quot;New York&quot;, &quot;San Francisco&quot;),</span><br><span class="line"> <span class="keyword">PARTITION</span> `p_jp` <span class="keyword">VALUES</span> <span class="keyword">IN</span> (&quot;Tokyo&quot;)</span><br><span class="line">)</span><br><span class="line">DISTRIBUTED <span class="keyword">BY</span> HASH(`user_id`) BUCKETS <span class="number">16</span></span><br><span class="line">PROPERTIES</span><br><span class="line">(</span><br><span class="line"> &quot;replication_num&quot; <span class="operator">=</span> &quot;3&quot;,</span><br><span class="line"> &quot;storage_medium&quot; <span class="operator">=</span> &quot;SSD&quot;,</span><br><span class="line"> &quot;storage_cooldown_time&quot; <span class="operator">=</span> &quot;2018-01-01 12:00:00&quot;</span><br><span class="line">);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="数据模型"><a href="#数据模型" class="headerlink" title="数据模型"></a>数据模型</h2><p>Doris 的数据模型主要分为 3 类：Aggregate、Uniq、Duplicate</p>
+<h3 id="Aggregate-模型"><a href="#Aggregate-模型" class="headerlink" title="Aggregate 模型"></a>Aggregate 模型</h3><p>表中的列按照是否设置了 AggregationType，分为 Key（维度列）和 Value（指标列）。没有设置 AggregationType 的称为 Key，设置了 AggregationType 的称为 Value。<br>当我们导入数据时，对于 Key 列相同的行会聚合成一行，而 Value 列会按照设置的AggregationType 进行聚合。AggregationType 目前有以下四种聚合方式：</p>
+<ul>
+<li>➢ SUM：求和，多行的 Value 进行累加。</li>
+<li>➢ REPLACE：替代，下一批数据中的 Value 会替换之前导入过的行中的 Value。<br>   REPLACE_IF_NOT_NULL ：当遇到 null 值则不更新。</li>
+<li>➢ MAX：保留最大值。</li>
+<li>➢ MIN：保留最小值。</li>
+</ul>
+<p>数据的聚合，在 Doris 中有如下三个阶段发生：</p>
+<ul>
+<li>（1）每一批次数据导入的 ETL 阶段。该阶段会在每一批次导入的数据内部进行聚合。</li>
+<li>（2）底层 BE 进行数据 Compaction 的阶段。该阶段，BE 会对已导入的不同批次的数据进行进一步的聚合。</li>
+<li>（3）数据查询阶段。在数据查询时，对于查询涉及到的数据，会进行对应的聚合。</li>
+</ul>
+<p>数据在不同时间，可能聚合的程度不一致。比如一批数据刚导入时，可能还未与之前已存在的数据进行聚合。但是对于用户而言，用户只能查询到聚合后的数据。即不同的聚合程度对于用户查询而言是透明的。用户需始终认为数据以最终的完成的聚合程度存在，而不应假设某些聚合还未发生。（可参阅聚合模型的局限性一节获得更多详情。）</p>
+<h3 id="Uniq-模型"><a href="#Uniq-模型" class="headerlink" title="Uniq 模型"></a>Uniq 模型</h3><p>在某些多维分析场景下，用户更关注的是如何保证 Key 的唯一性，即如何获得 Primary  Key 唯一性约束。因此，我们引入了 Uniq 的数据模型。该模型本质上是聚合模型的一个特 例，也是一种简化的表结构表示方式。</p>
+<p>Uniq 模型完全可以用聚合模型中的 REPLACE 方式替代。其内部的实现方式和数据存 储方式也完全一样。</p>
+<h3 id="Duplicate-模型"><a href="#Duplicate-模型" class="headerlink" title="Duplicate 模型"></a>Duplicate 模型</h3><p>在某些多维分析场景下，数据既没有主键，也没有聚合需求。Duplicate 数据模型可以 满足这类需求。数据完全按照导入文件中的数据进行存储，不会有任何聚合。即使两行数据 完全相同，也都会保留。 而在建表语句中指定的 <code>DUPLICATE KEY</code>，只是用来指明底层数 据按照那些列进行排序。</p>
+<h3 id="数据模型的选择建议"><a href="#数据模型的选择建议" class="headerlink" title="数据模型的选择建议"></a>数据模型的选择建议</h3><p>因为数据模型在建表时就已经确定，且无法修改。所以，选择一个合适的数据模型非常 重要。 </p>
+<p>（1）Aggregate 模型可以通过预聚合，极大地降低聚合查询时所需扫描的数据量和查询 的计算量，非常适合有固定模式的报表类查询场景。但是该模型对 count(*) 查询很不友好。 <strong>同时因为固定了 Value 列上的聚合方式，在进行其他类型的聚合查询时，需要考虑语意正确 性。</strong></p>
+<p>（2）Uniq 模型针对需要唯一主键约束的场景，可以保证主键唯一性约束。<strong>但是无法利 用 ROLLUP 等预聚合带来的查询优势（因为本质是 REPLACE，没有 SUM 这种聚合方式）。</strong> </p>
+<p>（3）Duplicate 适合任意维度的 Ad-hoc 查询。虽然同样无法利用预聚合的特性，但是不 受聚合模型的约束，可以发挥列存模型的优势（只读取相关列，而不需要读取所有 Key 列）</p>
+<h2 id="Rollup"><a href="#Rollup" class="headerlink" title="Rollup"></a>Rollup</h2><p>ROLLUP 在多维分析中是“上卷”的意思，即将数据按某种指定的粒度进行进一步聚 合。</p>
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>在 Doris 中，我们将用户通过建表语句创建出来的表称为 Base 表（Base Table）。Base  表中保存着按用户建表语句指定的方式存储的基础数据。 </p>
+<p>在 Base 表之上，我们可以创建任意多个 ROLLUP 表。这些 ROLLUP 的数据是基于 Base  表产生的，并且在物理上是独立存储的。 ROLLUP 表的基本作用，在于在 Base 表的基础上，获得更粗粒度的聚合数据</p>
+<h3 id="Duplicate-模型中的-ROLLUP"><a href="#Duplicate-模型中的-ROLLUP" class="headerlink" title="Duplicate 模型中的 ROLLUP"></a>Duplicate 模型中的 ROLLUP</h3><p>因为 Duplicate 模型没有聚合的语意。所以该模型中的 ROLLUP，已经失去了“上卷” 这一层含义。而仅仅是作为调整列顺序，以命中前缀索引的作用。下面详细介绍前缀索引， 以及如何使用 ROLLUP 改变前缀索引，以获得更好的查询效率。</p>
+<h4 id="前缀索引"><a href="#前缀索引" class="headerlink" title="前缀索引"></a>前缀索引</h4><p>不同于传统的数据库设计，Doris 不支持在任意列上创建索引。Doris 这类 MPP 架构的 OLAP 数据库，通常都是通过提高并发，来处理大量数据的。 </p>
+<p>本质上，Doris 的数据存储在类似 SSTable（Sorted String Table）的数据结构中。该结构 是一种有序的数据结构，可以按照指定的列进行排序存储。在这种数据结构上，以排序列作 为条件进行查找，会非常的高效。 </p>
+<p>在 Aggregate、Uniq 和 Duplicate 三种数据模型中。底层的数据存储，是按照各自建表 语句中，AGGREGATE KEY、UNIQ KEY 和 DUPLICATE KEY 中指定的列进行排序存储 的。而<strong>前缀索引，即在排序的基础上，实现的一种根据给定前缀列，快速查询数据的索引方 式。</strong></p>
+<h4 id="ROLLUP-调整前缀索引"><a href="#ROLLUP-调整前缀索引" class="headerlink" title="ROLLUP 调整前缀索引"></a>ROLLUP 调整前缀索引</h4><p>因为建表时已经指定了列顺序，所以一个表只有一种前缀索引。这对于使用其他不能命 中前缀索引的列作为条件进行的查询来说，效率上可能无法满足需求。因此，我们可以通过 创建 ROLLUP 来人为的调整列顺序。举例说明。</p>
+<h3 id="ROLLUP-的几点说明"><a href="#ROLLUP-的几点说明" class="headerlink" title="ROLLUP 的几点说明"></a>ROLLUP 的几点说明</h3><p>⚫ ROLLUP 最根本的作用是提高某些查询的查询效率（无论是通过聚合来减少数据 量，还是修改列顺序以匹配前缀索引）。因此 ROLLUP 的含义已经超出了“上卷” 的范围。这也是为什么在源代码中，将其命名为 Materialized Index（物化索引）的 原因。</p>
+<p>⚫ ROLLUP 是附属于 Base 表的，可以看做是 Base 表的一种辅助数据结构。用户可以 在 Base 表的基础上，创建或删除 ROLLUP，但是不能在查询中显式的指定查询某 ROLLUP。是否命中 ROLLUP 完全由 Doris 系统自动决定。 </p>
+<p>⚫ ROLLUP 的数据是独立物理存储的。因此，创建的 ROLLUP 越多，占用的磁盘空 间也就越大。同时对导入速度也会有影响（导入的 ETL 阶段会自动产生所有 ROLLUP 的数据），但是不会降低查询效率（只会更好）。 </p>
+<p>⚫ ROLLUP 的数据更新与 Base 表是完全同步的。用户无需关心这个问题。</p>
+<p>⚫ ROLLUP 中列的聚合方式，与 Base 表完全相同。在创建 ROLLUP 无需指定，也不 能修改。 </p>
+<p>⚫ 查询能否命中 ROLLUP 的一个必要条件（非充分条件）是，查询所涉及的所有列 （包括 select list 和 where 中的查询条件列等）都存在于该 ROLLUP 的列中。否 则，查询只能命中 Base 表。 </p>
+<p>⚫ 某些类型的查询（如 count(*)）在任何条件下，都无法命中 ROLLUP。具体参见接 下来的聚合模型的局限性一节。</p>
+<p>⚫ 可以通过 EXPLAIN your_sql; 命令获得查询执行计划，在执行计划中，查看是否命 中 ROLLUP。</p>
+<p>⚫ 可以通过 DESC tbl_name ALL; 语句显示 Base 表和所有已创建完成的 ROLLUP。</p>
+<h2 id="物化视图"><a href="#物化视图" class="headerlink" title="物化视图"></a>物化视图</h2><p>物化视图就是包含了查询结果的数据库对象，可能是对远程数据的本地 copy，也可能 是一个表或多表 join 后结果的行或列的子集，也可能是聚合后的结果。说白了，就是预先存 储查询结果的一种数据库对象。</p>
+<p>在 Doris 中的物化视图，就是查询结果预先存储起来的特殊的表。 </p>
+<p>物化视图的出现主要是为了满足用户，既能对原始明细数据的任意维度分析，也能快速 的对固定维度进行分析查询。</p>
+<h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><p>⚫ 对于那些经常重复的使用相同的子查询结果的查询性能大幅提升。 </p>
+<p>⚫ Doris 自动维护物化视图的数据，无论是新的导入，还是删除操作都能保证 base 表 和物化视图表的数据一致性。无需任何额外的人工维护成本。 </p>
+<p>⚫ 查询时，会自动匹配到最优物化视图，并直接从物化视图中读取数据。 自动维护物化视图的数据会造成一些维护开销，会在后面的物化视图的局限性中展开说 明。</p>
+<h3 id="物化视图-VS-Rollup"><a href="#物化视图-VS-Rollup" class="headerlink" title="物化视图 VS Rollup"></a>物化视图 VS Rollup</h3><p>在没有物化视图功能之前，用户一般都是使用 Rollup 功能通过预聚合方式提升查询效 率的。但是 Rollup 具有一定的局限性，他不能基于明细模型做预聚合。 </p>
+<p>物化视图则在覆盖了 Rollup 的功能的同时，还能支持更丰富的聚合函数。所以物化视 图其实是 Rollup 的一个超集。 </p>
+<p>也就是说，之前 ALTER TABLE ADD ROLLUP 语法支持的功能现在均可以通过 CREATE MATERIALIZED VIEW 实现。</p>
+<h3 id="物化视图原理"><a href="#物化视图原理" class="headerlink" title="物化视图原理"></a>物化视图原理</h3><p>Doris 系统提供了一整套对物化视图的 DDL 语法，包括创建，查看，删除。DDL 的语 法和 PostgreSQL, Oracle 都是一致的。但是 Doris 目前创建物化视图只能在单表操作，不支 持 join。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://poxiao.tk">破晓</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://poxiao.tk/posts/27737.html">https://poxiao.tk/posts/27737.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://poxiao.tk" target="_blank">破晓</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Doris/">Doris</a></div><div class="post_share"><div class="social-share" data-image="https://dogefs.s3.ladydaily.com/tzk/storage/20210302234030.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/gh/overtrue/share.js@master/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/bg/clash.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/bg/clash.jpg" alt="嘻嘻！！！"/></a><div class="post-qr-code-desc">嘻嘻！！！</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/13792.html"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://dogefs.s3.ladydaily.com/tzk/storage/20210302234030.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">测试Flink Doris Connector</div></div></a></div><div class="next-post pull-right"><a href="/posts/2371.html"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://dogefs.s3.ladydaily.com/tzk/storage/000651627f0c-92aec253754ab3dba99f61b49e9aa856.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">初入用户画像</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/41835.html" title="Doris Join最佳实践"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://dogefs.s3.ladydaily.com/tzk/storage/20210302234030.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-25</div><div class="title">Doris Join最佳实践</div></div></a></div><div><a href="/posts/15533.html" title="Doris Compaction从入门到跑路"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://zfh-tuchuang.oss-cn-shanghai.aliyuncs.com/img/site-backgound.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-03</div><div class="title">Doris Compaction从入门到跑路</div></div></a></div><div><a href="/posts/60503.html" title="基于Doris的数据中台的实践与优化"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://dogefs.s3.ladydaily.com/tzk/storage/000651627f0c-92aec253754ab3dba99f61b49e9aa856.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-30</div><div class="title">基于Doris的数据中台的实践与优化</div></div></a></div><div><a href="/posts/24352.html" title="Doris中的索引"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://dogefs.s3.ladydaily.com/tzk/storage/000651627f0c-92aec253754ab3dba99f61b49e9aa856.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-07</div><div class="title">Doris中的索引</div></div></a></div><div><a href="/posts/65527.html" title="When：何时需要进行Doris Compaction调优"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://dogefs.s3.ladydaily.com/tzk/storage/20210302234030.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-03</div><div class="title">When：何时需要进行Doris Compaction调优</div></div></a></div><div><a href="/posts/29811.html" title="Doris性能优化（一）"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://zfh-tuchuang.oss-cn-shanghai.aliyuncs.com/img/site-backgound.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-21</div><div class="title">Doris性能优化（一）</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E8%A1%A8%E8%AF%AD%E5%8F%A5"><span class="toc-number">1.</span> <span class="toc-text">建表语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text">数据模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Aggregate-%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.1.</span> <span class="toc-text">Aggregate 模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Uniq-%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.2.</span> <span class="toc-text">Uniq 模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Duplicate-%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.3.</span> <span class="toc-text">Duplicate 模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B%E7%9A%84%E9%80%89%E6%8B%A9%E5%BB%BA%E8%AE%AE"><span class="toc-number">2.4.</span> <span class="toc-text">数据模型的选择建议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rollup"><span class="toc-number">3.</span> <span class="toc-text">Rollup</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">3.1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Duplicate-%E6%A8%A1%E5%9E%8B%E4%B8%AD%E7%9A%84-ROLLUP"><span class="toc-number">3.2.</span> <span class="toc-text">Duplicate 模型中的 ROLLUP</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%8D%E7%BC%80%E7%B4%A2%E5%BC%95"><span class="toc-number">3.2.1.</span> <span class="toc-text">前缀索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ROLLUP-%E8%B0%83%E6%95%B4%E5%89%8D%E7%BC%80%E7%B4%A2%E5%BC%95"><span class="toc-number">3.2.2.</span> <span class="toc-text">ROLLUP 调整前缀索引</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ROLLUP-%E7%9A%84%E5%87%A0%E7%82%B9%E8%AF%B4%E6%98%8E"><span class="toc-number">3.3.</span> <span class="toc-text">ROLLUP 的几点说明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%A9%E5%8C%96%E8%A7%86%E5%9B%BE"><span class="toc-number">4.</span> <span class="toc-text">物化视图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E5%8A%BF"><span class="toc-number">4.1.</span> <span class="toc-text">优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%A9%E5%8C%96%E8%A7%86%E5%9B%BE-VS-Rollup"><span class="toc-number">4.2.</span> <span class="toc-text">物化视图 VS Rollup</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%A9%E5%8C%96%E8%A7%86%E5%9B%BE%E5%8E%9F%E7%90%86"><span class="toc-number">4.3.</span> <span class="toc-text">物化视图原理</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By 破晓</div><div class="footer_custom_text">VARIETY IS THE SPICE OF LIFE. POWERED BY HEXO WITH BUTTERFLY</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'WYR8lzh0P1AxrT4HT9aKwquJ-MdYXbMMI',
+      appKey: 'RhTywPnpSjOJAADhepy6soF6',
+      avatar: 'monsterid',
+      serverURLs: 'https://acatnwad.api.lncldglobal.com',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://poxiao.tk/posts/27737.html'
+    this.page.identifier = 'posts/27737.html'
+    this.page.title = '初识Doris'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://poxiao.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !true) {
+  if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    if(parent_div_git) {
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var qweather_key = 'b16a1fa0e63c46a4b8f28abfb06ae3fe';
+  var gaud_map_key = 'e2b04289e870b005374ee030148d64fd&s=rsv3';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '112.982279,28.19409';
+  var clock_default_rectangle_enable = 'true';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="https://pv.sohu.com/cityjson?ie=utf-8"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><!-- hexo injector body_end end --></body></html>
